@@ -53,7 +53,7 @@ This is the general request structure for verifing the request by server.
 
 The paramters `timestamp`, `nonce` and `sign` are located in query for GET requests, but located in the body for POST requests.
 
-The [signature method](https://github.com/nbltrust/jadepool-saas-sdk-nodejs/blob/master/sign.md) is similar to OAuth.
+The [signature method](#signature) is similar to OAuth.
 
 # V1 API
 
@@ -906,3 +906,20 @@ block | number | the block transaction mined in
 memo | string | order note, editable on admin
 n | number | the order index
 sign | string | hex string, sign parameters with HMACSHA256
+
+# Signature
+1. Get the current timestamp (seconds) and the nonce (random string). Please make sure the timestamp error not exceed 5 minutes and the nonce not repeated in 10 minutes.
+
+2. Form a String message (sorted) that contains the timestamp above. The message looks like this:
+</br>
+```
+nonce=1559811763025698274450320&timestamp=1559811763
+```
+
+3. Sign the message using HMAC-SHA256. If the AppSecret is `yeTJ3EnOkyQQEjhTMVqn165Dqjp43bhTwXLIv25Ycdu8qwDOyqpa0WV54C6sO4HW`, the sign param would be like this:
+</br>
+```
+a0e18ef88ff9d2fb8ad417dace09834632732de86ae97bbba84186375dd0c0a8
+```
+
+4. Send request as the same format as described in [General Structure](#general-structure).
