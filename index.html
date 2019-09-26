@@ -270,7 +270,7 @@
                             <a href="#undelegate" class="toc-h3 toc-link" data-title="undelegate">undelegate</a>
                           </li>
                           <li>
-                            <a href="#add-urgent-staking-funding" class="toc-h3 toc-link" data-title="add urgent staking funding">add urgent staking funding</a>
+                            <a href="#add-funding-requirement" class="toc-h3 toc-link" data-title="add funding requirement">add funding requirement</a>
                           </li>
                       </ul>
                   </li>
@@ -1300,7 +1300,7 @@ data:
 <td>delegate amount</td>
 </tr>
 </tbody></table>
-<h3 id='add-urgent-staking-funding'>add urgent staking funding</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"AddUrgentStakingFunding"</span> <span class="k">$(</span>date +%s<span class="k">)</span> <span class="s2">"IRIS2"</span> <span class="s2">"1"</span> <span class="s2">"1569302076"</span>
+<h3 id='add-funding-requirement'>add funding requirement</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"AddUrgentStakingFunding"</span> <span class="k">$(</span>date +%s<span class="k">)</span> <span class="s2">"IRIS2"</span> <span class="s2">"1"</span> <span class="s2">"1569302076"</span>
 code: 0
 message: success
 data:
@@ -1318,7 +1318,7 @@ data:
     <span class="p">}</span>
 </code></pre><pre class="highlight go tab-go"><code><span class="x">    </span><span class="n">result</span><span class="p">,</span><span class="x"> </span><span class="n">_</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">app</span><span class="o">.</span><span class="n">AddUrgentStakingFunding</span><span class="p">(</span><span class="s">"1569292076"</span><span class="p">,</span><span class="x"> </span><span class="s">"IRIS2"</span><span class="p">,</span><span class="x"> </span><span class="s">"1"</span><span class="p">,</span><span class="x"> </span><span class="m">1569302076</span><span class="p">)</span><span class="x">
 </span></code></pre>
-<p><strong>Summary:</strong> add urgent staking funding</p>
+<p><strong>Summary:</strong> add funding requirement</p>
 <h4 id='http-request-10'>HTTP Request</h4>
 <p><code>POST /api/v1/staking/{coinName}/funding</code> </p>
 
