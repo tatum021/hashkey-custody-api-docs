@@ -602,7 +602,7 @@ id | string | order id
 type | string | order type
 value | string | delegate amount
 
-### add urgent staking funding 
+### add funding requirement
 
 ```shell
 $ go run cmd/ctl/main.go "appkey" "appsecret" "AddUrgentStakingFunding" $(date +%s) "IRIS2" "1" "1569302076"
@@ -630,7 +630,7 @@ data:
 	result, _ = app.AddUrgentStakingFunding("1569292076", "IRIS2", "1", 1569302076)
 ```
 
-**Summary:** add urgent staking funding
+**Summary:** add funding requirement
 
 #### HTTP Request 
 `POST /api/v1/staking/{coinName}/funding` 
