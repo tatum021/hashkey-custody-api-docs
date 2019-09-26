@@ -298,6 +298,9 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#signature" class="toc-h1 toc-link" data-title="Signature">Signature</a>
+          </li>
       </ul>
         <ul class="toc-footer">
             <li><a href='https://github.com/nbltrust/jadepool-saas-api-docs'>Documentation</a></li>
@@ -359,7 +362,7 @@
 
 <p>The paramters <code>timestamp</code>, <code>nonce</code> and <code>sign</code> are located in query for GET requests, but located in the body for POST requests.</p>
 
-<p>The <a href="https://github.com/nbltrust/jadepool-saas-sdk-nodejs/blob/master/sign.md">signature method</a> is similar to OAuth.</p>
+<p>The <a href="#signature">signature method</a> is similar to OAuth.</p>
 <h1 id='v1-api'>V1 API</h1><h2 id='address'>Address</h2><h3 id='create-a-new-address'>create a new address</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"CreateAddress"</span> <span class="s2">"ETH"</span>
 code: 0
 message: success
@@ -1813,6 +1816,21 @@ data:
 <td>hex string, sign parameters with HMACSHA256</td>
 </tr>
 </tbody></table>
+<h1 id='signature'>Signature</h1>
+<ol>
+<li><p>Get the current timestamp (seconds) and the nonce (random string). Please make sure the timestamp error not exceed 5 minutes and the nonce not repeated in 10 minutes.</p></li>
+<li><p>Form a String message (sorted) that contains the timestamp above. The message looks like this:
+</br>
+<code>
+nonce=1559811763025698274450320&amp;timestamp=1559811763
+</code></p></li>
+<li><p>Sign the message using HMAC-SHA256. If the AppSecret is <code>yeTJ3EnOkyQQEjhTMVqn165Dqjp43bhTwXLIv25Ycdu8qwDOyqpa0WV54C6sO4HW</code>, the sign param would be like this:
+</br>
+<code>
+a0e18ef88ff9d2fb8ad417dace09834632732de86ae97bbba84186375dd0c0a8
+</code></p></li>
+<li><p>Send request as the same format as described in <a href="#general-structure">General Structure</a>.</p></li>
+</ol>
 
       </div>
       <div class="dark-box">
