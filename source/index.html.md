@@ -650,6 +650,53 @@ data:
 Value | Type | Description
 --------- | ------- | ---------
 
+### get staking interest
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "GetStakingInterest" "IRIS" "2019-09-28"
+code: 0
+message: success
+data:
+{
+  "coinName": "IRIS",
+  "interest": "0.12345"
+}
+```
+
+```javascript
+    try {
+        result = await api.getStakingInterest("IRIS", "2019-09-28")
+        console.log(result)
+    } catch(e) {
+        // do something
+        console.log(e)
+    }
+```
+
+```go
+	result, _ = app.GetStakingInterest("IRIS", "2019-09-28")
+```
+
+**Summary:** get staking interest
+
+#### HTTP Request 
+`GET /api/v1/staking/{coinName}/interest` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| coinName | path | coin type | Yes | string |
+| date | query | date | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+coinName | string | the coin name
+value | string | the interest value
+
 ## Funding
 ### get funding wallets list 
 
