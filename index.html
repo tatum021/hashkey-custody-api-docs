@@ -1383,7 +1383,7 @@ data:
 </tr>
 </thead><tbody>
 </tbody></table>
-<h3 id='get-staking-interest'>get staking interest</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"GetStakingInterest"</span> <span class="s2">"IRIS"</span> <span class="s2">"2019-09-28"</span>
+<h3 id='get-staking-interest'>get staking interest</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"GetStakingInterest"</span> <span class="s2">"IRIS"</span> <span class="s2">"2019-09-26"</span> <span class="s2">"8"</span>
 code: 0
 message: success
 data:
@@ -1392,13 +1392,13 @@ data:
   <span class="s2">"interest"</span>: <span class="s2">"0.12345"</span>
 <span class="o">}</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code>    <span class="k">try</span> <span class="p">{</span>
-        <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getStakingInterest</span><span class="p">(</span><span class="s2">"IRIS"</span><span class="p">,</span> <span class="s2">"2019-09-28"</span><span class="p">)</span>
+        <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getStakingInterest</span><span class="p">(</span><span class="s2">"IRIS"</span><span class="p">,</span> <span class="s2">"2019-09-26"</span><span class="p">,</span> <span class="s2">"8"</span><span class="p">)</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
     <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// do something</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
     <span class="p">}</span>
-</code></pre><pre class="highlight go tab-go"><code><span class="x">    </span><span class="n">result</span><span class="p">,</span><span class="x"> </span><span class="n">_</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">app</span><span class="o">.</span><span class="n">GetStakingInterest</span><span class="p">(</span><span class="s">"IRIS"</span><span class="p">,</span><span class="x"> </span><span class="s">"2019-09-28"</span><span class="p">)</span><span class="x">
+</code></pre><pre class="highlight go tab-go"><code><span class="x">    </span><span class="n">result</span><span class="p">,</span><span class="x"> </span><span class="n">_</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">app</span><span class="o">.</span><span class="n">GetStakingInterest</span><span class="p">(</span><span class="s">"IRIS"</span><span class="p">,</span><span class="x"> </span><span class="s">"2019-09-26"</span><span class="p">,</span><span class="x"> </span><span class="s">"8"</span><span class="p">)</span><span class="x">
 </span></code></pre>
 <p><strong>Summary:</strong> get staking interest</p>
 <h4 id='http-request-11'>HTTP Request</h4>
@@ -1434,6 +1434,13 @@ data:
 <td>query</td>
 <td>date</td>
 <td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>query</td>
+<td>time zone</td>
+<td>NO</td>
 <td>string</td>
 </tr>
 </tbody></table>
