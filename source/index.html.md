@@ -653,7 +653,7 @@ Value | Type | Description
 ### get staking interest
 
 ```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "GetStakingInterest" "IRIS" "2019-09-26" "8"
+$ go run cmd/ctl/main.go "appkey" "appsecret" "GetStakingInterest" "IRIS" "2019-09-26"
 code: 0
 message: success
 data:
@@ -665,7 +665,7 @@ data:
 
 ```javascript
     try {
-        result = await api.getStakingInterest("IRIS", "2019-09-26", "8")
+        result = await api.getStakingInterest("IRIS", "2019-09-26")
         console.log(result)
     } catch(e) {
         // do something
@@ -674,7 +674,7 @@ data:
 ```
 
 ```go
-	result, _ = app.GetStakingInterest("IRIS", "2019-09-26", "8")
+	result, _ = app.GetStakingInterest("IRIS", "2019-09-26")
 ```
 
 **Summary:** get staking interest
@@ -688,8 +688,7 @@ data:
 | ---- | ---------- | ----------- | -------- | ---- |
 | X-App-Key | header | app key | Yes | string |
 | coinName | path | coin type | Yes | string |
-| date | query | date | Yes | string |
-| timezone | query | time zone | NO | string |
+| date | query | UTC date | Yes | string |
 
 **Response Result**
 
