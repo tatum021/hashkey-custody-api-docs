@@ -8,7 +8,10 @@ language_tabs:
    - go
 
 toc_footers: 
-   - <a href='https://github.com/nbltrust/jadepool-saas-api-docs'>Documentation</a> 
+   - <a href='https://github.com/nbltrust/jadepool-saas-api-docs'>Documentation</a>
+
+includes:
+  - errors
 
 search: true 
 

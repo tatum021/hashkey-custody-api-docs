@@ -1,22 +1,21 @@
 # Errors
 
-<aside class="notice">
-This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
-</aside>
-
-The Kittn API uses the following error codes:
+The Jadepool SAAS API uses the following error codes:
 
 
 Error Code | Meaning
 ---------- | -------
-400 | Bad Request -- Your request is invalid.
-401 | Unauthorized -- Your API key is wrong.
-403 | Forbidden -- The kitten requested is hidden for administrators only.
-404 | Not Found -- The specified kitten could not be found.
-405 | Method Not Allowed -- You tried to access a kitten with an invalid method.
-406 | Not Acceptable -- You requested a format that isn't json.
-410 | Gone -- The kitten requested has been removed from our servers.
-418 | I'm a teapot.
-429 | Too Many Requests -- You're requesting too many kittens! Slow down!
-500 | Internal Server Error -- We had a problem with our server. Try again later.
-503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.
+10001 | Bad Key -- Your API key is wrong.
+10002 | Bad Sign -- Your API signature is wrong.
+10003 | Bad Timestamp -- Your API timestamp is wrong.
+10004 | Repeated Nonce -- Your API nonce was given before.
+10005 | Bad Params -- Your request parameters is invalid.
+10006 | Internal Server Error -- We had a problem with our server. Try again later.
+10007 | API Closed -- We don't provide the API anymore.
+20001 | Not Found -- The specified resource could not be found.
+20002 | Not Enough -- The wallet balance isn't enough.
+20003 | Repeated Request -- The specified resource has existed.
+20005 | Too Small -- The amount is too small caused by fee.
+20007 | Forbidden -- The API is hidden for the user.
+20008 | In Blacklist -- The request address in the blacklist.
+20009 | Not In Whitelist -- The request address not in the whitelist.
