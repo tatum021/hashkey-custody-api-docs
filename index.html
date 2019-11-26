@@ -304,6 +304,9 @@
           <li>
             <a href="#signature" class="toc-h1 toc-link" data-title="Signature">Signature</a>
           </li>
+          <li>
+            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+          </li>
       </ul>
         <ul class="toc-footer">
             <li><a href='https://github.com/nbltrust/jadepool-saas-api-docs'>Documentation</a></li>
@@ -1909,6 +1912,72 @@ a0e18ef88ff9d2fb8ad417dace09834632732de86ae97bbba84186375dd0c0a8
 </code></p></li>
 <li><p>Send request as the same format as described in <a href="#general-structure">General Structure</a>.</p></li>
 </ol>
+<h1 id='errors'>Errors</h1>
+<p>The Jadepool SAAS API uses the following error codes:</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>10001</td>
+<td>Bad Key -- Your API key is wrong.</td>
+</tr>
+<tr>
+<td>10002</td>
+<td>Bad Sign -- Your API signature is wrong.</td>
+</tr>
+<tr>
+<td>10003</td>
+<td>Bad Timestamp -- Your API timestamp is wrong.</td>
+</tr>
+<tr>
+<td>10004</td>
+<td>Repeated Nonce -- Your API nonce was given before.</td>
+</tr>
+<tr>
+<td>10005</td>
+<td>Bad Params -- Your request parameters is invalid.</td>
+</tr>
+<tr>
+<td>10006</td>
+<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td>10007</td>
+<td>API Closed -- We don&#39;t provide the API anymore.</td>
+</tr>
+<tr>
+<td>20001</td>
+<td>Not Found -- The specified resource could not be found.</td>
+</tr>
+<tr>
+<td>20002</td>
+<td>Not Enough -- The wallet balance isn&#39;t enough.</td>
+</tr>
+<tr>
+<td>20003</td>
+<td>Repeated Request -- The specified resource has existed.</td>
+</tr>
+<tr>
+<td>20005</td>
+<td>Too Small -- The amount is too small caused by fee.</td>
+</tr>
+<tr>
+<td>20007</td>
+<td>Forbidden -- The API is hidden for the user.</td>
+</tr>
+<tr>
+<td>20008</td>
+<td>In Blacklist -- The request address in the blacklist.</td>
+</tr>
+<tr>
+<td>20009</td>
+<td>Not In Whitelist -- The request address not in the whitelist.</td>
+</tr>
+</tbody></table>
 
       </div>
       <div class="dark-box">
