@@ -19,3 +19,4 @@ Error Code | Meaning
 20007 | Forbidden -- The API is hidden for the user.
 20008 | In Blacklist -- The request address in the blacklist.
 20009 | Not In Whitelist -- The request address not in the whitelist.
+20010 | Not In Package -- The package don't support this feature. Please upgrade the package.
