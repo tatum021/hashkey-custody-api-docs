@@ -54,7 +54,7 @@ This is the general request structure for verifing the request by server.
 | nonce | query/body | nonce | Yes | string |
 | sign | query/body | hex string, sign parameters with HMACSHA256 | Yes | string |
 
-The paramters `timestamp`, `nonce` and `sign` are located in query for GET requests, but located in the body for POST requests.
+The parameters `timestamp`, `nonce` and `sign` are located in query for GET requests, but located in the body for POST requests.
 
 The [signature method](#signature) is similar to OAuth.
 
