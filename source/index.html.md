@@ -1,6 +1,6 @@
 --- 
 
-title: API Reference
+title: Jadepool SAAS API
 
 language_tabs: 
    - shell
@@ -25,25 +25,6 @@ Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/jadepool-saa
 
 # General Structure
 
-```shell
-$ git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git && cd jadepool-saas-sdk-golang
-```
-
-```javascript
-const appKey = 'TyTLvCnHINbWZQag88hhmMz1'
-const appSecret = 'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'
-const apiAddr = 'http://127.0.0.1:8092'
-
-const api = new API(appKey, appSecret, apiAddr)
-```
-
-```go
-// App Api
-app := sdk.NewAppWithAddr(apiAddr, key, secret)
-// Company Api
-company := sdk.NewCompanyWithAddr(apiAddr, key, secret)
-```
-
 This is the general request structure for verifing the request by server.
 
 **Parameters**
@@ -58,7 +39,25 @@ The parameters `timestamp`, `nonce` and `sign` are located in query for GET requ
 
 The [signature method](#signature) is similar to OAuth.
 
-# V1 API
+# Wallet API
+
+```shell
+$ git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git && cd jadepool-saas-sdk-golang
+```
+
+```javascript
+const key = 'TyTLvCnHINbWZQag88hhmMz1'
+const secret = 'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'
+const apiAddr = 'http://127.0.0.1:8092'
+
+const api = new API(key, secret, apiAddr)
+```
+
+```go
+app := sdk.NewAppWithAddr(apiAddr, key, secret)
+```
+
+The wallet key and secret can be generated in the wallet settings.
 
 ## Address
 
@@ -699,6 +698,26 @@ Value | Type | Description
 --------- | ------- | ---------
 coinName | string | the coin name
 value | string | the interest value
+
+# Company API
+
+```shell
+$ git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git && cd jadepool-saas-sdk-golang
+```
+
+```javascript
+const companyKey = 'TyTLvCnHINbWZQag88hhmMz1'
+const companySecret = 'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'
+const apiAddr = 'http://127.0.0.1:8092'
+
+const api = new API(companyKey, companySecret, apiAddr)
+```
+
+```go
+company := sdk.NewCompanyWithAddr(apiAddr, key, secret)
+```
+
+The company key and secret can be generated in the company settings.
 
 ## Funding
 ### get funding wallets list 
