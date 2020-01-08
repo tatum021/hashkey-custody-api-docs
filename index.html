@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>Jadepool SAAS API</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -227,7 +227,7 @@
             <a href="#general-structure" class="toc-h1 toc-link" data-title="General Structure">General Structure</a>
           </li>
           <li>
-            <a href="#v1-api" class="toc-h1 toc-link" data-title="V1 API">V1 API</a>
+            <a href="#wallet-api" class="toc-h1 toc-link" data-title="Wallet API">Wallet API</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#address" class="toc-h2 toc-link" data-title="Address">Address</a>
@@ -277,6 +277,11 @@
                           </li>
                       </ul>
                   </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#company-api" class="toc-h1 toc-link" data-title="Company API">Company API</a>
+              <ul class="toc-list-h2">
                   <li>
                     <a href="#funding" class="toc-h2 toc-link" data-title="Funding">Funding</a>
                       <ul class="toc-list-h3">
@@ -319,17 +324,7 @@
 <p>Jadepool SAAS API</p>
 
 <p>Feel free to check out our <a href="https://github.com/nbltrust/jadepool-saas-sdk-nodejs">NodeJs SDK</a>, <a href="https://github.com/nbltrust/jadepool-saas-sdk-golang">Go SDK</a>.</p>
-<h1 id='general-structure'>General Structure</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>jadepool-saas-sdk-golang
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">appKey</span> <span class="o">=</span> <span class="s1">'TyTLvCnHINbWZQag88hhmMz1'</span>
-<span class="kr">const</span> <span class="nx">appSecret</span> <span class="o">=</span> <span class="s1">'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'</span>
-<span class="kr">const</span> <span class="nx">apiAddr</span> <span class="o">=</span> <span class="s1">'http://127.0.0.1:8092'</span>
-
-<span class="kr">const</span> <span class="nx">api</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">API</span><span class="p">(</span><span class="nx">appKey</span><span class="p">,</span> <span class="nx">appSecret</span><span class="p">,</span> <span class="nx">apiAddr</span><span class="p">)</span>
-</code></pre><pre class="highlight go tab-go"><code><span class="c">// App Api</span><span class="x">
-</span><span class="n">app</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">sdk</span><span class="o">.</span><span class="n">NewAppWithAddr</span><span class="p">(</span><span class="n">apiAddr</span><span class="p">,</span><span class="x"> </span><span class="n">key</span><span class="p">,</span><span class="x"> </span><span class="n">secret</span><span class="p">)</span><span class="x">
-</span><span class="c">// Company Api</span><span class="x">
-</span><span class="n">company</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">sdk</span><span class="o">.</span><span class="n">NewCompanyWithAddr</span><span class="p">(</span><span class="n">apiAddr</span><span class="p">,</span><span class="x"> </span><span class="n">key</span><span class="p">,</span><span class="x"> </span><span class="n">secret</span><span class="p">)</span><span class="x">
-</span></code></pre>
+<h1 id='general-structure'>General Structure</h1>
 <p>This is the general request structure for verifing the request by server.</p>
 
 <p><strong>Parameters</strong></p>
@@ -369,7 +364,16 @@
 <p>The parameters <code>timestamp</code>, <code>nonce</code> and <code>sign</code> are located in query for GET requests, but located in the body for POST requests.</p>
 
 <p>The <a href="#signature">signature method</a> is similar to OAuth.</p>
-<h1 id='v1-api'>V1 API</h1><h2 id='address'>Address</h2><h3 id='create-a-new-address'>create a new address</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"CreateAddress"</span> <span class="s2">"ETH"</span>
+<h1 id='wallet-api'>Wallet API</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>jadepool-saas-sdk-golang
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="s1">'TyTLvCnHINbWZQag88hhmMz1'</span>
+<span class="kr">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="s1">'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'</span>
+<span class="kr">const</span> <span class="nx">apiAddr</span> <span class="o">=</span> <span class="s1">'http://127.0.0.1:8092'</span>
+
+<span class="kr">const</span> <span class="nx">api</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">API</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">secret</span><span class="p">,</span> <span class="nx">apiAddr</span><span class="p">)</span>
+</code></pre><pre class="highlight go tab-go"><code><span class="n">app</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">sdk</span><span class="o">.</span><span class="n">NewAppWithAddr</span><span class="p">(</span><span class="n">apiAddr</span><span class="p">,</span><span class="x"> </span><span class="n">key</span><span class="p">,</span><span class="x"> </span><span class="n">secret</span><span class="p">)</span><span class="x">
+</span></code></pre>
+<p>The wallet key and secret can be generated in the wallet settings.</p>
+<h2 id='address'>Address</h2><h3 id='create-a-new-address'>create a new address</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"CreateAddress"</span> <span class="s2">"ETH"</span>
 code: 0
 message: success
 data:
@@ -1461,6 +1465,15 @@ data:
 <td>the interest value</td>
 </tr>
 </tbody></table>
+<h1 id='company-api'>Company API</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>jadepool-saas-sdk-golang
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">companyKey</span> <span class="o">=</span> <span class="s1">'TyTLvCnHINbWZQag88hhmMz1'</span>
+<span class="kr">const</span> <span class="nx">companySecret</span> <span class="o">=</span> <span class="s1">'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'</span>
+<span class="kr">const</span> <span class="nx">apiAddr</span> <span class="o">=</span> <span class="s1">'http://127.0.0.1:8092'</span>
+
+<span class="kr">const</span> <span class="nx">api</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">API</span><span class="p">(</span><span class="nx">companyKey</span><span class="p">,</span> <span class="nx">companySecret</span><span class="p">,</span> <span class="nx">apiAddr</span><span class="p">)</span>
+</code></pre><pre class="highlight go tab-go"><code><span class="n">company</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">sdk</span><span class="o">.</span><span class="n">NewCompanyWithAddr</span><span class="p">(</span><span class="n">apiAddr</span><span class="p">,</span><span class="x"> </span><span class="n">key</span><span class="p">,</span><span class="x"> </span><span class="n">secret</span><span class="p">)</span><span class="x">
+</span></code></pre>
+<p>The company key and secret can be generated in the company settings.</p>
 <h2 id='funding'>Funding</h2><h3 id='get-funding-wallets-list'>get funding wallets list</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"companykey"</span> <span class="s2">"companysecret"</span> <span class="s2">"GetFundingWallets"</span>
 code: 0
 message: success
