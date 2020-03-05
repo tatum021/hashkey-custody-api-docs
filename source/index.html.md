@@ -35,9 +35,26 @@ This is the general request structure for verifing the request by server.
 | nonce | query/body | nonce | Yes | string |
 | sign | query/body | hex string, sign parameters with HMACSHA256 | Yes | string |
 
-The parameters `timestamp`, `nonce` and `sign` are located in query for GET requests, but located in the body for POST requests.
+The parameters `timestamp`, `nonce` and `sign` are located in query for GET requests, but located in the body for POST/PATCH/PUT requests.
 
-The [signature method](#signature) is similar to OAuth.
+if POST/PATCH/PUT request, the body looks like this:
+
+`
+{ 
+  "timestamp": 1583374390,
+  "nonce": "1583374390314165815853245",
+  "otherkey": "other value",
+  "sign":"7c482cf15d9d25772eee2c43bd146c8136472a055b4587b9fb22d02720037875"
+}
+`
+
+if GET request, the url looks like this:
+
+`
+/api/v1/app/balance/ETH?timestamp=1583374390&nonce=1583374390314165815853245&sign=7c482cf15d9d25772eee2c43bd146c8136472a055b4587b9fb22d02720037875
+`
+
+<font size=4>The [signature method](#signature) is similar to OAuth.</font>
 
 # Wallet API
 
@@ -979,16 +996,26 @@ sign | string | hex string, sign parameters with HMACSHA256
 # Signature
 1. Get the current timestamp (seconds) and the nonce (random string). Please make sure the timestamp error not exceed 5 minutes and the nonce not repeated in 10 minutes.
 
-2. Form a String message (sorted) that contains the timestamp above. The message looks like this:
+2. Form a String message (sorted) that contains data prarams, the timestamp and nonce above. 
+
+    if body params is: 
 </br>
-```
-nonce=1559811763025698274450320&timestamp=1559811763
-```
+`
+{
+  "mode": "auto"
+}
+`
+
+    The message string looks like this:
+</br>
+`
+mode=auto&nonce=15833762841261615239762485&timestamp=1583376284
+`
 
 3. Sign the message using HMAC-SHA256. If the AppSecret is `yeTJ3EnOkyQQEjhTMVqn165Dqjp43bhTwXLIv25Ycdu8qwDOyqpa0WV54C6sO4HW`, the sign param would be like this:
 </br>
-```
-a0e18ef88ff9d2fb8ad417dace09834632732de86ae97bbba84186375dd0c0a8
-```
+`
+7042a9fd6deea017be7ad76dfb48e4c36feca279819630c870a628f5352c9044
+`
 
 4. Send request as the same format as described in [General Structure](#general-structure).
