@@ -31,8 +31,8 @@ This is the general request structure for verifing the request by server.
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| timestamp | query/body | unix timestamp | Yes | string |
-| nonce | query/body | nonce | Yes | string |
+| timestamp | query/body | unix timestamp, seconds | Yes | string |
+| nonce | query/body | nonce, random string, not repeated in 10 minutes | Yes | string |
 | sign | query/body | hex string, sign parameters with HMACSHA256 | Yes | string |
 
 The parameters `timestamp`, `nonce` and `sign` are located in query for GET requests, but located in the body for POST requests.
@@ -182,9 +182,6 @@ message: success
 data:
 {
   "balance": "0.450000000000000000",
-  "delegateAmount": "0.000000000000000000",
-  "delegateInLocked": "0.000000000000000000",
-  "delegateOutLocked": "0.000000000000000000",
   "inLocked": "0.000000000000000000",
   "inLockedFee": "0.000000000000000000",
   "outLocked": "0.000000000000000000",
@@ -192,6 +189,9 @@ data:
   "stakingBalance": "0.000000000000000000",
   "stakingInLocked": "0.000000000000000000",
   "stakingOutLocked": "0.000000000000000000",
+  "delegateAmount": "0.000000000000000000",
+  "delegateInLocked": "0.000000000000000000",
+  "delegateOutLocked": "0.000000000000000000",
   "undelegateAmount": "0.000000000000000000",
   "undelegateInLocked": "0.000000000000000000",
   "undelegateOutLocked": "0.000000000000000000"
@@ -229,9 +229,6 @@ data:
 Value | Type | Description
 --------- | ------- | ---------
 balance | string | the coin balance
-delegateAmount | string | the coin delegate amount
-delegateInLocked | string | the coin delegate transfer in amount under locked
-delegateOutLocked | string | the coin delegate transfer out amount under locked
 inLocked | string | the coin transfer in amount under locked
 inLockedFee | string | the coin transfer in fee under locked
 outLocked | string | the coin transfer out amount under locked
@@ -239,6 +236,9 @@ outLockedFee | string | the coin transfer out fee under locked
 stakingBalance | string | the staking coin balance
 stakingInLocked | string | the staking coin transfer in amount under locked
 stakingOutLocked | string | the staking coin transfer out amount under locked
+delegateAmount | string | the coin delegate amount
+delegateInLocked | string | the coin delegate transfer in amount under locked
+delegateOutLocked | string | the coin delegate transfer out amount under locked
 undelegateAmount | string | the undelegate coin amount
 undelegateInLocked | string | the undelegate coin transfer in amount under locked
 undelegateOutLocked | string | the undelegate coin transfer out amount under locked
