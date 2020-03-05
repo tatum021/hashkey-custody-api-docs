@@ -361,16 +361,16 @@
 </tr>
 </tbody></table>
 
-<p>The parameters <code>timestamp</code>, <code>nonce</code> and <code>sign</code> are located in query for GET requests, but located in the body for POST/PATCH/PUT requests.</p>
+<p>The parameters <code>timestamp</code>, <code>nonce</code> and <code>sign</code> are located in query for GET requests, but located in the body for POST requests.</p>
 
-<p>if POST/PATCH/PUT request, the body looks like this:</p>
+<p>if POST request, the body looks like this:</p>
 
 <p><code>
 { 
-  &quot;timestamp&quot;: 1583374390,
-  &quot;nonce&quot;: &quot;1583374390314165815853245&quot;,
-  &quot;otherkey&quot;: &quot;other value&quot;,
-  &quot;sign&quot;:&quot;7c482cf15d9d25772eee2c43bd146c8136472a055b4587b9fb22d02720037875&quot;
+  &quot;timestamp&quot;: 1583376284,
+  &quot;nonce&quot;: &quot;15833762841261615239762485&quot;,
+  &quot;mode&quot;: &quot;auto&quot;,
+  &quot;sign&quot;:&quot;7042a9fd6deea017be7ad76dfb48e4c36feca279819630c870a628f5352c9044&quot;
 }
 </code></p>
 
