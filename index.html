@@ -361,9 +361,26 @@
 </tr>
 </tbody></table>
 
-<p>The parameters <code>timestamp</code>, <code>nonce</code> and <code>sign</code> are located in query for GET requests, but located in the body for POST requests.</p>
+<p>The parameters <code>timestamp</code>, <code>nonce</code> and <code>sign</code> are located in query for GET requests, but located in the body for POST/PATCH/PUT requests.</p>
 
-<p>The <a href="#signature">signature method</a> is similar to OAuth.</p>
+<p>if POST/PATCH/PUT request, the body looks like this:</p>
+
+<p><code>
+{ 
+  &quot;timestamp&quot;: 1583374390,
+  &quot;nonce&quot;: &quot;1583374390314165815853245&quot;,
+  &quot;otherkey&quot;: &quot;other value&quot;,
+  &quot;sign&quot;:&quot;7c482cf15d9d25772eee2c43bd146c8136472a055b4587b9fb22d02720037875&quot;
+}
+</code></p>
+
+<p>if GET request, the url looks like this:</p>
+
+<p><code>
+/api/v1/app/balance/ETH?timestamp=1583374390&amp;nonce=1583374390314165815853245&amp;sign=7c482cf15d9d25772eee2c43bd146c8136472a055b4587b9fb22d02720037875
+</code></p>
+
+<p><font size=4>The <a href="#signature">signature method</a> is similar to OAuth.</font></p>
 <h1 id='wallet-api'>Wallet API</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>jadepool-saas-sdk-golang
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="s1">'TyTLvCnHINbWZQag88hhmMz1'</span>
 <span class="kr">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="s1">'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'</span>
@@ -1913,15 +1930,25 @@ data:
 <h1 id='signature'>Signature</h1>
 <ol>
 <li><p>Get the current timestamp (seconds) and the nonce (random string). Please make sure the timestamp error not exceed 5 minutes and the nonce not repeated in 10 minutes.</p></li>
-<li><p>Form a String message (sorted) that contains the timestamp above. The message looks like this:
+<li><p>Form a String message (sorted) that contains data prarams, the timestamp and nonce above. </p>
+
+<p>if body params is: 
 </br>
 <code>
-nonce=1559811763025698274450320&amp;timestamp=1559811763
+{
+&quot;mode&quot;: &quot;auto&quot;
+}
+</code></p>
+
+<p>The message string looks like this:
+</br>
+<code>
+mode=auto&amp;nonce=15833762841261615239762485&amp;timestamp=1583376284
 </code></p></li>
 <li><p>Sign the message using HMAC-SHA256. If the AppSecret is <code>yeTJ3EnOkyQQEjhTMVqn165Dqjp43bhTwXLIv25Ycdu8qwDOyqpa0WV54C6sO4HW</code>, the sign param would be like this:
 </br>
 <code>
-a0e18ef88ff9d2fb8ad417dace09834632732de86ae97bbba84186375dd0c0a8
+7042a9fd6deea017be7ad76dfb48e4c36feca279819630c870a628f5352c9044
 </code></p></li>
 <li><p>Send request as the same format as described in <a href="#general-structure">General Structure</a>.</p></li>
 </ol>
