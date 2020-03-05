@@ -35,16 +35,16 @@ This is the general request structure for verifing the request by server.
 | nonce | query/body | nonce | Yes | string |
 | sign | query/body | hex string, sign parameters with HMACSHA256 | Yes | string |
 
-The parameters `timestamp`, `nonce` and `sign` are located in query for GET requests, but located in the body for POST/PATCH/PUT requests.
+The parameters `timestamp`, `nonce` and `sign` are located in query for GET requests, but located in the body for POST requests.
 
-if POST/PATCH/PUT request, the body looks like this:
+if POST request, the body looks like this:
 
 `
 { 
-  "timestamp": 1583374390,
-  "nonce": "1583374390314165815853245",
-  "otherkey": "other value",
-  "sign":"7c482cf15d9d25772eee2c43bd146c8136472a055b4587b9fb22d02720037875"
+  "timestamp": 1583376284,
+  "nonce": "15833762841261615239762485",
+  "mode": "auto",
+  "sign":"7042a9fd6deea017be7ad76dfb48e4c36feca279819630c870a628f5352c9044"
 }
 `
 
