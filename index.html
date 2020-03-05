@@ -341,14 +341,14 @@
 <tr>
 <td>timestamp</td>
 <td>query/body</td>
-<td>unix timestamp</td>
+<td>unix timestamp, seconds</td>
 <td>Yes</td>
 <td>string</td>
 </tr>
 <tr>
 <td>nonce</td>
 <td>query/body</td>
-<td>nonce</td>
+<td>nonce, random string, not repeated in 10 minutes</td>
 <td>Yes</td>
 <td>string</td>
 </tr>
@@ -546,9 +546,6 @@ message: success
 data:
 <span class="o">{</span>
   <span class="s2">"balance"</span>: <span class="s2">"0.450000000000000000"</span>,
-  <span class="s2">"delegateAmount"</span>: <span class="s2">"0.000000000000000000"</span>,
-  <span class="s2">"delegateInLocked"</span>: <span class="s2">"0.000000000000000000"</span>,
-  <span class="s2">"delegateOutLocked"</span>: <span class="s2">"0.000000000000000000"</span>,
   <span class="s2">"inLocked"</span>: <span class="s2">"0.000000000000000000"</span>,
   <span class="s2">"inLockedFee"</span>: <span class="s2">"0.000000000000000000"</span>,
   <span class="s2">"outLocked"</span>: <span class="s2">"0.000000000000000000"</span>,
@@ -556,6 +553,9 @@ data:
   <span class="s2">"stakingBalance"</span>: <span class="s2">"0.000000000000000000"</span>,
   <span class="s2">"stakingInLocked"</span>: <span class="s2">"0.000000000000000000"</span>,
   <span class="s2">"stakingOutLocked"</span>: <span class="s2">"0.000000000000000000"</span>,
+  <span class="s2">"delegateAmount"</span>: <span class="s2">"0.000000000000000000"</span>,
+  <span class="s2">"delegateInLocked"</span>: <span class="s2">"0.000000000000000000"</span>,
+  <span class="s2">"delegateOutLocked"</span>: <span class="s2">"0.000000000000000000"</span>,
   <span class="s2">"undelegateAmount"</span>: <span class="s2">"0.000000000000000000"</span>,
   <span class="s2">"undelegateInLocked"</span>: <span class="s2">"0.000000000000000000"</span>,
   <span class="s2">"undelegateOutLocked"</span>: <span class="s2">"0.000000000000000000"</span>
@@ -615,21 +615,6 @@ data:
 <td>the coin balance</td>
 </tr>
 <tr>
-<td>delegateAmount</td>
-<td>string</td>
-<td>the coin delegate amount</td>
-</tr>
-<tr>
-<td>delegateInLocked</td>
-<td>string</td>
-<td>the coin delegate transfer in amount under locked</td>
-</tr>
-<tr>
-<td>delegateOutLocked</td>
-<td>string</td>
-<td>the coin delegate transfer out amount under locked</td>
-</tr>
-<tr>
 <td>inLocked</td>
 <td>string</td>
 <td>the coin transfer in amount under locked</td>
@@ -663,6 +648,21 @@ data:
 <td>stakingOutLocked</td>
 <td>string</td>
 <td>the staking coin transfer out amount under locked</td>
+</tr>
+<tr>
+<td>delegateAmount</td>
+<td>string</td>
+<td>the coin delegate amount</td>
+</tr>
+<tr>
+<td>delegateInLocked</td>
+<td>string</td>
+<td>the coin delegate transfer in amount under locked</td>
+</tr>
+<tr>
+<td>delegateOutLocked</td>
+<td>string</td>
+<td>the coin delegate transfer out amount under locked</td>
 </tr>
 <tr>
 <td>undelegateAmount</td>
