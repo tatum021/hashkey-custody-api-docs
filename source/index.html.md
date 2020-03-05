@@ -23,6 +23,12 @@ Jadepool SAAS API
 
 Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/jadepool-saas-sdk-nodejs), [Go SDK](https://github.com/nbltrust/jadepool-saas-sdk-golang).
 
+# API Server URL:
+
+### sandbox: https://openapi.jadepool.io
+### production: https://custody.hashkey.com/saas-api
+
+
 # General Structure
 
 This is the general request structure for verifing the request by server.
