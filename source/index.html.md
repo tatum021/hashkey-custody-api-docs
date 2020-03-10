@@ -26,7 +26,6 @@ Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/jadepool-saa
 # API Server URL:
 
 ### sandbox: https://openapi.jadepool.io
-### production: https://custody.hashkey.com/saas-api
 
 
 # General Structure
