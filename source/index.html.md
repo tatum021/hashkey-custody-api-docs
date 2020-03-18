@@ -6,6 +6,7 @@ language_tabs:
    - shell
    - javascript
    - go
+   - java
 
 toc_footers: 
    - <a href='https://github.com/nbltrust/jadepool-saas-api-docs'>Documentation</a>
@@ -21,7 +22,7 @@ search: true
 
 Jadepool SAAS API
 
-Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/jadepool-saas-sdk-nodejs), [Go SDK](https://github.com/nbltrust/jadepool-saas-sdk-golang).
+Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/jadepool-saas-sdk-nodejs), [Go SDK](https://github.com/nbltrust/jadepool-saas-sdk-golang), [Java SDK](https://github.com/nbltrust/jadepool-saas-sdk-java).
 
 # API Server URL:
 
@@ -79,6 +80,15 @@ const api = new API(key, secret, apiAddr)
 app := sdk.NewAppWithAddr(apiAddr, key, secret)
 ```
 
+```java
+String endpoint = "http://127.0.0.1:8092";
+String appKey = "TyTLvCnHINbWZQag88hhmMz1";
+String appSecret = "uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6";
+
+APIContext appContext = new APIContext(endpoint, appKey, appSecret);
+App appTest = new App(appContext);
+```
+
 The wallet key and secret can be generated in the wallet settings.
 
 ## Address
@@ -108,6 +118,10 @@ data:
 
 ```go
 	result, _ := app.CreateAddress("ETH")
+```
+
+```java
+  APIResult result = appTest.createAddress("ETH");
 ```
 
 **Summary:** create a new address
@@ -155,6 +169,10 @@ data:
 
 ```go
 	result, _ = app.VerifyAddress("ETH", "0x9bf65CDF5729b9588F6bAEBb2Aa2926472D4a035")
+```
+
+```java
+  APIResult result = appTest.verifyAddress("ETH", "0x9bf65CDF5729b9588F6bAEBb2Aa2926472D4a035");
 ```
 
 **Summary:** verify a address
@@ -217,6 +235,10 @@ data:
 	result, _ = app.GetBalance("ETH")
 ```
 
+```java
+  APIResult result = appTest.getBalance("ETH")
+```
+
 **Summary:** get wallet balance
 
 #### HTTP Request 
@@ -276,6 +298,10 @@ data:
 	result, _ = app.GetAssets()
 ```
 
+```java
+  APIResult result = appTest.getAssets();
+```
+
 **Summary:** get wallet assets
 
 #### HTTP Request 
@@ -330,6 +356,10 @@ data:
 
 ```go
 	result, _ = app.GetOrder("rNXBQGJlw09apVyg4nDo")
+```
+
+```java
+  APIResult result = appTest.getOrder("rNXBQGJlw09apVyg4nDo");
 ```
 
 **Summary:** get wallet order
@@ -405,6 +435,10 @@ data:
 
 ```go
 	result, _ = app.Withdraw("1569225735", "ETH", "0xF0706B7Cab38EA42538f4D8C279B6F57ad1d4072", "0.05")
+```
+
+```java
+  APIResult result = appTest.withdraw(id, "ETH", "0xF0706B7Cab38EA42538f4D8C279B6F57ad1d4072", "0.05");
 ```
 
 **Summary:** withdraw
@@ -502,6 +536,10 @@ data:
 	result, _ = app.GetValidators("IRIS")
 ```
 
+```java
+  APIResult result = appTest.getValidators("IRIS");
+```
+
 **Summary:** get staking validators
 
 #### HTTP Request 
@@ -549,6 +587,10 @@ data:
 
 ```go
 	result, _ = app.Delegate("1569231558", "IRIS2", "1")
+```
+
+```java
+  APIResult result = appTest.delegate("1569231558", "IRIS2", "1");
 ```
 
 **Summary:** delegate
@@ -604,6 +646,10 @@ data:
 	result, _ = app.UnDelegate("1569231809", "IRIS2", "1")
 ```
 
+```java
+  APIResult result = appTest.unDelegate("1569231809", "IRIS2", "1");
+```
+
 **Summary:** undelegate
 
 #### HTTP Request 
@@ -654,6 +700,10 @@ data:
 	result, _ = app.AddUrgentStakingFunding("1569292076", "IRIS2", "1", 1569302076)
 ```
 
+```java
+  APIResult result = appTest.addUrgentStakingFunding("1569292076", "IRIS2", "1", 1569302076);
+```
+
 **Summary:** add funding requirement
 
 #### HTTP Request 
@@ -701,6 +751,10 @@ data:
 	result, _ = app.GetStakingInterest("IRIS", "2019-09-26")
 ```
 
+```java
+  APIResult result = appTest.getStakingInterest("IRIS", "2019-09-26");
+```
+
 **Summary:** get staking interest
 
 #### HTTP Request 
@@ -737,6 +791,14 @@ const api = new API(companyKey, companySecret, apiAddr)
 
 ```go
 company := sdk.NewCompanyWithAddr(apiAddr, key, secret)
+```
+
+```java
+String endpoint = "http://127.0.0.1:8092";
+String appKey = "TyTLvCnHINbWZQag88hhmMz1";
+String appSecret = "uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6";
+APIContext companyContext = new APIContext(endpoint, appKey, appSecret);
+Company companyTest = new Company(companyContext);
 ```
 
 The company key and secret can be generated in the company settings.
@@ -783,6 +845,10 @@ data:
 
 ```go
 	result, _ = company.GetFundingWallets()
+```
+
+```java
+  APIResult result = companyTest.getFundingWallets();
 ```
 
 **Summary:** get funding wallets list
@@ -851,6 +917,10 @@ data:
 
 ```go
 	result, _ = company.FundingTransfer("QrLxg3XgKPMR1O8", "ZKz8XpwXGPBAQVE", "BTC", "0.0001")
+```
+
+```java
+  APIResult result = companyTest.fundingTransfer("QrLxg3XgKPMR1O8", "ZKz8XpwXGPBAQVE", "BTC", "0.0001");
 ```
 
 **Summary:** funding transfer
@@ -926,6 +996,10 @@ data:
 
 ```go
 	result, _ = company.GetFundingRecords(1, 10)
+```
+
+```java
+  APIResult result = companyTest.getFundingRecords(1, 10);
 ```
 
 **Summary:** get funding records list
