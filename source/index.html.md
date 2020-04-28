@@ -1065,6 +1065,7 @@ type | string | token type
 from | string | transaction input
 to | string | transaction output
 value | string | transaction value
+affirmativeConfirmation | number | affirmative confirmation of the blockchain
 confirmations | number | number of transaction confirmations
 fee | string | fee burnt for the transaction
 block | number | the block transaction mined in
