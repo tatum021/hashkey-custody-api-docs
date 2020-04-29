@@ -1269,7 +1269,7 @@ records | array | record list
   "bizType": "DEPOSIT",
   "coinName": "ETH",
   "type": "ETH",
-  "state": "PENDING",
+  "state": "DONE",
   "memo": "",
   "value": "1.000000000000000000",
   "fee": "0.000000000000000000",
@@ -1278,6 +1278,7 @@ records | array | record list
   "txid": "0x8487e23bbf71f1763e015598283ae891cc5ea8d444f87a0a60a0b5eb7e1a4d59",
   "n": 0,
   "block": 13721091,
+  "affirmativeConfirmation": 20,
   "confirmations": 27,
   "sign": "796dde931a15c98edc3dfdb65a2c2addfde422f217a1f6934be9226542839aa0"
 }
@@ -1296,6 +1297,7 @@ type | string | token type
 from | string | transaction input
 to | string | transaction output
 value | string | transaction value
+affirmativeConfirmation | number | affirmative confirmation of the blockchain
 confirmations | number | number of transaction confirmations
 fee | string | fee burnt for the transaction
 block | number | the block transaction mined in
