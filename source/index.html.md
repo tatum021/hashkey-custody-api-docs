@@ -775,6 +775,237 @@ Value | Type | Description
 coinName | string | the coin name
 value | string | the interest value
 
+## OTC
+### get open orders
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetOrders" "BTC_USD"
+code: 0
+message: success
+data:
+{
+  "orders": [
+    {
+      "id": "8yxkewovldjmmqj2m0n9pz71",
+      "status": "OPEN",
+      "accountID": "1009",
+      "type": "BUY",
+      "baseCoin": "BTC",
+      "quoteCoin": "USD",
+      "amountCoin": "BTC",
+      "amount": 10
+    }
+  ]
+}
+```
+
+**Summary:** get opening quote orders
+
+#### HTTP Request 
+`GET /api/v1/otc/orders` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| quoteSymbol | query | quote symbol(e.g. BTC_USD) | No | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+orders | array | order list
+
+Order object:
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | order id
+status | string | order status, OPEN/DONE/TERMINATE
+accountID | string | account id
+type | string | quote mode, BUY/SELL
+baseCoin | string | base coin
+quoteCoin | string | quote coin
+amountCoin | string | amount coin
+amount | number | amount
+
+
+### feed price
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCFeedPrice" "8yxkewovldjmmqj2m0n9pz71" 7739.90 "0320042810120495" 1588151178 15
+code: 0
+message: success
+data:
+{
+  "id": "25ovqdkrm86201g73zx4ynep",
+  "status": "OPEN",
+  "choose": false,
+  "invaildAt": 1588151193
+}
+```
+
+**Summary:** feed price
+
+#### HTTP Request 
+`POST /api/v1/otc/orders/{orderID}/price` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| orderID | path | order id | Yes | string |
+| price | body | price | Yes | number |
+| customID | body | the custom id defined by requester | No | string |
+| timestamp | body | timestamp | number |
+| vaildWithin | body | vaild interval | number |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | price id
+status | string | price status, OPEN/CLOSE/TERMINATE
+choose | boolean | mark if customer choose
+invaildAt | number | invalid timestamp
+
+
+### get price
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetPrice" "25ovqdkrm86201g73zx4ynep"
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetPriceByCustomID" "0320042810120495"
+code: 0
+message: success
+data:
+{
+  "id": "25ovqdkrm86201g73zx4ynep",
+  "status": "OPEN",
+  "choose": true,
+  "customID": "0320042810120495",
+  "price": 7739.90,
+  "invaildAt": 1588151193,
+  "order": {
+    "id": "8yxkewovldjmmqj2m0n9pz71",
+    "status": "OPEN",
+    "accountID": "1009",
+    "type": "BUY",
+    "baseCoin": "BTC",
+    "quoteCoin": "USD",
+    "amountCoin": "BTC",
+    "amount": 10
+  }
+}
+```
+
+**Summary:** get the latest status of price
+
+#### HTTP Request 
+`GET /api/v1/otc/price/{priceID}`
+
+`GET /api/v1/otc/price/custom/{customID}`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| priceID | path | price id | Yes | string |
+| customID | path | custom id | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | price id
+status | string | price status, OPEN/CLOSE/TERMINATE
+choose | boolean | mark if customer choose
+customID | string | the custom id
+price | number | price
+invaildAt | number | invalid timestamp
+order | object | the associated order info
+
+Order object:
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | order id
+status | string | order status, OPEN/DONE/TERMINATE
+accountID | string | account id
+type | string | quote mode, BUY/SELL
+baseCoin | string | base coin
+quoteCoin | string | quote coin
+amountCoin | string | amount coin
+amount | number | amount
+
+### close price
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCClosePrice" "25ovqdkrm86201g73zx4ynep"
+code: 0
+message: success
+data:
+{
+  "id": "25ovqdkrm86201g73zx4ynep",
+  "status": "CLOSE"
+}
+```
+
+**Summary:** make a deal with the price
+
+#### HTTP Request 
+`GET /api/v1/otc/price/{priceID}/close`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| priceID | path | price id | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | price id
+status | string | price status, OPEN/CLOSE/TERMINATE
+
+
+### terminate price
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCTerminatePrice" "25ovqdkrm86201g73zx4ynep"
+code: 0
+message: success
+data:
+{
+  "id": "25ovqdkrm86201g73zx4ynep",
+  "status": "TERMINATE"
+}
+```
+
+**Summary:** reject the price
+
+#### HTTP Request 
+`GET /api/v1/otc/price/{priceID}/terminate`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| priceID | path | price id | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | price id
+status | string | price status, OPEN/CLOSE/TERMINATE
+
+
 # Company API
 
 ```shell
