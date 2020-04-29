@@ -286,6 +286,26 @@
                           </li>
                       </ul>
                   </li>
+                  <li>
+                    <a href="#otc" class="toc-h2 toc-link" data-title="OTC">OTC</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#get-open-orders" class="toc-h3 toc-link" data-title="get open orders">get open orders</a>
+                          </li>
+                          <li>
+                            <a href="#feed-price" class="toc-h3 toc-link" data-title="feed price">feed price</a>
+                          </li>
+                          <li>
+                            <a href="#get-price" class="toc-h3 toc-link" data-title="get price">get price</a>
+                          </li>
+                          <li>
+                            <a href="#close-price" class="toc-h3 toc-link" data-title="close price">close price</a>
+                          </li>
+                          <li>
+                            <a href="#terminate-price" class="toc-h3 toc-link" data-title="terminate price">terminate price</a>
+                          </li>
+                      </ul>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1508,6 +1528,502 @@ data:
 <td>the interest value</td>
 </tr>
 </tbody></table>
+<h2 id='otc'>OTC</h2><h3 id='get-open-orders'>get open orders</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetOrders"</span> <span class="s2">"BTC_USD"</span>
+code: 0
+message: success
+data:
+<span class="o">{</span>
+  <span class="s2">"orders"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"id"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>,
+      <span class="s2">"status"</span>: <span class="s2">"OPEN"</span>,
+      <span class="s2">"accountID"</span>: <span class="s2">"1009"</span>,
+      <span class="s2">"type"</span>: <span class="s2">"BUY"</span>,
+      <span class="s2">"baseCoin"</span>: <span class="s2">"BTC"</span>,
+      <span class="s2">"quoteCoin"</span>: <span class="s2">"USD"</span>,
+      <span class="s2">"amountCoin"</span>: <span class="s2">"BTC"</span>,
+      <span class="s2">"amount"</span>: 10
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
+<p><strong>Summary:</strong> get opening quote orders</p>
+<h4 id='http-request-12'>HTTP Request</h4>
+<p><code>GET /api/v1/otc/orders</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-App-Key</td>
+<td>header</td>
+<td>app key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>quoteSymbol</td>
+<td>query</td>
+<td>quote symbol(e.g. BTC_USD)</td>
+<td>No</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>orders</td>
+<td>array</td>
+<td>order list</td>
+</tr>
+</tbody></table>
+
+<p>Order object:</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>order id</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>order status, OPEN/DONE/TERMINATE</td>
+</tr>
+<tr>
+<td>accountID</td>
+<td>string</td>
+<td>account id</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>quote mode, BUY/SELL</td>
+</tr>
+<tr>
+<td>baseCoin</td>
+<td>string</td>
+<td>base coin</td>
+</tr>
+<tr>
+<td>quoteCoin</td>
+<td>string</td>
+<td>quote coin</td>
+</tr>
+<tr>
+<td>amountCoin</td>
+<td>string</td>
+<td>amount coin</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>number</td>
+<td>amount</td>
+</tr>
+</tbody></table>
+<h3 id='feed-price'>feed price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCFeedPrice"</span> <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span> 7739.90 <span class="s2">"0320042810120495"</span> 1588151178 15
+code: 0
+message: success
+data:
+<span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>,
+  <span class="s2">"status"</span>: <span class="s2">"OPEN"</span>,
+  <span class="s2">"choose"</span>: <span class="nb">false</span>,
+  <span class="s2">"invaildAt"</span>: 1588151193
+<span class="o">}</span>
+</code></pre>
+<p><strong>Summary:</strong> feed price</p>
+<h4 id='http-request-13'>HTTP Request</h4>
+<p><code>POST /api/v1/otc/orders/{orderID}/price</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-App-Key</td>
+<td>header</td>
+<td>app key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>orderID</td>
+<td>path</td>
+<td>order id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>price</td>
+<td>body</td>
+<td>price</td>
+<td>Yes</td>
+<td>number</td>
+</tr>
+<tr>
+<td>customID</td>
+<td>body</td>
+<td>the custom id defined by requester</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>body</td>
+<td>timestamp</td>
+<td>number</td>
+<td></td>
+</tr>
+<tr>
+<td>vaildWithin</td>
+<td>body</td>
+<td>vaild interval</td>
+<td>number</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>price id</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>price status, OPEN/CLOSE/TERMINATE</td>
+</tr>
+<tr>
+<td>choose</td>
+<td>boolean</td>
+<td>mark if customer choose</td>
+</tr>
+<tr>
+<td>invaildAt</td>
+<td>number</td>
+<td>invalid timestamp</td>
+</tr>
+</tbody></table>
+<h3 id='get-price'>get price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetPrice"</span> <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>
+<span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetPriceByCustomID"</span> <span class="s2">"0320042810120495"</span>
+code: 0
+message: success
+data:
+<span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>,
+  <span class="s2">"status"</span>: <span class="s2">"OPEN"</span>,
+  <span class="s2">"choose"</span>: <span class="nb">true</span>,
+  <span class="s2">"customID"</span>: <span class="s2">"0320042810120495"</span>,
+  <span class="s2">"price"</span>: 7739.90,
+  <span class="s2">"invaildAt"</span>: 1588151193,
+  <span class="s2">"order"</span>: <span class="o">{</span>
+    <span class="s2">"id"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>,
+    <span class="s2">"status"</span>: <span class="s2">"OPEN"</span>,
+    <span class="s2">"accountID"</span>: <span class="s2">"1009"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"BUY"</span>,
+    <span class="s2">"baseCoin"</span>: <span class="s2">"BTC"</span>,
+    <span class="s2">"quoteCoin"</span>: <span class="s2">"USD"</span>,
+    <span class="s2">"amountCoin"</span>: <span class="s2">"BTC"</span>,
+    <span class="s2">"amount"</span>: 10
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+<p><strong>Summary:</strong> get the latest status of price</p>
+<h4 id='http-request-14'>HTTP Request</h4>
+<p><code>GET /api/v1/otc/price/{priceID}</code></p>
+
+<p><code>GET /api/v1/otc/price/custom/{customID}</code></p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-App-Key</td>
+<td>header</td>
+<td>app key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>priceID</td>
+<td>path</td>
+<td>price id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>customID</td>
+<td>path</td>
+<td>custom id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>price id</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>price status, OPEN/CLOSE/TERMINATE</td>
+</tr>
+<tr>
+<td>choose</td>
+<td>boolean</td>
+<td>mark if customer choose</td>
+</tr>
+<tr>
+<td>customID</td>
+<td>string</td>
+<td>the custom id</td>
+</tr>
+<tr>
+<td>price</td>
+<td>number</td>
+<td>price</td>
+</tr>
+<tr>
+<td>invaildAt</td>
+<td>number</td>
+<td>invalid timestamp</td>
+</tr>
+<tr>
+<td>order</td>
+<td>object</td>
+<td>the associated order info</td>
+</tr>
+</tbody></table>
+
+<p>Order object:</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>order id</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>order status, OPEN/DONE/TERMINATE</td>
+</tr>
+<tr>
+<td>accountID</td>
+<td>string</td>
+<td>account id</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>quote mode, BUY/SELL</td>
+</tr>
+<tr>
+<td>baseCoin</td>
+<td>string</td>
+<td>base coin</td>
+</tr>
+<tr>
+<td>quoteCoin</td>
+<td>string</td>
+<td>quote coin</td>
+</tr>
+<tr>
+<td>amountCoin</td>
+<td>string</td>
+<td>amount coin</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>number</td>
+<td>amount</td>
+</tr>
+</tbody></table>
+<h3 id='close-price'>close price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCClosePrice"</span> <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>
+code: 0
+message: success
+data:
+<span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>,
+  <span class="s2">"status"</span>: <span class="s2">"CLOSE"</span>
+<span class="o">}</span>
+</code></pre>
+<p><strong>Summary:</strong> make a deal with the price</p>
+<h4 id='http-request-15'>HTTP Request</h4>
+<p><code>GET /api/v1/otc/price/{priceID}/close</code></p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-App-Key</td>
+<td>header</td>
+<td>app key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>priceID</td>
+<td>path</td>
+<td>price id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>price id</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>price status, OPEN/CLOSE/TERMINATE</td>
+</tr>
+</tbody></table>
+<h3 id='terminate-price'>terminate price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCTerminatePrice"</span> <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>
+code: 0
+message: success
+data:
+<span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>,
+  <span class="s2">"status"</span>: <span class="s2">"TERMINATE"</span>
+<span class="o">}</span>
+</code></pre>
+<p><strong>Summary:</strong> reject the price</p>
+<h4 id='http-request-16'>HTTP Request</h4>
+<p><code>GET /api/v1/otc/price/{priceID}/terminate</code></p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-App-Key</td>
+<td>header</td>
+<td>app key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>priceID</td>
+<td>path</td>
+<td>price id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>price id</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>price status, OPEN/CLOSE/TERMINATE</td>
+</tr>
+</tbody></table>
 <h1 id='company-api'>Company API</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>jadepool-saas-sdk-golang
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">companyKey</span> <span class="o">=</span> <span class="s1">'TyTLvCnHINbWZQag88hhmMz1'</span>
 <span class="kr">const</span> <span class="nx">companySecret</span> <span class="o">=</span> <span class="s1">'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'</span>
@@ -1557,7 +2073,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">getFundingWallets</span><span class="o">();</span>
 </code></pre>
 <p><strong>Summary:</strong> get funding wallets list</p>
-<h4 id='http-request-12'>HTTP Request</h4>
+<h4 id='http-request-17'>HTTP Request</h4>
 <p><code>GET /api/v1/funding/balances</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1638,7 +2154,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">fundingTransfer</span><span class="o">(</span><span class="s">"QrLxg3XgKPMR1O8"</span><span class="o">,</span> <span class="s">"ZKz8XpwXGPBAQVE"</span><span class="o">,</span> <span class="s">"BTC"</span><span class="o">,</span> <span class="s">"0.0001"</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> funding transfer</p>
-<h4 id='http-request-13'>HTTP Request</h4>
+<h4 id='http-request-18'>HTTP Request</h4>
 <p><code>POST /api/v1/funding/transfer</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1760,7 +2276,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">getFundingRecords</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> get funding records list</p>
-<h4 id='http-request-14'>HTTP Request</h4>
+<h4 id='http-request-19'>HTTP Request</h4>
 <p><code>GET /api/v1/funding/records</code> </p>
 
 <p><strong>Parameters</strong></p>
