@@ -1917,6 +1917,8 @@ data:
 <h4 id='http-request-15'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}/close</code></p>
 
+<p><code>GET /api/v1/otc/price/custom/{customID}/close</code></p>
+
 <p><strong>Parameters</strong></p>
 
 <table><thead>
@@ -1939,6 +1941,13 @@ data:
 <td>priceID</td>
 <td>path</td>
 <td>price id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>customID</td>
+<td>path</td>
+<td>custom id</td>
 <td>Yes</td>
 <td>string</td>
 </tr>
@@ -1977,6 +1986,8 @@ data:
 <h4 id='http-request-16'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}/terminate</code></p>
 
+<p><code>GET /api/v1/otc/price/custom/{customID}/terminate</code></p>
+
 <p><strong>Parameters</strong></p>
 
 <table><thead>
@@ -1999,6 +2010,13 @@ data:
 <td>priceID</td>
 <td>path</td>
 <td>price id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>customID</td>
+<td>path</td>
+<td>custom id</td>
 <td>Yes</td>
 <td>string</td>
 </tr>
