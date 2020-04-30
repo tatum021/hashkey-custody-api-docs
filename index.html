@@ -1910,7 +1910,21 @@ message: success
 data:
 <span class="o">{</span>
   <span class="s2">"id"</span>: <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>,
-  <span class="s2">"status"</span>: <span class="s2">"CLOSE"</span>
+  <span class="s2">"status"</span>: <span class="s2">"CLOSE"</span>,
+  <span class="s2">"choose"</span>: <span class="nb">true</span>,
+  <span class="s2">"customID"</span>: <span class="s2">"0320042810120495"</span>,
+  <span class="s2">"price"</span>: 7739.90,
+  <span class="s2">"invaildAt"</span>: 1588151193,
+  <span class="s2">"order"</span>: <span class="o">{</span>
+    <span class="s2">"id"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>,
+    <span class="s2">"status"</span>: <span class="s2">"DONE"</span>,
+    <span class="s2">"accountID"</span>: <span class="s2">"1009"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"BUY"</span>,
+    <span class="s2">"baseCoin"</span>: <span class="s2">"BTC"</span>,
+    <span class="s2">"quoteCoin"</span>: <span class="s2">"USD"</span>,
+    <span class="s2">"amountCoin"</span>: <span class="s2">"BTC"</span>,
+    <span class="s2">"amount"</span>: 10
+  <span class="o">}</span>
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> make a deal with the price</p>
@@ -1972,6 +1986,82 @@ data:
 <td>string</td>
 <td>price status, OPEN/CLOSE/TERMINATE</td>
 </tr>
+<tr>
+<td>choose</td>
+<td>boolean</td>
+<td>mark if customer choose</td>
+</tr>
+<tr>
+<td>customID</td>
+<td>string</td>
+<td>the custom id</td>
+</tr>
+<tr>
+<td>price</td>
+<td>number</td>
+<td>price</td>
+</tr>
+<tr>
+<td>invaildAt</td>
+<td>number</td>
+<td>invalid timestamp</td>
+</tr>
+<tr>
+<td>order</td>
+<td>object</td>
+<td>the associated order info</td>
+</tr>
+</tbody></table>
+
+<p>Order object:</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>order id</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>order status, OPEN/DONE/TERMINATE</td>
+</tr>
+<tr>
+<td>accountID</td>
+<td>string</td>
+<td>account id</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>quote mode, BUY/SELL</td>
+</tr>
+<tr>
+<td>baseCoin</td>
+<td>string</td>
+<td>base coin</td>
+</tr>
+<tr>
+<td>quoteCoin</td>
+<td>string</td>
+<td>quote coin</td>
+</tr>
+<tr>
+<td>amountCoin</td>
+<td>string</td>
+<td>amount coin</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>number</td>
+<td>amount</td>
+</tr>
 </tbody></table>
 <h3 id='terminate-price'>terminate price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCTerminatePrice"</span> <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>
 code: 0
@@ -1979,7 +2069,21 @@ message: success
 data:
 <span class="o">{</span>
   <span class="s2">"id"</span>: <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>,
-  <span class="s2">"status"</span>: <span class="s2">"TERMINATE"</span>
+  <span class="s2">"status"</span>: <span class="s2">"TERMINATE"</span>,
+  <span class="s2">"choose"</span>: <span class="nb">true</span>,
+  <span class="s2">"customID"</span>: <span class="s2">"0320042810120495"</span>,
+  <span class="s2">"price"</span>: 7739.90,
+  <span class="s2">"invaildAt"</span>: 1588151193,
+  <span class="s2">"order"</span>: <span class="o">{</span>
+    <span class="s2">"id"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>,
+    <span class="s2">"status"</span>: <span class="s2">"TERMINATE"</span>,
+    <span class="s2">"accountID"</span>: <span class="s2">"1009"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"BUY"</span>,
+    <span class="s2">"baseCoin"</span>: <span class="s2">"BTC"</span>,
+    <span class="s2">"quoteCoin"</span>: <span class="s2">"USD"</span>,
+    <span class="s2">"amountCoin"</span>: <span class="s2">"BTC"</span>,
+    <span class="s2">"amount"</span>: 10
+  <span class="o">}</span>
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> reject the price</p>
@@ -2040,6 +2144,82 @@ data:
 <td>status</td>
 <td>string</td>
 <td>price status, OPEN/CLOSE/TERMINATE</td>
+</tr>
+<tr>
+<td>choose</td>
+<td>boolean</td>
+<td>mark if customer choose</td>
+</tr>
+<tr>
+<td>customID</td>
+<td>string</td>
+<td>the custom id</td>
+</tr>
+<tr>
+<td>price</td>
+<td>number</td>
+<td>price</td>
+</tr>
+<tr>
+<td>invaildAt</td>
+<td>number</td>
+<td>invalid timestamp</td>
+</tr>
+<tr>
+<td>order</td>
+<td>object</td>
+<td>the associated order info</td>
+</tr>
+</tbody></table>
+
+<p>Order object:</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>order id</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>order status, OPEN/DONE/TERMINATE</td>
+</tr>
+<tr>
+<td>accountID</td>
+<td>string</td>
+<td>account id</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>quote mode, BUY/SELL</td>
+</tr>
+<tr>
+<td>baseCoin</td>
+<td>string</td>
+<td>base coin</td>
+</tr>
+<tr>
+<td>quoteCoin</td>
+<td>string</td>
+<td>quote coin</td>
+</tr>
+<tr>
+<td>amountCoin</td>
+<td>string</td>
+<td>amount coin</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>number</td>
+<td>amount</td>
 </tr>
 </tbody></table>
 <h1 id='company-api'>Company API</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>jadepool-saas-sdk-golang
