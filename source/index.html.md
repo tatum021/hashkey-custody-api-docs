@@ -958,12 +958,15 @@ data:
 #### HTTP Request 
 `GET /api/v1/otc/price/{priceID}/close`
 
+`GET /api/v1/otc/price/custom/{customID}/close`
+
 **Parameters**
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
 | X-App-Key | header | app key | Yes | string |
 | priceID | path | price id | Yes | string |
+| customID | path | custom id | Yes | string |
 
 **Response Result**
 
@@ -991,12 +994,15 @@ data:
 #### HTTP Request 
 `GET /api/v1/otc/price/{priceID}/terminate`
 
+`GET /api/v1/otc/price/custom/{customID}/terminate`
+
 **Parameters**
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
 | X-App-Key | header | app key | Yes | string |
 | priceID | path | price id | Yes | string |
+| customID | path | custom id | Yes | string |
 
 **Response Result**
 
