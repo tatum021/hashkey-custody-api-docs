@@ -949,7 +949,21 @@ message: success
 data:
 {
   "id": "25ovqdkrm86201g73zx4ynep",
-  "status": "CLOSE"
+  "status": "CLOSE",
+  "choose": true,
+  "customID": "0320042810120495",
+  "price": 7739.90,
+  "invaildAt": 1588151193,
+  "order": {
+    "id": "8yxkewovldjmmqj2m0n9pz71",
+    "status": "DONE",
+    "accountID": "1009",
+    "type": "BUY",
+    "baseCoin": "BTC",
+    "quoteCoin": "USD",
+    "amountCoin": "BTC",
+    "amount": 10
+  }
 }
 ```
 
@@ -974,6 +988,24 @@ Value | Type | Description
 --------- | ------- | ---------
 id | string | price id
 status | string | price status, OPEN/CLOSE/TERMINATE
+choose | boolean | mark if customer choose
+customID | string | the custom id
+price | number | price
+invaildAt | number | invalid timestamp
+order | object | the associated order info
+
+Order object:
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | order id
+status | string | order status, OPEN/DONE/TERMINATE
+accountID | string | account id
+type | string | quote mode, BUY/SELL
+baseCoin | string | base coin
+quoteCoin | string | quote coin
+amountCoin | string | amount coin
+amount | number | amount
 
 
 ### terminate price
@@ -985,7 +1017,21 @@ message: success
 data:
 {
   "id": "25ovqdkrm86201g73zx4ynep",
-  "status": "TERMINATE"
+  "status": "TERMINATE",
+  "choose": true,
+  "customID": "0320042810120495",
+  "price": 7739.90,
+  "invaildAt": 1588151193,
+  "order": {
+    "id": "8yxkewovldjmmqj2m0n9pz71",
+    "status": "TERMINATE",
+    "accountID": "1009",
+    "type": "BUY",
+    "baseCoin": "BTC",
+    "quoteCoin": "USD",
+    "amountCoin": "BTC",
+    "amount": 10
+  }
 }
 ```
 
@@ -1010,6 +1056,24 @@ Value | Type | Description
 --------- | ------- | ---------
 id | string | price id
 status | string | price status, OPEN/CLOSE/TERMINATE
+choose | boolean | mark if customer choose
+customID | string | the custom id
+price | number | price
+invaildAt | number | invalid timestamp
+order | object | the associated order info
+
+Order object:
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | order id
+status | string | order status, OPEN/DONE/TERMINATE
+accountID | string | account id
+type | string | quote mode, BUY/SELL
+baseCoin | string | base coin
+quoteCoin | string | quote coin
+amountCoin | string | amount coin
+amount | number | amount
 
 
 # Company API
