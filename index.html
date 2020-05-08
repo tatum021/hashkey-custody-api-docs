@@ -293,6 +293,9 @@
                             <a href="#get-open-orders" class="toc-h3 toc-link" data-title="get open orders">get open orders</a>
                           </li>
                           <li>
+                            <a href="#get-order" class="toc-h3 toc-link" data-title="get order">get order</a>
+                          </li>
+                          <li>
                             <a href="#feed-price" class="toc-h3 toc-link" data-title="feed price">feed price</a>
                           </li>
                           <li>
@@ -1528,7 +1531,16 @@ data:
 <td>the interest value</td>
 </tr>
 </tbody></table>
-<h2 id='otc'>OTC</h2><h3 id='get-open-orders'>get open orders</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetOrders"</span> <span class="s2">"BTC_USD"</span>
+<h2 id='otc'>OTC</h2>
+<p>Provide better pricing and fast settlement for large trades. The customer can trade on the OTC tab in custody dashboard. The following are normal processs.</p>
+
+<ol>
+<li>An open order would be created after the customer get quote on the OTC tab. Get that by <a href="#get-open-orders">the API</a>.</li>
+<li><a href="#feed-price">Feed price</a> for the open order.</li>
+<li>The price will show on the OTC tab and wait for confirmation by the customer. <a href="#get-price">Check if the price is chosen</a> consistently during this period.</li>
+<li><a href="#close-price">Close the price</a> after the price is chosen. But if the price no longer suitable, just <a href="#terminate-price">terminate it</a>. The transaction would be done when close the price.</li>
+</ol>
+<h3 id='get-open-orders'>get open orders</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetOrders"</span> <span class="s2">"BUY,SELL"</span> <span class="s2">"BTC_USD"</span>
 code: 0
 message: success
 data:
@@ -1570,10 +1582,17 @@ data:
 <td>string</td>
 </tr>
 <tr>
+<td>quoteType</td>
+<td>query</td>
+<td>quote type, BUY/SELL/BUY,SELL</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
 <td>quoteSymbol</td>
 <td>query</td>
 <td>quote symbol(e.g. BTC_USD)</td>
-<td>No</td>
+<td>Yes</td>
 <td>string</td>
 </tr>
 </tbody></table>
@@ -1593,8 +1612,53 @@ data:
 <td>order list</td>
 </tr>
 </tbody></table>
+<h3 id='get-order'>get order</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetOrder"</span> <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>
+code: 0
+message: success
+data:
+<span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>,
+  <span class="s2">"status"</span>: <span class="s2">"OPEN"</span>,
+  <span class="s2">"accountID"</span>: <span class="s2">"1009"</span>,
+  <span class="s2">"type"</span>: <span class="s2">"BUY"</span>,
+  <span class="s2">"baseCoin"</span>: <span class="s2">"BTC"</span>,
+  <span class="s2">"quoteCoin"</span>: <span class="s2">"USD"</span>,
+  <span class="s2">"amountCoin"</span>: <span class="s2">"BTC"</span>,
+  <span class="s2">"amount"</span>: 10
+<span class="o">}</span>
+</code></pre>
+<p><strong>Summary:</strong> get order by id</p>
+<h4 id='http-request-13'>HTTP Request</h4>
+<p><code>GET /api/v1/otc/order/{orderID}</code> </p>
 
-<p>Order object:</p>
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-App-Key</td>
+<td>header</td>
+<td>app key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>orderID</td>
+<td>path</td>
+<td>order id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
 
 <table><thead>
 <tr>
@@ -1611,7 +1675,7 @@ data:
 <tr>
 <td>status</td>
 <td>string</td>
-<td>order status, OPEN/DONE/TERMINATE</td>
+<td>order status</td>
 </tr>
 <tr>
 <td>accountID</td>
@@ -1644,6 +1708,28 @@ data:
 <td>amount</td>
 </tr>
 </tbody></table>
+
+<p>order status:</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>OPEN</td>
+<td>the order is waiting for feeding price</td>
+</tr>
+<tr>
+<td>DONE</td>
+<td>the order has been carried out</td>
+</tr>
+<tr>
+<td>TERMINATE</td>
+<td>the order has been cancelled</td>
+</tr>
+</tbody></table>
 <h3 id='feed-price'>feed price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCFeedPrice"</span> <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span> 7739.90 <span class="s2">"0320042810120495"</span> 1588151178 15
 code: 0
 message: success
@@ -1656,7 +1742,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> feed price</p>
-<h4 id='http-request-13'>HTTP Request</h4>
+<h4 id='http-request-14'>HTTP Request</h4>
 <p><code>POST /api/v1/otc/orders/{orderID}/price</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1695,20 +1781,13 @@ data:
 <td>customID</td>
 <td>body</td>
 <td>the custom id defined by requester</td>
-<td>No</td>
+<td>Yes</td>
 <td>string</td>
 </tr>
 <tr>
-<td>timestamp</td>
+<td>invaildAt</td>
 <td>body</td>
 <td>timestamp</td>
-<td>number</td>
-<td></td>
-</tr>
-<tr>
-<td>vaildWithin</td>
-<td>body</td>
-<td>vaild interval</td>
 <td>number</td>
 <td></td>
 </tr>
@@ -1731,7 +1810,7 @@ data:
 <tr>
 <td>status</td>
 <td>string</td>
-<td>price status, OPEN/CLOSE/TERMINATE</td>
+<td>price status</td>
 </tr>
 <tr>
 <td>choose</td>
@@ -1742,6 +1821,28 @@ data:
 <td>invaildAt</td>
 <td>number</td>
 <td>invalid timestamp</td>
+</tr>
+</tbody></table>
+
+<p>price status:</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>OPEN</td>
+<td>the price is waiting for confirmation</td>
+</tr>
+<tr>
+<td>CLOSE</td>
+<td>the order has been carried out with the price</td>
+</tr>
+<tr>
+<td>TERMINATE</td>
+<td>the price was rejected by OTC provider</td>
 </tr>
 </tbody></table>
 <h3 id='get-price'>get price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetPrice"</span> <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>
@@ -1756,20 +1857,11 @@ data:
   <span class="s2">"customID"</span>: <span class="s2">"0320042810120495"</span>,
   <span class="s2">"price"</span>: 7739.90,
   <span class="s2">"invaildAt"</span>: 1588151193,
-  <span class="s2">"order"</span>: <span class="o">{</span>
-    <span class="s2">"id"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>,
-    <span class="s2">"status"</span>: <span class="s2">"OPEN"</span>,
-    <span class="s2">"accountID"</span>: <span class="s2">"1009"</span>,
-    <span class="s2">"type"</span>: <span class="s2">"BUY"</span>,
-    <span class="s2">"baseCoin"</span>: <span class="s2">"BTC"</span>,
-    <span class="s2">"quoteCoin"</span>: <span class="s2">"USD"</span>,
-    <span class="s2">"amountCoin"</span>: <span class="s2">"BTC"</span>,
-    <span class="s2">"amount"</span>: 10
-  <span class="o">}</span>
+  <span class="s2">"orderID"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> get the latest status of price</p>
-<h4 id='http-request-14'>HTTP Request</h4>
+<h4 id='http-request-15'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}</code></p>
@@ -1825,7 +1917,7 @@ data:
 <tr>
 <td>status</td>
 <td>string</td>
-<td>price status, OPEN/CLOSE/TERMINATE</td>
+<td>price status</td>
 </tr>
 <tr>
 <td>choose</td>
@@ -1848,60 +1940,9 @@ data:
 <td>invalid timestamp</td>
 </tr>
 <tr>
-<td>order</td>
-<td>object</td>
-<td>the associated order info</td>
-</tr>
-</tbody></table>
-
-<p>Order object:</p>
-
-<table><thead>
-<tr>
-<th>Value</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>id</td>
+<td>orderID</td>
 <td>string</td>
-<td>order id</td>
-</tr>
-<tr>
-<td>status</td>
-<td>string</td>
-<td>order status, OPEN/DONE/TERMINATE</td>
-</tr>
-<tr>
-<td>accountID</td>
-<td>string</td>
-<td>account id</td>
-</tr>
-<tr>
-<td>type</td>
-<td>string</td>
-<td>quote mode, BUY/SELL</td>
-</tr>
-<tr>
-<td>baseCoin</td>
-<td>string</td>
-<td>base coin</td>
-</tr>
-<tr>
-<td>quoteCoin</td>
-<td>string</td>
-<td>quote coin</td>
-</tr>
-<tr>
-<td>amountCoin</td>
-<td>string</td>
-<td>amount coin</td>
-</tr>
-<tr>
-<td>amount</td>
-<td>number</td>
-<td>amount</td>
+<td>the associated order id</td>
 </tr>
 </tbody></table>
 <h3 id='close-price'>close price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCClosePrice"</span> <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>
@@ -1915,20 +1956,11 @@ data:
   <span class="s2">"customID"</span>: <span class="s2">"0320042810120495"</span>,
   <span class="s2">"price"</span>: 7739.90,
   <span class="s2">"invaildAt"</span>: 1588151193,
-  <span class="s2">"order"</span>: <span class="o">{</span>
-    <span class="s2">"id"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>,
-    <span class="s2">"status"</span>: <span class="s2">"DONE"</span>,
-    <span class="s2">"accountID"</span>: <span class="s2">"1009"</span>,
-    <span class="s2">"type"</span>: <span class="s2">"BUY"</span>,
-    <span class="s2">"baseCoin"</span>: <span class="s2">"BTC"</span>,
-    <span class="s2">"quoteCoin"</span>: <span class="s2">"USD"</span>,
-    <span class="s2">"amountCoin"</span>: <span class="s2">"BTC"</span>,
-    <span class="s2">"amount"</span>: 10
-  <span class="o">}</span>
+  <span class="s2">"orderID"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> make a deal with the price</p>
-<h4 id='http-request-15'>HTTP Request</h4>
+<h4 id='http-request-16'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}/close</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}/close</code></p>
@@ -2007,60 +2039,9 @@ data:
 <td>invalid timestamp</td>
 </tr>
 <tr>
-<td>order</td>
-<td>object</td>
-<td>the associated order info</td>
-</tr>
-</tbody></table>
-
-<p>Order object:</p>
-
-<table><thead>
-<tr>
-<th>Value</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>id</td>
+<td>orderID</td>
 <td>string</td>
-<td>order id</td>
-</tr>
-<tr>
-<td>status</td>
-<td>string</td>
-<td>order status, OPEN/DONE/TERMINATE</td>
-</tr>
-<tr>
-<td>accountID</td>
-<td>string</td>
-<td>account id</td>
-</tr>
-<tr>
-<td>type</td>
-<td>string</td>
-<td>quote mode, BUY/SELL</td>
-</tr>
-<tr>
-<td>baseCoin</td>
-<td>string</td>
-<td>base coin</td>
-</tr>
-<tr>
-<td>quoteCoin</td>
-<td>string</td>
-<td>quote coin</td>
-</tr>
-<tr>
-<td>amountCoin</td>
-<td>string</td>
-<td>amount coin</td>
-</tr>
-<tr>
-<td>amount</td>
-<td>number</td>
-<td>amount</td>
+<td>the associated order id</td>
 </tr>
 </tbody></table>
 <h3 id='terminate-price'>terminate price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCTerminatePrice"</span> <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>
@@ -2074,20 +2055,11 @@ data:
   <span class="s2">"customID"</span>: <span class="s2">"0320042810120495"</span>,
   <span class="s2">"price"</span>: 7739.90,
   <span class="s2">"invaildAt"</span>: 1588151193,
-  <span class="s2">"order"</span>: <span class="o">{</span>
-    <span class="s2">"id"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>,
-    <span class="s2">"status"</span>: <span class="s2">"TERMINATE"</span>,
-    <span class="s2">"accountID"</span>: <span class="s2">"1009"</span>,
-    <span class="s2">"type"</span>: <span class="s2">"BUY"</span>,
-    <span class="s2">"baseCoin"</span>: <span class="s2">"BTC"</span>,
-    <span class="s2">"quoteCoin"</span>: <span class="s2">"USD"</span>,
-    <span class="s2">"amountCoin"</span>: <span class="s2">"BTC"</span>,
-    <span class="s2">"amount"</span>: 10
-  <span class="o">}</span>
+  <span class="s2">"orderID"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> reject the price</p>
-<h4 id='http-request-16'>HTTP Request</h4>
+<h4 id='http-request-17'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}/terminate</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}/terminate</code></p>
@@ -2166,60 +2138,9 @@ data:
 <td>invalid timestamp</td>
 </tr>
 <tr>
-<td>order</td>
-<td>object</td>
-<td>the associated order info</td>
-</tr>
-</tbody></table>
-
-<p>Order object:</p>
-
-<table><thead>
-<tr>
-<th>Value</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>id</td>
+<td>orderID</td>
 <td>string</td>
-<td>order id</td>
-</tr>
-<tr>
-<td>status</td>
-<td>string</td>
-<td>order status, OPEN/DONE/TERMINATE</td>
-</tr>
-<tr>
-<td>accountID</td>
-<td>string</td>
-<td>account id</td>
-</tr>
-<tr>
-<td>type</td>
-<td>string</td>
-<td>quote mode, BUY/SELL</td>
-</tr>
-<tr>
-<td>baseCoin</td>
-<td>string</td>
-<td>base coin</td>
-</tr>
-<tr>
-<td>quoteCoin</td>
-<td>string</td>
-<td>quote coin</td>
-</tr>
-<tr>
-<td>amountCoin</td>
-<td>string</td>
-<td>amount coin</td>
-</tr>
-<tr>
-<td>amount</td>
-<td>number</td>
-<td>amount</td>
+<td>the associated order id</td>
 </tr>
 </tbody></table>
 <h1 id='company-api'>Company API</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>jadepool-saas-sdk-golang
@@ -2271,7 +2192,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">getFundingWallets</span><span class="o">();</span>
 </code></pre>
 <p><strong>Summary:</strong> get funding wallets list</p>
-<h4 id='http-request-17'>HTTP Request</h4>
+<h4 id='http-request-18'>HTTP Request</h4>
 <p><code>GET /api/v1/funding/balances</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -2352,7 +2273,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">fundingTransfer</span><span class="o">(</span><span class="s">"QrLxg3XgKPMR1O8"</span><span class="o">,</span> <span class="s">"ZKz8XpwXGPBAQVE"</span><span class="o">,</span> <span class="s">"BTC"</span><span class="o">,</span> <span class="s">"0.0001"</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> funding transfer</p>
-<h4 id='http-request-18'>HTTP Request</h4>
+<h4 id='http-request-19'>HTTP Request</h4>
 <p><code>POST /api/v1/funding/transfer</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -2474,7 +2395,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">getFundingRecords</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> get funding records list</p>
-<h4 id='http-request-19'>HTTP Request</h4>
+<h4 id='http-request-20'>HTTP Request</h4>
 <p><code>GET /api/v1/funding/records</code> </p>
 
 <p><strong>Parameters</strong></p>
