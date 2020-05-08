@@ -776,10 +776,18 @@ coinName | string | the coin name
 value | string | the interest value
 
 ## OTC
+
+Provide better pricing and fast settlement for large trades. The customer can trade on the OTC tab in custody dashboard. The following are normal processs.
+
+1. An open order would be created after the customer get quote on the OTC tab. Get that by [the API](#get-open-orders).
+2. [Feed price](#feed-price) for the open order.
+3. The price will show on the OTC tab and wait for confirmation by the customer. [Check if the price is chosen](#get-price) consistently during this period.
+4. [Close the price](#close-price) after the price is chosen. But if the price no longer suitable, just [terminate it](#terminate-price). The transaction would be done when close the price.
+
 ### get open orders
 
 ```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetOrders" "BTC_USD"
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetOrders" "BUY,SELL" "BTC_USD"
 code: 0
 message: success
 data:
@@ -809,7 +817,8 @@ data:
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
 | X-App-Key | header | app key | Yes | string |
-| quoteSymbol | query | quote symbol(e.g. BTC_USD) | No | string |
+| quoteType | query | quote type, BUY/SELL/BUY,SELL | Yes | string |
+| quoteSymbol | query | quote symbol(e.g. BTC_USD) | Yes | string |
 
 **Response Result**
 
@@ -817,12 +826,44 @@ Value | Type | Description
 --------- | ------- | ---------
 orders | array | order list
 
-Order object:
+
+### get order
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetOrder" "8yxkewovldjmmqj2m0n9pz71"
+code: 0
+message: success
+data:
+{
+  "id": "8yxkewovldjmmqj2m0n9pz71",
+  "status": "OPEN",
+  "accountID": "1009",
+  "type": "BUY",
+  "baseCoin": "BTC",
+  "quoteCoin": "USD",
+  "amountCoin": "BTC",
+  "amount": 10
+}
+```
+
+**Summary:** get order by id
+
+#### HTTP Request 
+`GET /api/v1/otc/order/{orderID}` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| orderID | path | order id | Yes | string |
+
+**Response Result**
 
 Value | Type | Description
 --------- | ------- | ---------
 id | string | order id
-status | string | order status, OPEN/DONE/TERMINATE
+status | string | order status
 accountID | string | account id
 type | string | quote mode, BUY/SELL
 baseCoin | string | base coin
@@ -830,6 +871,13 @@ quoteCoin | string | quote coin
 amountCoin | string | amount coin
 amount | number | amount
 
+order status:
+
+Value | Description
+--------- | ---------
+OPEN | the order is waiting for feeding price
+DONE | the order has been carried out
+TERMINATE | the order has been cancelled
 
 ### feed price
 
@@ -858,19 +906,25 @@ data:
 | X-App-Key | header | app key | Yes | string |
 | orderID | path | order id | Yes | string |
 | price | body | price | Yes | number |
-| customID | body | the custom id defined by requester | No | string |
-| timestamp | body | timestamp | number |
-| vaildWithin | body | vaild interval | number |
+| customID | body | the custom id defined by requester | Yes | string |
+| invaildAt | body | timestamp | number |
 
 **Response Result**
 
 Value | Type | Description
 --------- | ------- | ---------
 id | string | price id
-status | string | price status, OPEN/CLOSE/TERMINATE
+status | string | price status
 choose | boolean | mark if customer choose
 invaildAt | number | invalid timestamp
 
+price status:
+
+Value | Description
+--------- | ---------
+OPEN | the price is waiting for confirmation
+CLOSE | the order has been carried out with the price
+TERMINATE | the price was rejected by OTC provider
 
 ### get price
 
@@ -887,16 +941,7 @@ data:
   "customID": "0320042810120495",
   "price": 7739.90,
   "invaildAt": 1588151193,
-  "order": {
-    "id": "8yxkewovldjmmqj2m0n9pz71",
-    "status": "OPEN",
-    "accountID": "1009",
-    "type": "BUY",
-    "baseCoin": "BTC",
-    "quoteCoin": "USD",
-    "amountCoin": "BTC",
-    "amount": 10
-  }
+  "orderID": "8yxkewovldjmmqj2m0n9pz71"
 }
 ```
 
@@ -920,25 +965,12 @@ data:
 Value | Type | Description
 --------- | ------- | ---------
 id | string | price id
-status | string | price status, OPEN/CLOSE/TERMINATE
+status | string | price status
 choose | boolean | mark if customer choose
 customID | string | the custom id
 price | number | price
 invaildAt | number | invalid timestamp
-order | object | the associated order info
-
-Order object:
-
-Value | Type | Description
---------- | ------- | ---------
-id | string | order id
-status | string | order status, OPEN/DONE/TERMINATE
-accountID | string | account id
-type | string | quote mode, BUY/SELL
-baseCoin | string | base coin
-quoteCoin | string | quote coin
-amountCoin | string | amount coin
-amount | number | amount
+orderID | string | the associated order id
 
 ### close price
 
@@ -954,16 +986,7 @@ data:
   "customID": "0320042810120495",
   "price": 7739.90,
   "invaildAt": 1588151193,
-  "order": {
-    "id": "8yxkewovldjmmqj2m0n9pz71",
-    "status": "DONE",
-    "accountID": "1009",
-    "type": "BUY",
-    "baseCoin": "BTC",
-    "quoteCoin": "USD",
-    "amountCoin": "BTC",
-    "amount": 10
-  }
+  "orderID": "8yxkewovldjmmqj2m0n9pz71"
 }
 ```
 
@@ -992,20 +1015,7 @@ choose | boolean | mark if customer choose
 customID | string | the custom id
 price | number | price
 invaildAt | number | invalid timestamp
-order | object | the associated order info
-
-Order object:
-
-Value | Type | Description
---------- | ------- | ---------
-id | string | order id
-status | string | order status, OPEN/DONE/TERMINATE
-accountID | string | account id
-type | string | quote mode, BUY/SELL
-baseCoin | string | base coin
-quoteCoin | string | quote coin
-amountCoin | string | amount coin
-amount | number | amount
+orderID | string | the associated order id
 
 
 ### terminate price
@@ -1022,16 +1032,7 @@ data:
   "customID": "0320042810120495",
   "price": 7739.90,
   "invaildAt": 1588151193,
-  "order": {
-    "id": "8yxkewovldjmmqj2m0n9pz71",
-    "status": "TERMINATE",
-    "accountID": "1009",
-    "type": "BUY",
-    "baseCoin": "BTC",
-    "quoteCoin": "USD",
-    "amountCoin": "BTC",
-    "amount": 10
-  }
+  "orderID": "8yxkewovldjmmqj2m0n9pz71"
 }
 ```
 
@@ -1060,20 +1061,7 @@ choose | boolean | mark if customer choose
 customID | string | the custom id
 price | number | price
 invaildAt | number | invalid timestamp
-order | object | the associated order info
-
-Order object:
-
-Value | Type | Description
---------- | ------- | ---------
-id | string | order id
-status | string | order status, OPEN/DONE/TERMINATE
-accountID | string | account id
-type | string | quote mode, BUY/SELL
-baseCoin | string | base coin
-quoteCoin | string | quote coin
-amountCoin | string | amount coin
-amount | number | amount
+orderID | string | the associated order id
 
 
 # Company API
