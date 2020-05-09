@@ -290,6 +290,9 @@
                     <a href="#otc" class="toc-h2 toc-link" data-title="OTC">OTC</a>
                       <ul class="toc-list-h3">
                           <li>
+                            <a href="#set-support-quote-symbols" class="toc-h3 toc-link" data-title="set support quote symbols">set support quote symbols</a>
+                          </li>
+                          <li>
                             <a href="#get-open-orders" class="toc-h3 toc-link" data-title="get open orders">get open orders</a>
                           </li>
                           <li>
@@ -727,7 +730,7 @@ message: success
 data:
 <span class="o">{</span>
   <span class="s2">"assets"</span>: <span class="o">[</span>
-    <span class="s2">"ETH"</span>
+    <span class="o">{</span><span class="s2">"id"</span>: 1, name: <span class="s2">"ETH"</span><span class="o">}</span>
   <span class="o">]</span>
 <span class="o">}</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code>    <span class="k">try</span> <span class="p">{</span>
@@ -742,7 +745,7 @@ data:
 </code></pre>
 <p><strong>Summary:</strong> get wallet assets</p>
 <h4 id='http-request-4'>HTTP Request</h4>
-<p><code>GET /api/v1/app/assets</code> </p>
+<p><code>GET /api/v2/app/assets</code> </p>
 
 <p><strong>Parameters</strong></p>
 
@@ -1535,11 +1538,116 @@ data:
 <p>Provide better pricing and fast settlement for large trades. The customer can trade on the OTC tab in custody dashboard. The following are normal processs.</p>
 
 <ol>
+<li><a href="#set-support-quote-symbols">Set support quote symbols</a> for the customer. The customer will see the quote symbols on the OTC tab.</li>
 <li>An open order would be created after the customer get quote on the OTC tab. Get that by <a href="#get-open-orders">the API</a>.</li>
 <li><a href="#feed-price">Feed price</a> for the open order.</li>
 <li>The price will show on the OTC tab and wait for confirmation by the customer. <a href="#get-price">Check if the price is chosen</a> consistently during this period.</li>
 <li><a href="#close-price">Close the price</a> after the price is chosen. But if the price no longer suitable, just <a href="#terminate-price">terminate it</a>. The transaction would be done when close the price.</li>
 </ol>
+<h3 id='set-support-quote-symbols'>set support quote symbols</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCSetSymbols"</span> <span class="s1">'[ \
+{ \
+  "baseCoinID": 1, \
+  "quoteCoinID": 2, \
+  "baseCoinAmountRange": [10, 100], \
+  "quoteCoinAmountRange": [10000, 100000000] \
+}]'</span>
+code: 0
+message: success
+data:
+<span class="o">{</span>
+  <span class="s2">"symbols"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"baseCoin"</span>: <span class="o">{</span>
+        <span class="s2">"id"</span>: 1,
+        <span class="s2">"name"</span>: <span class="s2">"BTC"</span>
+      <span class="o">}</span>,
+      <span class="s2">"quoteCoin"</span>: <span class="o">{</span>
+        <span class="s2">"id"</span>: 2,
+        <span class="s2">"name"</span>: <span class="s2">"USD"</span>
+      <span class="o">}</span>,
+      <span class="s2">"baseCoinAmountRange"</span>: <span class="o">[</span>10, 100],
+      <span class="s2">"quoteCoinAmountRange"</span>: <span class="o">[</span>10000, 100000000]
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
+<p><strong>Summary:</strong> set all support quote symbols</p>
+<h4 id='http-request-12'>HTTP Request</h4>
+<p><code>POST /api/v1/otc/symbols</code></p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-App-Key</td>
+<td>header</td>
+<td>app key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>symbols</td>
+<td>body</td>
+<td>quote symbol list</td>
+<td>Yes</td>
+<td>array</td>
+</tr>
+</tbody></table>
+
+<p>symbol:</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>baseCoinID</td>
+<td>buy/sell asset id</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>quoteCoinID</td>
+<td>spend/receive asset id</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>baseCoinAmountRange</td>
+<td>the min/max limit of baseCoin</td>
+<td>No</td>
+</tr>
+<tr>
+<td>quoteCoinAmountRange</td>
+<td>the min/max limit of quoteCoin</td>
+<td>No</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbols</td>
+<td>array</td>
+<td>quote symbol list</td>
+</tr>
+</tbody></table>
 <h3 id='get-open-orders'>get open orders</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetOrders"</span> <span class="s2">"BUY,SELL"</span> <span class="s2">"BTC_USD"</span>
 code: 0
 message: success
@@ -1560,7 +1668,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> get opening quote orders</p>
-<h4 id='http-request-12'>HTTP Request</h4>
+<h4 id='http-request-13'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/orders</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1628,7 +1736,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> get order by id</p>
-<h4 id='http-request-13'>HTTP Request</h4>
+<h4 id='http-request-14'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/order/{orderID}</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1742,7 +1850,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> feed price</p>
-<h4 id='http-request-14'>HTTP Request</h4>
+<h4 id='http-request-15'>HTTP Request</h4>
 <p><code>POST /api/v1/otc/orders/{orderID}/price</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1861,7 +1969,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> get the latest status of price</p>
-<h4 id='http-request-15'>HTTP Request</h4>
+<h4 id='http-request-16'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}</code></p>
@@ -1960,7 +2068,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> make a deal with the price</p>
-<h4 id='http-request-16'>HTTP Request</h4>
+<h4 id='http-request-17'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}/close</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}/close</code></p>
@@ -2059,7 +2167,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> reject the price</p>
-<h4 id='http-request-17'>HTTP Request</h4>
+<h4 id='http-request-18'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}/terminate</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}/terminate</code></p>
@@ -2192,7 +2300,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">getFundingWallets</span><span class="o">();</span>
 </code></pre>
 <p><strong>Summary:</strong> get funding wallets list</p>
-<h4 id='http-request-18'>HTTP Request</h4>
+<h4 id='http-request-19'>HTTP Request</h4>
 <p><code>GET /api/v1/funding/balances</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -2273,7 +2381,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">fundingTransfer</span><span class="o">(</span><span class="s">"QrLxg3XgKPMR1O8"</span><span class="o">,</span> <span class="s">"ZKz8XpwXGPBAQVE"</span><span class="o">,</span> <span class="s">"BTC"</span><span class="o">,</span> <span class="s">"0.0001"</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> funding transfer</p>
-<h4 id='http-request-19'>HTTP Request</h4>
+<h4 id='http-request-20'>HTTP Request</h4>
 <p><code>POST /api/v1/funding/transfer</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -2395,7 +2503,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">getFundingRecords</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> get funding records list</p>
-<h4 id='http-request-20'>HTTP Request</h4>
+<h4 id='http-request-21'>HTTP Request</h4>
 <p><code>GET /api/v1/funding/records</code> </p>
 
 <p><strong>Parameters</strong></p>
