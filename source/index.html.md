@@ -279,7 +279,7 @@ message: success
 data:
 {
   "assets": [
-    "ETH"
+    {"id": 1, name: "ETH"}
   ]
 }
 ```
@@ -305,7 +305,7 @@ data:
 **Summary:** get wallet assets
 
 #### HTTP Request 
-`GET /api/v1/app/assets` 
+`GET /api/v2/app/assets` 
 
 **Parameters**
 
@@ -779,10 +779,69 @@ value | string | the interest value
 
 Provide better pricing and fast settlement for large trades. The customer can trade on the OTC tab in custody dashboard. The following are normal processs.
 
-1. An open order would be created after the customer get quote on the OTC tab. Get that by [the API](#get-open-orders).
-2. [Feed price](#feed-price) for the open order.
-3. The price will show on the OTC tab and wait for confirmation by the customer. [Check if the price is chosen](#get-price) consistently during this period.
-4. [Close the price](#close-price) after the price is chosen. But if the price no longer suitable, just [terminate it](#terminate-price). The transaction would be done when close the price.
+1. [Set support quote symbols](#set-support-quote-symbols) for the customer. The customer will see the quote symbols on the OTC tab.
+2. An open order would be created after the customer get quote on the OTC tab. Get that by [the API](#get-open-orders).
+3. [Feed price](#feed-price) for the open order.
+4. The price will show on the OTC tab and wait for confirmation by the customer. [Check if the price is chosen](#get-price) consistently during this period.
+5. [Close the price](#close-price) after the price is chosen. But if the price no longer suitable, just [terminate it](#terminate-price). The transaction would be done when close the price.
+
+### set support quote symbols
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCSetSymbols" '[ \
+{ \
+  "baseCoinID": 1, \
+  "quoteCoinID": 2, \
+  "baseCoinAmountRange": [10, 100], \
+  "quoteCoinAmountRange": [10000, 100000000] \
+}]'
+code: 0
+message: success
+data:
+{
+  "symbols": [
+    {
+      "baseCoin": {
+        "id": 1,
+        "name": "BTC"
+      },
+      "quoteCoin": {
+        "id": 2,
+        "name": "USD"
+      },
+      "baseCoinAmountRange": [10, 100],
+      "quoteCoinAmountRange": [10000, 100000000]
+    }
+  ]
+}
+```
+
+**Summary:** set all support quote symbols
+
+#### HTTP Request 
+`POST /api/v1/otc/symbols`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| symbols | body | quote symbol list | Yes | array |
+
+symbol:
+
+Value | Description | Required
+--------- | --------- | --------
+baseCoinID | buy/sell asset id | Yes
+quoteCoinID | spend/receive asset id | Yes
+baseCoinAmountRange | the min/max limit of baseCoin | No
+quoteCoinAmountRange | the min/max limit of quoteCoin | No
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+symbols | array | quote symbol list
 
 ### get open orders
 
