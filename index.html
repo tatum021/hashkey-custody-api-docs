@@ -1648,7 +1648,11 @@ data:
 <td>quote symbol list</td>
 </tr>
 </tbody></table>
-<h3 id='get-open-orders'>get open orders</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetOrders"</span> <span class="s2">"BUY,SELL"</span> <span class="s2">"BTC_USD"</span>
+<h3 id='get-open-orders'>get open orders</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetOrders"</span> <span class="s1">'[ \
+{ \
+  "baseCoinID": 1, \
+  "quoteCoinID": 2 \
+}]'</span>
 code: 0
 message: success
 data:
@@ -1659,9 +1663,18 @@ data:
       <span class="s2">"status"</span>: <span class="s2">"OPEN"</span>,
       <span class="s2">"accountID"</span>: <span class="s2">"1009"</span>,
       <span class="s2">"type"</span>: <span class="s2">"BUY"</span>,
-      <span class="s2">"baseCoin"</span>: <span class="s2">"BTC"</span>,
-      <span class="s2">"quoteCoin"</span>: <span class="s2">"USD"</span>,
-      <span class="s2">"amountCoin"</span>: <span class="s2">"BTC"</span>,
+      <span class="s2">"baseCoin"</span>: <span class="o">{</span>
+        <span class="s2">"id"</span>: 1,
+        <span class="s2">"name"</span>: <span class="s2">"BTC"</span>
+      <span class="o">}</span>,
+      <span class="s2">"quoteCoin"</span>: <span class="o">{</span>
+        <span class="s2">"id"</span>: 2,
+        <span class="s2">"name"</span>: <span class="s2">"USD"</span>
+      <span class="o">}</span>,
+      <span class="s2">"amountCoin"</span>: <span class="o">{</span>
+        <span class="s2">"id"</span>: 1,
+        <span class="s2">"name"</span>: <span class="s2">"BTC"</span>
+      <span class="o">}</span>,
       <span class="s2">"amount"</span>: 10
     <span class="o">}</span>
   <span class="o">]</span>
@@ -1669,7 +1682,7 @@ data:
 </code></pre>
 <p><strong>Summary:</strong> get opening quote orders</p>
 <h4 id='http-request-13'>HTTP Request</h4>
-<p><code>GET /api/v1/otc/orders</code> </p>
+<p><code>POST /api/v1/otc/orders</code> </p>
 
 <p><strong>Parameters</strong></p>
 
@@ -1690,18 +1703,32 @@ data:
 <td>string</td>
 </tr>
 <tr>
-<td>quoteType</td>
-<td>query</td>
-<td>quote type, BUY/SELL/BUY,SELL</td>
+<td>quoteSymbols</td>
+<td>body</td>
+<td>quote symbol list</td>
 <td>Yes</td>
-<td>string</td>
+<td>array</td>
+</tr>
+</tbody></table>
+
+<p>quote symbol:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>baseCoinID</td>
+<td>buy/sell asset id</td>
+<td>number</td>
 </tr>
 <tr>
-<td>quoteSymbol</td>
-<td>query</td>
-<td>quote symbol(e.g. BTC_USD)</td>
-<td>Yes</td>
-<td>string</td>
+<td>quoteCoinID</td>
+<td>spend/receive asset id</td>
+<td>number</td>
 </tr>
 </tbody></table>
 
@@ -1729,9 +1756,18 @@ data:
   <span class="s2">"status"</span>: <span class="s2">"OPEN"</span>,
   <span class="s2">"accountID"</span>: <span class="s2">"1009"</span>,
   <span class="s2">"type"</span>: <span class="s2">"BUY"</span>,
-  <span class="s2">"baseCoin"</span>: <span class="s2">"BTC"</span>,
-  <span class="s2">"quoteCoin"</span>: <span class="s2">"USD"</span>,
-  <span class="s2">"amountCoin"</span>: <span class="s2">"BTC"</span>,
+  <span class="s2">"baseCoin"</span>: <span class="o">{</span>
+    <span class="s2">"id"</span>: 1,
+    <span class="s2">"name"</span>: <span class="s2">"BTC"</span>
+  <span class="o">}</span>,
+  <span class="s2">"quoteCoin"</span>: <span class="o">{</span>
+    <span class="s2">"id"</span>: 2,
+    <span class="s2">"name"</span>: <span class="s2">"USD"</span>
+  <span class="o">}</span>,
+  <span class="s2">"amountCoin"</span>: <span class="o">{</span>
+    <span class="s2">"id"</span>: 1,
+    <span class="s2">"name"</span>: <span class="s2">"BTC"</span>
+  <span class="o">}</span>,
   <span class="s2">"amount"</span>: 10
 <span class="o">}</span>
 </code></pre>
