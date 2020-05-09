@@ -994,7 +994,7 @@ data:
 | orderID | path | order id | Yes | string |
 | price | body | price | Yes | number |
 | customID | body | the custom id defined by requester | Yes | string |
-| invaildAt | body | timestamp | number |
+| invalidAt | body | timestamp | Yes | number |
 
 **Response Result**
 
@@ -1003,7 +1003,7 @@ Value | Type | Description
 id | string | price id
 status | string | price status
 choose | boolean | mark if customer choose
-invaildAt | number | invalid timestamp
+invalidAt | number | invalid timestamp
 
 price status:
 
