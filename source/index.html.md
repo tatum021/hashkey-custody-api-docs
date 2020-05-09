@@ -846,7 +846,11 @@ symbols | array | quote symbol list
 ### get open orders
 
 ```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetOrders" "BUY,SELL" "BTC_USD"
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetOrders" '[ \
+{ \
+  "baseCoinID": 1, \
+  "quoteCoinID": 2 \
+}]'
 code: 0
 message: success
 data:
@@ -857,9 +861,18 @@ data:
       "status": "OPEN",
       "accountID": "1009",
       "type": "BUY",
-      "baseCoin": "BTC",
-      "quoteCoin": "USD",
-      "amountCoin": "BTC",
+      "baseCoin": {
+        "id": 1,
+        "name": "BTC"
+      },
+      "quoteCoin": {
+        "id": 2,
+        "name": "USD"
+      },
+      "amountCoin": {
+        "id": 1,
+        "name": "BTC"
+      },
       "amount": 10
     }
   ]
@@ -869,15 +882,21 @@ data:
 **Summary:** get opening quote orders
 
 #### HTTP Request 
-`GET /api/v1/otc/orders` 
+`POST /api/v1/otc/orders` 
 
 **Parameters**
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
 | X-App-Key | header | app key | Yes | string |
-| quoteType | query | quote type, BUY/SELL/BUY,SELL | Yes | string |
-| quoteSymbol | query | quote symbol(e.g. BTC_USD) | Yes | string |
+| quoteSymbols | body | quote symbol list | Yes | array |
+
+quote symbol:
+
+| Name | Description | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| baseCoinID | buy/sell asset id | number |
+| quoteCoinID | spend/receive asset id | number |
 
 **Response Result**
 
@@ -898,9 +917,18 @@ data:
   "status": "OPEN",
   "accountID": "1009",
   "type": "BUY",
-  "baseCoin": "BTC",
-  "quoteCoin": "USD",
-  "amountCoin": "BTC",
+  "baseCoin": {
+    "id": 1,
+    "name": "BTC"
+  },
+  "quoteCoin": {
+    "id": 2,
+    "name": "USD"
+  },
+  "amountCoin": {
+    "id": 1,
+    "name": "BTC"
+  },
   "amount": 10
 }
 ```
