@@ -788,13 +788,13 @@ Provide better pricing and fast settlement for large trades. The customer can tr
 ### set support quote symbols
 
 ```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCSetSymbols" '[ \
-{ \
-  "baseCoinID": 1, \
-  "quoteCoinID": 2, \
-  "baseCoinAmountRange": [10, 100], \
-  "quoteCoinAmountRange": [10000, 100000000] \
-}]'
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCSetSymbols" '[
+  {
+    "baseCoinID": 1,
+    "quoteCoinID": 2,
+    "baseCoinAmountRange": ["10", "100"],
+    "quoteCoinAmountRange": ["10000", "100000000"]
+  }]'
 code: 0
 message: success
 data:
@@ -846,10 +846,10 @@ symbols | array | quote symbol list
 ### get open orders
 
 ```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetOrders" '[ \
-{ \
-  "baseCoinID": 1, \
-  "quoteCoinID": 2 \
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetOrders" '[
+{
+  "baseCoinID": 1,
+  "quoteCoinID": 2
 }]'
 code: 0
 message: success
