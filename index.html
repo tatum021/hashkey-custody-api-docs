@@ -1544,13 +1544,13 @@ data:
 <li>The price will show on the OTC tab and wait for confirmation by the customer. <a href="#get-price">Check if the price is chosen</a> consistently during this period.</li>
 <li><a href="#close-price">Close the price</a> after the price is chosen. But if the price no longer suitable, just <a href="#terminate-price">terminate it</a>. The transaction would be done when close the price.</li>
 </ol>
-<h3 id='set-support-quote-symbols'>set support quote symbols</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCSetSymbols"</span> <span class="s1">'[ \
-{ \
-  "baseCoinID": 1, \
-  "quoteCoinID": 2, \
-  "baseCoinAmountRange": [10, 100], \
-  "quoteCoinAmountRange": [10000, 100000000] \
-}]'</span>
+<h3 id='set-support-quote-symbols'>set support quote symbols</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCSetSymbols"</span> <span class="s1">'[
+  {
+    "baseCoinID": 1,
+    "quoteCoinID": 2,
+    "baseCoinAmountRange": ["10", "100"],
+    "quoteCoinAmountRange": ["10000", "100000000"]
+  }]'</span>
 code: 0
 message: success
 data:
@@ -1648,10 +1648,10 @@ data:
 <td>quote symbol list</td>
 </tr>
 </tbody></table>
-<h3 id='get-open-orders'>get open orders</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetOrders"</span> <span class="s1">'[ \
-{ \
-  "baseCoinID": 1, \
-  "quoteCoinID": 2 \
+<h3 id='get-open-orders'>get open orders</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetOrders"</span> <span class="s1">'[
+{
+  "baseCoinID": 1,
+  "quoteCoinID": 2
 }]'</span>
 code: 0
 message: success
