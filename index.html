@@ -1874,14 +1874,13 @@ data:
 <td>the order has been cancelled</td>
 </tr>
 </tbody></table>
-<h3 id='feed-price'>feed price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCFeedPrice"</span> <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span> 7739.90 <span class="s2">"0320042810120495"</span> 1588151178 15
+<h3 id='feed-price'>feed price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCFeedPrice"</span> <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span> <span class="s2">"7739.90"</span> <span class="s2">"0320042810120495"</span> 1588151193
 code: 0
 message: success
 data:
 <span class="o">{</span>
   <span class="s2">"id"</span>: <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>,
   <span class="s2">"status"</span>: <span class="s2">"OPEN"</span>,
-  <span class="s2">"choose"</span>: <span class="nb">false</span>,
   <span class="s2">"invaildAt"</span>: 1588151193
 <span class="o">}</span>
 </code></pre>
@@ -1919,7 +1918,7 @@ data:
 <td>body</td>
 <td>price</td>
 <td>Yes</td>
-<td>number</td>
+<td>string</td>
 </tr>
 <tr>
 <td>customID</td>
@@ -1955,11 +1954,6 @@ data:
 <td>status</td>
 <td>string</td>
 <td>price status</td>
-</tr>
-<tr>
-<td>choose</td>
-<td>boolean</td>
-<td>mark if customer choose</td>
 </tr>
 <tr>
 <td>invalidAt</td>
