@@ -969,14 +969,13 @@ TERMINATE | the order has been cancelled
 ### feed price
 
 ```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCFeedPrice" "8yxkewovldjmmqj2m0n9pz71" 7739.90 "0320042810120495" 1588151178 15
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCFeedPrice" "8yxkewovldjmmqj2m0n9pz71" "7739.90" "0320042810120495" 1588151193
 code: 0
 message: success
 data:
 {
   "id": "25ovqdkrm86201g73zx4ynep",
   "status": "OPEN",
-  "choose": false,
   "invaildAt": 1588151193
 }
 ```
@@ -992,7 +991,7 @@ data:
 | ---- | ---------- | ----------- | -------- | ---- |
 | X-App-Key | header | app key | Yes | string |
 | orderID | path | order id | Yes | string |
-| price | body | price | Yes | number |
+| price | body | price | Yes | string |
 | customID | body | the custom id defined by requester | Yes | string |
 | invalidAt | body | timestamp | Yes | number |
 
@@ -1002,7 +1001,6 @@ Value | Type | Description
 --------- | ------- | ---------
 id | string | price id
 status | string | price status
-choose | boolean | mark if customer choose
 invalidAt | number | invalid timestamp
 
 price status:
