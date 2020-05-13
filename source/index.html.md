@@ -846,11 +846,7 @@ symbols | array | quote symbol list
 ### get open orders
 
 ```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetOrders" '[
-{
-  "baseCoinID": 1,
-  "quoteCoinID": 2
-}]'
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetOrders"
 code: 0
 message: success
 data:
@@ -879,24 +875,16 @@ data:
 }
 ```
 
-**Summary:** get opening quote orders
+**Summary:** get opening quote orders without feeding price
 
 #### HTTP Request 
-`POST /api/v1/otc/orders` 
+`GET /api/v1/otc/orders`
 
 **Parameters**
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
 | X-App-Key | header | app key | Yes | string |
-| quoteSymbols | body | quote symbol list | Yes | array |
-
-quote symbol:
-
-| Name | Description | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| baseCoinID | buy/sell asset id | number |
-| quoteCoinID | spend/receive asset id | number |
 
 **Response Result**
 
