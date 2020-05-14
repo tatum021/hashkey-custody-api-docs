@@ -855,7 +855,7 @@ data:
     {
       "id": "8yxkewovldjmmqj2m0n9pz71",
       "status": "OPEN",
-      "accountID": "1009",
+      "accountID": 1,
       "type": "BUY",
       "baseCoin": {
         "id": 1,
@@ -869,7 +869,7 @@ data:
         "id": 1,
         "name": "BTC"
       },
-      "amount": 10
+      "amount": "10"
     }
   ]
 }
@@ -903,7 +903,7 @@ data:
 {
   "id": "8yxkewovldjmmqj2m0n9pz71",
   "status": "OPEN",
-  "accountID": "1009",
+  "accountID": 1,
   "type": "BUY",
   "baseCoin": {
     "id": 1,
@@ -917,7 +917,7 @@ data:
     "id": 1,
     "name": "BTC"
   },
-  "amount": 10
+  "amount": "10"
 }
 ```
 
@@ -939,12 +939,12 @@ Value | Type | Description
 --------- | ------- | ---------
 id | string | order id
 status | string | order status
-accountID | string | account id
+accountID | number | account id
 type | string | quote mode, BUY/SELL
 baseCoin | string | base coin
 quoteCoin | string | quote coin
 amountCoin | string | amount coin
-amount | number | amount
+amount | string | amount
 
 order status:
 
@@ -1012,7 +1012,7 @@ data:
   "status": "OPEN",
   "choose": true,
   "customID": "0320042810120495",
-  "price": 7739.90,
+  "price": "7739.90",
   "invaildAt": 1588151193,
   "orderID": "8yxkewovldjmmqj2m0n9pz71"
 }
@@ -1041,7 +1041,7 @@ id | string | price id
 status | string | price status
 choose | boolean | mark if customer choose
 customID | string | the custom id
-price | number | price
+price | string | price
 invaildAt | number | invalid timestamp
 orderID | string | the associated order id
 
@@ -1057,7 +1057,7 @@ data:
   "status": "CLOSE",
   "choose": true,
   "customID": "0320042810120495",
-  "price": 7739.90,
+  "price": "7739.90",
   "invaildAt": 1588151193,
   "orderID": "8yxkewovldjmmqj2m0n9pz71"
 }
@@ -1086,7 +1086,7 @@ id | string | price id
 status | string | price status, OPEN/CLOSE/TERMINATE
 choose | boolean | mark if customer choose
 customID | string | the custom id
-price | number | price
+price | string | price
 invaildAt | number | invalid timestamp
 orderID | string | the associated order id
 
@@ -1103,7 +1103,7 @@ data:
   "status": "TERMINATE",
   "choose": true,
   "customID": "0320042810120495",
-  "price": 7739.90,
+  "price": "7739.90",
   "invaildAt": 1588151193,
   "orderID": "8yxkewovldjmmqj2m0n9pz71"
 }
@@ -1132,7 +1132,7 @@ id | string | price id
 status | string | price status, OPEN/CLOSE/TERMINATE
 choose | boolean | mark if customer choose
 customID | string | the custom id
-price | number | price
+price | string | price
 invaildAt | number | invalid timestamp
 orderID | string | the associated order id
 
