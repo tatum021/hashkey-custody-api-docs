@@ -1065,6 +1065,8 @@ data:
 
 **Summary:** make a deal with the price
 
+If the app's asset balance is enough, the price's order will be done. Otherwise(Error code: 20002), the price will be terminated.
+
 #### HTTP Request 
 `GET /api/v1/otc/price/{priceID}/close`
 
