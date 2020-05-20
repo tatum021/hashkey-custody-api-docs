@@ -1013,7 +1013,7 @@ data:
   "choose": true,
   "customID": "0320042810120495",
   "price": "7739.90",
-  "invaildAt": 1588151193,
+  "invalidAt": 1588151193,
   "orderID": "8yxkewovldjmmqj2m0n9pz71"
 }
 ```
@@ -1042,7 +1042,7 @@ status | string | price status
 choose | boolean | mark if customer choose
 customID | string | the custom id
 price | string | price
-invaildAt | number | invalid timestamp
+invalidAt | number | invalid timestamp
 orderID | string | the associated order id
 
 ### close price
@@ -1058,7 +1058,7 @@ data:
   "choose": true,
   "customID": "0320042810120495",
   "price": "7739.90",
-  "invaildAt": 1588151193,
+  "invalidAt": 1588151193,
   "orderID": "8yxkewovldjmmqj2m0n9pz71"
 }
 ```
@@ -1089,7 +1089,7 @@ status | string | price status, OPEN/CLOSE/TERMINATE
 choose | boolean | mark if customer choose
 customID | string | the custom id
 price | string | price
-invaildAt | number | invalid timestamp
+invalidAt | number | invalid timestamp
 orderID | string | the associated order id
 
 
@@ -1106,7 +1106,7 @@ data:
   "choose": true,
   "customID": "0320042810120495",
   "price": "7739.90",
-  "invaildAt": 1588151193,
+  "invalidAt": 1588151193,
   "orderID": "8yxkewovldjmmqj2m0n9pz71"
 }
 ```
@@ -1135,7 +1135,7 @@ status | string | price status, OPEN/CLOSE/TERMINATE
 choose | boolean | mark if customer choose
 customID | string | the custom id
 price | string | price
-invaildAt | number | invalid timestamp
+invalidAt | number | invalid timestamp
 orderID | string | the associated order id
 
 
