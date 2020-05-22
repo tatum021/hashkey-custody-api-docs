@@ -964,7 +964,7 @@ data:
 {
   "id": "25ovqdkrm86201g73zx4ynep",
   "status": "OPEN",
-  "invaildAt": 1588151193
+  "invalidAt": 1588151193
 }
 ```
 
