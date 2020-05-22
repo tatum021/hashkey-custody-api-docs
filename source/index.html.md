@@ -981,7 +981,7 @@ data:
 | orderID | path | order id | Yes | string |
 | price | body | price | Yes | string |
 | customID | body | the custom id defined by requester | Yes | string |
-| invalidAt | body | timestamp | Yes | number |
+| invalidAt | body | timestamp, the max valid duration is 12 seconds, the value will be replaced with the max if invalidAt > now + 12s | Yes | number |
 
 **Response Result**
 
