@@ -999,6 +999,55 @@ OPEN | the price is waiting for confirmation
 CLOSE | the order has been carried out with the price
 TERMINATE | the price was rejected by OTC provider
 
+### get open prices
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetPrices"
+code: 0
+message: success
+data:
+{
+  "orders": [
+    {
+      "id": "8yxkewovldjmmqj2m0n9pz71",
+      "status": "OPEN",
+      "accountID": 1,
+      "type": "BUY",
+      "baseCoin": {
+        "id": 1,
+        "name": "BTC"
+      },
+      "quoteCoin": {
+        "id": 2,
+        "name": "USD"
+      },
+      "amountCoin": {
+        "id": 1,
+        "name": "BTC"
+      },
+      "amount": "10"
+    }
+  ]
+}
+```
+
+**Summary:** get opening prices the app feed
+
+#### HTTP Request 
+`GET /api/v1/otc/prices`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+prices | array | price list
+
 ### get price
 
 ```shell
@@ -1014,6 +1063,8 @@ data:
   "customID": "0320042810120495",
   "price": "7739.90",
   "invalidAt": 1588151193,
+  "quoteAmount": "9458.15779",
+  "baseAmount": "1.222",
   "orderID": "8yxkewovldjmmqj2m0n9pz71"
 }
 ```
@@ -1042,6 +1093,8 @@ status | string | price status
 choose | boolean | mark if customer choose
 customID | string | the custom id
 price | string | price
+quoteAmount | string | the quote amount by the price
+baseAmount | string | the base amount by the price
 invalidAt | number | invalid timestamp
 orderID | string | the associated order id
 
@@ -1138,6 +1191,36 @@ price | string | price
 invalidAt | number | invalid timestamp
 orderID | string | the associated order id
 
+## System
+
+### current timestamp
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "SystemGetTime"
+code: 0
+message: success
+data:
+{
+  "timestamp": 1590391287
+}
+```
+
+**Summary:** get system current timestamp
+
+#### HTTP Request 
+`GET /api/v1/system/time`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+timestamp | number | current timestamp
 
 # Company API
 
