@@ -302,6 +302,9 @@
                             <a href="#feed-price" class="toc-h3 toc-link" data-title="feed price">feed price</a>
                           </li>
                           <li>
+                            <a href="#get-open-prices" class="toc-h3 toc-link" data-title="get open prices">get open prices</a>
+                          </li>
+                          <li>
                             <a href="#get-price" class="toc-h3 toc-link" data-title="get price">get price</a>
                           </li>
                           <li>
@@ -309,6 +312,14 @@
                           </li>
                           <li>
                             <a href="#terminate-price" class="toc-h3 toc-link" data-title="terminate price">terminate price</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                    <a href="#system" class="toc-h2 toc-link" data-title="System">System</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#current-timestamp" class="toc-h3 toc-link" data-title="current timestamp">current timestamp</a>
                           </li>
                       </ul>
                   </li>
@@ -1951,6 +1962,73 @@ data:
 <td>the price was rejected by OTC provider</td>
 </tr>
 </tbody></table>
+<h3 id='get-open-prices'>get open prices</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetPrices"</span>
+code: 0
+message: success
+data:
+<span class="o">{</span>
+  <span class="s2">"orders"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"id"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>,
+      <span class="s2">"status"</span>: <span class="s2">"OPEN"</span>,
+      <span class="s2">"accountID"</span>: 1,
+      <span class="s2">"type"</span>: <span class="s2">"BUY"</span>,
+      <span class="s2">"baseCoin"</span>: <span class="o">{</span>
+        <span class="s2">"id"</span>: 1,
+        <span class="s2">"name"</span>: <span class="s2">"BTC"</span>
+      <span class="o">}</span>,
+      <span class="s2">"quoteCoin"</span>: <span class="o">{</span>
+        <span class="s2">"id"</span>: 2,
+        <span class="s2">"name"</span>: <span class="s2">"USD"</span>
+      <span class="o">}</span>,
+      <span class="s2">"amountCoin"</span>: <span class="o">{</span>
+        <span class="s2">"id"</span>: 1,
+        <span class="s2">"name"</span>: <span class="s2">"BTC"</span>
+      <span class="o">}</span>,
+      <span class="s2">"amount"</span>: <span class="s2">"10"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
+<p><strong>Summary:</strong> get opening prices the app feed</p>
+<h4 id='http-request-16'>HTTP Request</h4>
+<p><code>GET /api/v1/otc/prices</code></p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-App-Key</td>
+<td>header</td>
+<td>app key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>prices</td>
+<td>array</td>
+<td>price list</td>
+</tr>
+</tbody></table>
 <h3 id='get-price'>get price</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetPrice"</span> <span class="s2">"25ovqdkrm86201g73zx4ynep"</span>
 <span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"OTCGetPriceByCustomID"</span> <span class="s2">"0320042810120495"</span>
 code: 0
@@ -1963,11 +2041,13 @@ data:
   <span class="s2">"customID"</span>: <span class="s2">"0320042810120495"</span>,
   <span class="s2">"price"</span>: <span class="s2">"7739.90"</span>,
   <span class="s2">"invalidAt"</span>: 1588151193,
+  <span class="s2">"quoteAmount"</span>: <span class="s2">"9458.15779"</span>,
+  <span class="s2">"baseAmount"</span>: <span class="s2">"1.222"</span>,
   <span class="s2">"orderID"</span>: <span class="s2">"8yxkewovldjmmqj2m0n9pz71"</span>
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> get the latest status of price</p>
-<h4 id='http-request-16'>HTTP Request</h4>
+<h4 id='http-request-17'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}</code></p>
@@ -2041,6 +2121,16 @@ data:
 <td>price</td>
 </tr>
 <tr>
+<td>quoteAmount</td>
+<td>string</td>
+<td>the quote amount by the price</td>
+</tr>
+<tr>
+<td>baseAmount</td>
+<td>string</td>
+<td>the base amount by the price</td>
+</tr>
+<tr>
 <td>invalidAt</td>
 <td>number</td>
 <td>invalid timestamp</td>
@@ -2068,7 +2158,7 @@ data:
 <p><strong>Summary:</strong> make a deal with the price</p>
 
 <p>If the app&#39;s asset balance is enough, the price&#39;s order will be done. Otherwise(Error code: 20002), the price will be terminated.</p>
-<h4 id='http-request-17'>HTTP Request</h4>
+<h4 id='http-request-18'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}/close</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}/close</code></p>
@@ -2167,7 +2257,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> reject the price</p>
-<h4 id='http-request-18'>HTTP Request</h4>
+<h4 id='http-request-19'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}/terminate</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}/terminate</code></p>
@@ -2251,6 +2341,53 @@ data:
 <td>the associated order id</td>
 </tr>
 </tbody></table>
+<h2 id='system'>System</h2><h3 id='current-timestamp'>current timestamp</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"SystemGetTime"</span>
+code: 0
+message: success
+data:
+<span class="o">{</span>
+  <span class="s2">"timestamp"</span>: 1590391287
+<span class="o">}</span>
+</code></pre>
+<p><strong>Summary:</strong> get system current timestamp</p>
+<h4 id='http-request-20'>HTTP Request</h4>
+<p><code>GET /api/v1/system/time</code></p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-App-Key</td>
+<td>header</td>
+<td>app key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>timestamp</td>
+<td>number</td>
+<td>current timestamp</td>
+</tr>
+</tbody></table>
 <h1 id='company-api'>Company API</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>jadepool-saas-sdk-golang
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">companyKey</span> <span class="o">=</span> <span class="s1">'TyTLvCnHINbWZQag88hhmMz1'</span>
 <span class="kr">const</span> <span class="nx">companySecret</span> <span class="o">=</span> <span class="s1">'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'</span>
@@ -2300,7 +2437,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">getFundingWallets</span><span class="o">();</span>
 </code></pre>
 <p><strong>Summary:</strong> get funding wallets list</p>
-<h4 id='http-request-19'>HTTP Request</h4>
+<h4 id='http-request-21'>HTTP Request</h4>
 <p><code>GET /api/v1/funding/balances</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -2381,7 +2518,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">fundingTransfer</span><span class="o">(</span><span class="s">"QrLxg3XgKPMR1O8"</span><span class="o">,</span> <span class="s">"ZKz8XpwXGPBAQVE"</span><span class="o">,</span> <span class="s">"BTC"</span><span class="o">,</span> <span class="s">"0.0001"</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> funding transfer</p>
-<h4 id='http-request-20'>HTTP Request</h4>
+<h4 id='http-request-22'>HTTP Request</h4>
 <p><code>POST /api/v1/funding/transfer</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -2503,7 +2640,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">getFundingRecords</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> get funding records list</p>
-<h4 id='http-request-21'>HTTP Request</h4>
+<h4 id='http-request-23'>HTTP Request</h4>
 <p><code>GET /api/v1/funding/records</code> </p>
 
 <p><strong>Parameters</strong></p>
