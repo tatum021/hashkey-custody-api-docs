@@ -1007,25 +1007,17 @@ code: 0
 message: success
 data:
 {
-  "orders": [
+  "prices": [
     {
-      "id": "8yxkewovldjmmqj2m0n9pz71",
+      "id": "25ovqdkrm86201g73zx4ynep",
       "status": "OPEN",
-      "accountID": 1,
-      "type": "BUY",
-      "baseCoin": {
-        "id": 1,
-        "name": "BTC"
-      },
-      "quoteCoin": {
-        "id": 2,
-        "name": "USD"
-      },
-      "amountCoin": {
-        "id": 1,
-        "name": "BTC"
-      },
-      "amount": "10"
+      "choose": true,
+      "customID": "0320042810120495",
+      "price": "7739.90",
+      "invalidAt": 1588151193,
+      "quoteAmount": "9458.15779",
+      "baseAmount": "1.222",
+      "orderID": "8yxkewovldjmmqj2m0n9pz71"
     }
   ]
 }
