@@ -279,7 +279,7 @@ message: success
 data:
 {
   "assets": [
-    {"id": 1, name: "ETH"}
+    "ETH"
   ]
 }
 ```
@@ -305,7 +305,7 @@ data:
 **Summary:** get wallet assets
 
 #### HTTP Request 
-`GET /api/v2/app/assets` 
+`GET /api/v1/app/assets` 
 
 **Parameters**
 
