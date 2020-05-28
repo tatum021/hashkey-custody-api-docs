@@ -779,13 +779,13 @@ value | string | the interest value
 
 Provide better pricing and fast settlement for large trades. The customer can trade on the OTC tab in custody dashboard. The following are normal processs.
 
-1. [Set support quote symbols](#set-support-quote-symbols) for the customer. The customer will see the quote symbols on the OTC tab.
+1. [Set support quote symbols](#set-quote-symbols) for the customer. The customer will see the quote symbols on the OTC tab.
 2. An open order would be created after the customer get quote on the OTC tab. Get that by [the API](#get-open-orders).
 3. [Feed price](#feed-price) for the open order.
 4. The price will show on the OTC tab and wait for confirmation by the customer. [Check if the price is chosen](#get-price) consistently during this period.
 5. [Close the price](#close-price) after the price is chosen. But if the price no longer suitable, just [terminate it](#terminate-price). The transaction would be done when close the price.
 
-### set support quote symbols
+### set quote symbols
 
 ```shell
 $ go run cmd/ctl/main.go "appkey" "appsecret" "OTCSetSymbols" '[
@@ -816,7 +816,9 @@ data:
 }
 ```
 
-**Summary:** set all support quote symbols
+**Summary:** set support quote symbols
+
+The symbol will be updated if already exists.
 
 #### HTTP Request 
 `POST /api/v1/otc/symbols`
@@ -834,14 +836,79 @@ Value | Description | Required
 --------- | --------- | --------
 baseCoinID | buy/sell asset id | Yes
 quoteCoinID | spend/receive asset id | Yes
-baseCoinAmountRange | the min/max limit of baseCoin | No
-quoteCoinAmountRange | the min/max limit of quoteCoin | No
+baseCoinAmountRange | the min/max limit of baseCoin | Yes
+quoteCoinAmountRange | the min/max limit of quoteCoin | Yes
 
 **Response Result**
 
 Value | Type | Description
 --------- | ------- | ---------
 symbols | array | quote symbol list
+
+### get quote symbols
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCGetSymbols"
+code: 0
+message: success
+data:
+{
+  "symbols": [
+    {
+      "baseCoin": {
+        "id": 1,
+        "name": "BTC"
+      },
+      "quoteCoin": {
+        "id": 2,
+        "name": "USD"
+      },
+      "baseCoinAmountRange": [10, 100],
+      "quoteCoinAmountRange": [10000, 100000000]
+    }
+  ]
+}
+```
+
+**Summary:** get support quote symbols
+
+#### HTTP Request 
+`GET /api/v1/otc/symbols`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+symbols | array | quote symbol list
+
+### delete quote symbol
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCDeleteSymbol" 1 2
+code: 0
+message: success
+data:
+{}
+```
+
+**Summary:** delete a quote symbol
+
+#### HTTP Request 
+`DELETE /api/v1/otc/symbol`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| baseCoinID | query | base coin id | Yes | string |
+| quoteCoinID | query | quote coin id | Yes | string |
 
 ### get open orders
 
