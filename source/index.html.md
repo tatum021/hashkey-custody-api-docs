@@ -319,6 +319,37 @@ Value | Type | Description
 --------- | ------- | ---------
 assets | array | the wallet coin list
 
+### get wallet assets with id
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "GetAssets"
+code: 0
+message: success
+data:
+{
+  "assets": [
+    {id: 1, name: "ETH"}
+  ]
+}
+```
+
+**Summary:** get wallet assets with id
+
+#### HTTP Request 
+`GET /api/v1/app/assetsWithID`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+assets | array | the wallet coin list
+
 ### get wallet order
 
 ```shell
