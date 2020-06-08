@@ -1533,6 +1533,149 @@ Value | Type | Description
 --------- | ------- | ---------
 records | array | record list
 
+## Trading
+### get exchange balances 
+
+```javascript
+    try {
+        result = await api.getExchangeBalances("z41mwygl0gnl2keo")
+        console.dir(result, {depth: null})
+    } catch(e) {
+        // do something
+        console.log(e)
+    }
+```
+
+**Summary:** get exchange balances
+
+#### HTTP Request 
+`GET /api/v1/exchange/balances` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+| exchangeID | query | exchange id | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+balances | array | balances list
+
+### exchange transfer 
+
+```javascript
+    try {
+        result = await tradingTransfer("WALLET", "rKyOD9pAJPAg54e", "EXCHANGE", "qdkrm8621j73zx4y", "USDT", "2.73", "wallet to binance")
+        console.log(result)
+    } catch(e) {
+        // do something
+        console.log(e)
+    }
+```
+
+**Summary:** exchange transfer
+
+#### HTTP Request 
+`POST /api/v1/exchange/transfer` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+| fromType | body | from type: enum[EXCHANGE,WALLET] | Yes | string |
+| fromID | body | from id | Yes | string |
+| toType | body | to type: enum[EXCHANGE,WALLET] | Yes | string |
+| toID | body | to id | Yes | string |
+| amount | body | transfer amount | Yes | string |
+| assetName | body | coin name | Yes | string |
+| remark | body | remark | No | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+withdrawID | string | withdraw order id
+amount | string | real transfer amount
+fee | string | exchange fee amount
+status | string | withdraw order status, enum[PENDING,FAILED,DONE]
+
+### get exchange records list 
+
+```javascript
+    try {
+        result = await getExchangeFundings("z41mwygl0gnl2keo", 1)
+        console.log(result)
+    } catch(e) {
+        // do something
+        console.log(e)
+    }
+```
+
+**Summary:** get exchange records
+
+#### HTTP Request 
+`GET /api/v1/exchange/funding/records` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+| exchangeID | query | exchange id | Yes | string |
+| page | query | page, e.g. 1, 50 items per page | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+totalAmount| number |  total record number
+records | array | record list
+
+### get exchange record 
+
+```javascript
+    try {
+        result = await getExchangeFunding("3qky8xo2l0gpdg7erpmdwzn1")
+        console.log(result)
+    } catch(e) {
+        // do something
+        console.log(e)
+    }
+```
+
+**Summary:** get exchange record
+
+#### HTTP Request 
+`GET /api/v1/exchange/funding/record` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+| id | query | record id | Yes | string |
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id| string |  record id
+fromType| string |  from type: enum[EXCHANGE,WALLET]
+fromID| string |  from id
+fromName| string |  from name
+toType| string |  to type: enum[EXCHANGE,WALLET]
+toID| string |  to id
+toName| string |  to name
+status| string |  record status
+assetName| string |  coin name
+amount| string |  amount
+fee| string |  fee amount
+remark| string |  record remark
+createdAt| number |  unix timestamp, seconds
+
 # Callback
 
 ## Order
