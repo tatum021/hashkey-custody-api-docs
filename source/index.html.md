@@ -1534,6 +1534,35 @@ Value | Type | Description
 records | array | record list
 
 ## Trading
+### get exchange list 
+
+```javascript
+    try {
+        result = await api.getExchanges()
+        console.dir(result, {depth: null})
+    } catch(e) {
+        // do something
+        console.log(e)
+    }
+```
+
+**Summary:** get exchange list
+
+#### HTTP Request 
+`GET /api/v1/exchanges` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+exchanges | array | exchanges list
+
 ### get exchange balances 
 
 ```javascript
