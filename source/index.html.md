@@ -93,6 +93,56 @@ The wallet key and secret can be generated in the wallet settings.
 
 ## Address
 
+### get the latest address 
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "GetAddress" "ETH"
+code: 0
+message: success
+data:
+{
+  "address": "0x9bf65CDF5729b9588F6bAEBb2Aa2926472D4a035",
+  "mode": "deposit"
+}
+```
+
+```javascript
+    try {
+        const result = await api.getAddress("ETH")
+        console.log(result)
+    } catch(e) {
+        // do something
+        console.log(e.response)
+    }
+```
+
+```go
+	result, _ := app.GetAddress("ETH")
+```
+
+```java
+  APIResult result = appTest.getAddress("ETH");
+```
+
+**Summary:** get the latest address, create if not exist
+
+#### HTTP Request 
+`GET /api/v1/address/{coinName}` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| coinName | path | coinName | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+address | string | the new address
+mode | string | address mode
+
 ### create a new address 
 
 ```shell
@@ -196,6 +246,144 @@ address | string | the address to validate
 valid | boolean | the address is valid or not
 
 ## Wallet
+### get all available assets 
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "GetAllAssets"
+code: 0
+message: success
+data:
+{
+  "assets": [
+    "ETH"
+  ]
+}
+```
+
+```javascript
+    try {
+        result = await api.getAllAssets()
+        console.log(result)
+    } catch(e) {
+        // do something
+        console.log(e)
+    }
+```
+
+```go
+	result, _ = app.GetAllAssets()
+```
+
+```java
+  APIResult result = appTest.getAllAssets();
+```
+
+**Summary:** get all available assets
+
+#### HTTP Request 
+`GET /api/v1/app/allAssets` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+assets | array | the wallet coin list
+
+### get wallet balances
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "GetBalances"
+code: 0
+message: success
+data:
+{}
+```
+
+```javascript
+    try {
+        result = await api.getBalances()
+        console.log(result)
+    } catch(e) {
+        // do something
+        console.log(e)
+    }
+```
+
+```go
+	result, _ = app.GetBalances()
+```
+
+```java
+  APIResult result = appTest.getBalances();
+```
+
+**Summary:** get all asset balances, include the amount by USD and the price by USD
+
+#### HTTP Request 
+`GET /api/v1/app/balances` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+balances | array | the wallet balance list
+
+### add wallet assets
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "AddAppAssets" "BTC,ETH"
+code: 0
+message: success
+data:
+```
+
+```javascript
+    try {
+        result = await api.addAppAssets("BTC", "ETH")
+        console.log(result)
+    } catch(e) {
+        // do something
+        console.log(e)
+    }
+```
+
+```go
+	result, _ = app.AddAppAssets("BTC", "ETH")
+```
+
+```java
+  APIResult result = appTest.addAppAssets("BTC", "ETH");
+```
+
+**Summary:** add wallet assets
+
+#### HTTP Request 
+`POST /api/v1/app/assets` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| coinNames | body | asset name list | Yes | array |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+
 ### get wallet balance 
 
 ```shell
@@ -318,6 +506,72 @@ data:
 Value | Type | Description
 --------- | ------- | ---------
 assets | array | the wallet coin list
+
+### get wallet orders
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "GetOrders" 1 10
+code: 0
+message: success
+data:
+{
+  "totalAmount": 1,
+  "orders": [{
+    "bizType": "WITHDRAW",
+    "block": 12970670,
+    "coinName": "ETH",
+    "confirmations": 21,
+    "fee": "0.005000000000000000",
+    "from": "0xdedc1eca923cc1227c20571030146d8a01b70774",
+    "id": "rNXBQGJlw09apVyg4nDo",
+    "memo": "",
+    "n": 0,
+    "state": "DONE",
+    "to": "0xF0706B7Cab38EA42538f4D8C279B6F57ad1d4072",
+    "txid": "0xcfc4cb925c77c2ea10be3c233029fc1f05d0ddffe7396920ddd493544e52933d",
+    "type": "ETH",
+    "value": "0.045000000000000000"
+  }]
+}
+```
+
+```javascript
+    try {
+        result = await api.getOrders(1, 10)
+        console.log(result)
+    } catch(e) {
+        // do something
+        console.log(e)
+    }
+```
+
+```go
+	result, _ = app.GetOrders(1, 10)
+```
+
+```java
+  APIResult result = appTest.getOrders(1, 10);
+```
+
+**Summary:** get wallet orders
+
+#### HTTP Request 
+`GET /api/v1/app/orders` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| page | query | page, e.g. 1 | Yes | string |
+| amount | query | item count on this page, e.g. 10 | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+orders | array | order list
+totalAmount | number | the total count of orders
 
 ### get wallet order
 
@@ -1250,6 +1504,38 @@ price | string | price
 invalidAt | number | invalid timestamp
 orderID | string | the associated order id
 
+## Market
+
+### current price
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "GetMarket" "BTC"
+code: 0
+message: success
+data:
+{
+  "price": "10000"
+}
+```
+
+**Summary:** get the asset price by USD
+
+#### HTTP Request 
+`GET /api/v1/market/{coinName}`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| coinName  | path | asset name | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+price | string | current price
+
 ## System
 
 ### current timestamp
@@ -1308,6 +1594,126 @@ Company companyTest = new Company(companyContext);
 ```
 
 The company key and secret can be generated in the company settings.
+
+## Wallet
+### create
+
+```shell
+$ go run cmd/ctl/main.go "companykey" "companysecret" "CreateWallet" "name" "password" "https://noti.domain/callback"
+code: 0
+message: success
+data:
+{
+  "id": "ylr07eg58g2mkpw3",
+  "appKey": "p5q653k6xfqk9tdbym7ybmdq",
+  "appSecret": "yggukhz3uuwb2e6boef6vzcq7hd5l7c9e6nz7v31ckqqkwuidkavlaxhrg7hqt5v"
+}
+```
+
+```go
+	result, _ = company.CreateWallet("name", "password", "description", "https://noti.domain/callback")
+```
+
+**Summary:** create wallet
+
+#### HTTP Request 
+`POST /api/v1/app` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+| name | body | the wallet name | Yes | string |
+| password  | body | the wallet password | Yes | string |
+| description | body | the wallet description | Yes | string |
+| webHook | body | the url will be called when send [a notification](#callback) | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | wallet id
+appKey | string | the appkey placed in the header of [Wallet API](#wallet-api)
+appSecret | string | the appsecret used for the [signature](#signature) of [Wallet API](#wallet-api)
+
+### get appkeys
+
+```shell
+$ go run cmd/ctl/main.go "companykey" "companysecret" "GetAppKeys" "appID"
+code: 0
+message: success
+data:
+{
+  "keys": [{
+    "appKey": "p5q653k6xfqk9tdbym7ybmdq",
+    "appSecret": "yggukhz3uuwb2e6boef6vzcq7hd5l7c9e6nz7v31ckqqkwuidkavlaxhrg7hqt5v",
+    "enable": true
+  }]
+}
+```
+
+```go
+	result, _ = company.GetAppKeys("appID")
+```
+
+**Summary:** get appkeys(include appsecret)
+
+#### HTTP Request 
+`GET /api/v1/app/{appID}/keys` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+| appID | path | wallet id | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+keys | array | the appkey list
+
+key:
+
+Value | Type | Description
+--------- | ------- | ---------
+appKey | string | the appkey placed in the header of [Wallet API](#wallet-api)
+appSecret | string | the appsecret used for the [signature](#signature) of [Wallet API](#wallet-api)
+enable | boolean | enable flag, the appkey will been forbidden if set false
+
+### update appkey
+
+```shell
+$ go run cmd/ctl/main.go "companykey" "companysecret" "UpdateAppKey" "appKey" "false"
+code: 0
+message: success
+data:
+```
+
+```go
+	result, _ = company.UpdateAppKey("appKey", false)
+```
+
+**Summary:** update appkey attributes
+
+#### HTTP Request 
+`PUT /api/v1/appKey/{appKey}` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+| appKey | path | wallet appkey | Yes | string |
+| enable | body | enable flag, the appkey will been forbidden if set false | Yes | boolean |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+
 
 ## Funding
 ### get funding wallets list 
