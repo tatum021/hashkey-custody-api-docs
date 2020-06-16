@@ -22,7 +22,7 @@ search: true
 
 Jadepool SAAS API
 
-Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/jadepool-saas-sdk-nodejs), [Go SDK](https://github.com/nbltrust/jadepool-saas-sdk-golang), [Java SDK](https://github.com/nbltrust/jadepool-saas-sdk-java).
+Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/hashkey-custody-sdk-nodejs), [Go SDK](https://github.com/nbltrust/hashkey-custody-sdk-golang), [Java SDK](https://github.com/nbltrust/jadepool-saas-sdk-java).
 
 # API Server URL:
 
