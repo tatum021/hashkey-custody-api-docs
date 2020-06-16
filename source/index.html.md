@@ -302,7 +302,23 @@ $ go run cmd/ctl/main.go "appkey" "appsecret" "GetBalances"
 code: 0
 message: success
 data:
-{}
+{
+  "balances": [
+    {
+      "balance": "10001.225",
+      "money": "98175466.911631525",
+      "name": "BTC",
+      "price": "9816.344189"
+    },
+    {
+      "balance": "1.0",
+      "money": "246.565827",
+      "name": "ETH",
+      "price": "246.565827"
+    }
+  ],
+  "total": "98175713.477458525"
+}
 ```
 
 ```javascript
@@ -338,15 +354,26 @@ data:
 
 Value | Type | Description
 --------- | ------- | ---------
+total | string | total money(USD)
 balances | array | the wallet balance list
+
+balance:
+
+Value | Type | Description
+--------- | ------- | ---------
+balance | string | the coin balance
+money | string | the amount(USD) equal to the balance
+name | string | the coin name
+price | string | the coin price(USD)
 
 ### add wallet assets
 
 ```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "AddAppAssets" "BTC,ETH"
+$ go run cmd/ctl/main.go "appkey" "appsecret" "AddAsset" "BTC"
 code: 0
 message: success
 data:
+{}
 ```
 
 ```javascript
@@ -360,7 +387,7 @@ data:
 ```
 
 ```go
-	result, _ = app.AddAppAssets("BTC", "ETH")
+	result, _ = app.AddAsset("BTC")
 ```
 
 ```java
@@ -565,6 +592,8 @@ data:
 | X-App-Key | header | app key | Yes | string |
 | page | query | page, e.g. 1 | Yes | string |
 | amount | query | item count on this page, e.g. 10 | Yes | string |
+| coins | query | coin list, can be empty string | No | string |
+| state | query | order state, can be empty string | No | string |
 
 **Response Result**
 
@@ -1604,14 +1633,15 @@ code: 0
 message: success
 data:
 {
-  "id": "ylr07eg58g2mkpw3",
-  "appKey": "p5q653k6xfqk9tdbym7ybmdq",
-  "appSecret": "yggukhz3uuwb2e6boef6vzcq7hd5l7c9e6nz7v31ckqqkwuidkavlaxhrg7hqt5v"
+  "id": "ylr07eg5p862mkpw",
+  "appKey": "52u036rjmnd5qtwc74vohpj3",
+  "appSecret": "4d6718b405cb55e5544ba0b343472acba8a5a1eb0c5777e4040b38f9edd96a60",
+  "encryptedAppSecret": "7p128MoVWgSFI7AYAUXO9Px72qCNYSvtM5PCAGD3f6de+HjYJbJBEJcTswMH1qdLcKIriuy1RoP6P0YmNeEDlAfSSyJiHrX98Oid5/fuCEs="
 }
 ```
 
 ```go
-	result, _ = company.CreateWallet("name", "password", "description", "https://noti.domain/callback")
+	result, _ = company.CreateWallet("name", "password", "https://noti.domain/callback")
 ```
 
 **Summary:** create wallet
@@ -1625,9 +1655,10 @@ data:
 | ---- | ---------- | ----------- | -------- | ---- |
 | X-Company-Key | header | company key | Yes | string |
 | name | body | the wallet name | Yes | string |
-| password  | body | the wallet password | Yes | string |
+| password  | body | the wallet password, should encrypted by [AES encryption](#aes-encryption) and base64 encoded | Yes | string |
 | description | body | the wallet description | Yes | string |
 | webHook | body | the url will be called when send [a notification](#callback) | Yes | string |
+| aesIV | body | base64 encoded [AES encryption](#aes-encryption) iv, must be 16 bytes, used by encrypting app password and secret | Yes | string |
 
 **Response Result**
 
@@ -1635,26 +1666,29 @@ Value | Type | Description
 --------- | ------- | ---------
 id | string | wallet id
 appKey | string | the appkey placed in the header of [Wallet API](#wallet-api)
-appSecret | string | the appsecret used for the [signature](#signature) of [Wallet API](#wallet-api)
+encryptedAppSecret | string | the base64 encoded [AES encrypted](#aes-encryption) appsecret, the appsecret used for the [signature](#signature) of [Wallet API](#wallet-api)
 
 ### get appkeys
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "GetAppKeys" "appID"
+$ go run cmd/ctl/main.go "companykey" "companysecret" "GetWalletKeys" "appID"
 code: 0
 message: success
 data:
 {
-  "keys": [{
-    "appKey": "p5q653k6xfqk9tdbym7ybmdq",
-    "appSecret": "yggukhz3uuwb2e6boef6vzcq7hd5l7c9e6nz7v31ckqqkwuidkavlaxhrg7hqt5v",
-    "enable": true
-  }]
+  "keys": [
+    {
+      "appKey": "nq73yzkovqo44fsek2nq37nw",
+      "appSecret": "nn2oh58iuc1sg2adya1golz35cowjbz7r0hfjt2ey6b4fc4xyq6kdopp9tlp0ko3",
+      "enable": true,
+      "encryptedAppSecret": "+XowuN5bDYKKoDXvci19uoOiYAR+esV762cnBFCd2oX5pfRvOsCsRCyS0eopj9TdziDCm2N8YIBk+/Gj0JGwwKjtXA829ivYdiiVHEe6jvE="
+    }
+  ]
 }
 ```
 
 ```go
-	result, _ = company.GetAppKeys("appID")
+	result, _ = company.GetWalletKeys("appID")
 ```
 
 **Summary:** get appkeys(include appsecret)
@@ -1668,6 +1702,7 @@ data:
 | ---- | ---------- | ----------- | -------- | ---- |
 | X-Company-Key | header | company key | Yes | string |
 | appID | path | wallet id | Yes | string |
+| aesIV | query | base64 encoded [AES encryption](#aes-encryption) iv, must be 16 bytes, used by encrypting app secret in the response | Yes | string |
 
 **Response Result**
 
@@ -1680,20 +1715,21 @@ key:
 Value | Type | Description
 --------- | ------- | ---------
 appKey | string | the appkey placed in the header of [Wallet API](#wallet-api)
-appSecret | string | the appsecret used for the [signature](#signature) of [Wallet API](#wallet-api)
 enable | boolean | enable flag, the appkey will been forbidden if set false
+encryptedAppSecret | string | the base64 encoded [AES encrypted](#aes-encryption) appsecret, the appsecret used for the [signature](#signature) of [Wallet API](#wallet-api)
 
 ### update appkey
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "UpdateAppKey" "appKey" "false"
+$ go run cmd/ctl/main.go "companykey" "companysecret" UpdateWalletKey "appKey" true
 code: 0
 message: success
 data:
+{}
 ```
 
 ```go
-	result, _ = company.UpdateAppKey("appKey", false)
+	result, _ = company.UpdateWalletKey("appKey", true)
 ```
 
 **Summary:** update appkey attributes
@@ -2012,3 +2048,33 @@ mode=auto&nonce=15833762841261615239762485&timestamp=1583376284
 `
 
 4. Send request as the same format as described in [General Structure](#general-structure).
+
+# AES Encryption
+The encryption has two parts: key and iv. The key is md5(CompanySecret). The iv is a random bytes that length is 16. An example of encrypting appSecret written by python.
+
+```python
+import base64
+import hashlib
+from Crypto.Cipher import AES
+
+def _pad(s):
+    return s + (AES.block_size - len(s) % AES.block_size) * chr(AES.block_size - len(s) % AES.block_size)
+
+def _unpad(s):
+    return s[:-ord(s[len(s)-1:])]
+
+companySecret = b'kfTKfuSV5oiuFZENI6tv1OwfiJ1tEv70HnmJsVxNGCu2YEKqEq2QHpBGgqwRa29R'
+appSecret = 'nn2oh58iuc1sg2adya1golz35cowjbz7r0hfjt2ey6b4fc4xyq6kdopp9tlp0ko3'
+
+aeskey = bytes.fromhex(hashlib.md5(companySecret).hexdigest())
+iv = base64.b64decode('MTIzNDU2Nzg5MDEyMzQ1Ng==')
+
+decipher = AES.new(aeskey, AES.MODE_CBC, IV=iv)
+encryptedAppSecret = decipher.encrypt(_pad(appSecret))
+base64EncryptedAppSecret = base64.b64encode(encryptedAppSecret)
+print(base64EncryptedAppSecret)
+
+decipher = AES.new(aeskey, AES.MODE_CBC, IV=iv)
+plaintext = _unpad(decipher.decrypt(base64.b64decode(base64EncryptedAppSecret)))
+print(plaintext)
+```
