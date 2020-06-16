@@ -1675,6 +1675,10 @@ data:
 	result, _ = company.CreateWallet("name", "password", "https://noti.domain/callback")
 ```
 
+```java
+  APIResult result = companyTest.createWallet("name", "password", "https://noti.domain/callback", "description");
+```
+
 **Summary:** create wallet
 
 #### HTTP Request 
@@ -1722,6 +1726,10 @@ data:
 	result, _ = company.GetWalletKeys("appID")
 ```
 
+```java
+  APIResult result = companyTest.getWalletKeys("appID");
+```
+
 **Summary:** get appkeys(include appsecret)
 
 #### HTTP Request 
@@ -1761,6 +1769,10 @@ data:
 
 ```go
 	result, _ = company.UpdateWalletKey("appKey", true)
+```
+
+```java
+  APIResult result = companyTest.updateWalletKey("appID", true);
 ```
 
 **Summary:** update appkey attributes
@@ -2253,7 +2265,7 @@ mode=auto&nonce=15833762841261615239762485&timestamp=1583376284
 4. Send request as the same format as described in [General Structure](#general-structure).
 
 # AES Encryption
-The encryption has two parts: key and iv. The key is md5(CompanySecret). The iv is a random bytes that length is 16. An example of encrypting appSecret written by python.
+The encryption has two parts: key and iv. The key is sha256(CompanySecret). The iv is a random bytes that length is 16. An example of encrypting appSecret written by python.
 
 ```python
 import base64
@@ -2269,7 +2281,7 @@ def _unpad(s):
 companySecret = b'kfTKfuSV5oiuFZENI6tv1OwfiJ1tEv70HnmJsVxNGCu2YEKqEq2QHpBGgqwRa29R'
 appSecret = 'nn2oh58iuc1sg2adya1golz35cowjbz7r0hfjt2ey6b4fc4xyq6kdopp9tlp0ko3'
 
-aeskey = bytes.fromhex(hashlib.md5(companySecret).hexdigest())
+aeskey = bytes.fromhex(hashlib.sha256(companySecret).hexdigest())
 iv = base64.b64decode('MTIzNDU2Nzg5MDEyMzQ1Ng==')
 
 decipher = AES.new(aeskey, AES.MODE_CBC, IV=iv)
