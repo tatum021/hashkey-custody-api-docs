@@ -1,6 +1,6 @@
 --- 
 
-title: Jadepool SAAS API
+title: Hashkey Custody API
 
 language_tabs: 
    - shell
@@ -9,7 +9,7 @@ language_tabs:
    - java
 
 toc_footers: 
-   - <a href='https://github.com/nbltrust/jadepool-saas-api-docs'>Documentation</a>
+   - <a href='https://github.com/nbltrust/hashkey-custody-api-docs'>Documentation</a>
 
 includes:
   - errors
@@ -20,7 +20,7 @@ search: true
 
 # Introduction 
 
-Jadepool SAAS API
+Hashkey Custody API
 
 Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/hashkey-custody-sdk-nodejs), [Go SDK](https://github.com/nbltrust/hashkey-custody-sdk-golang), [Java SDK](https://github.com/nbltrust/jadepool-saas-sdk-java).
 
@@ -65,7 +65,7 @@ if GET request, the url looks like this:
 # Wallet API
 
 ```shell
-$ git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git && cd jadepool-saas-sdk-golang
+$ git clone https://github.com/nbltrust/hashkey-custody-sdk-golang.git && cd hashkey-custody-sdk-golang
 ```
 
 ```javascript
@@ -1315,7 +1315,7 @@ timestamp | number | current timestamp
 # Company API
 
 ```shell
-$ git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git && cd jadepool-saas-sdk-golang
+$ git clone https://github.com/nbltrust/hashkey-custody-sdk-golang.git && cd hashkey-custody-sdk-golang
 ```
 
 ```javascript
