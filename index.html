@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Jadepool SAAS API</title>
+    <title>Hashkey Custody API</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -259,6 +259,9 @@
                             <a href="#get-wallet-assets" class="toc-h3 toc-link" data-title="get wallet assets">get wallet assets</a>
                           </li>
                           <li>
+                            <a href="#get-wallet-assets-with-id" class="toc-h3 toc-link" data-title="get wallet assets with id">get wallet assets with id</a>
+                          </li>
+                          <li>
                             <a href="#get-wallet-order" class="toc-h3 toc-link" data-title="get wallet order">get wallet order</a>
                           </li>
                           <li>
@@ -348,6 +351,26 @@
                           </li>
                       </ul>
                   </li>
+                  <li>
+                    <a href="#trading" class="toc-h2 toc-link" data-title="Trading">Trading</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#get-exchange-list" class="toc-h3 toc-link" data-title="get exchange list">get exchange list</a>
+                          </li>
+                          <li>
+                            <a href="#get-exchange-balances" class="toc-h3 toc-link" data-title="get exchange balances">get exchange balances</a>
+                          </li>
+                          <li>
+                            <a href="#exchange-transfer" class="toc-h3 toc-link" data-title="exchange transfer">exchange transfer</a>
+                          </li>
+                          <li>
+                            <a href="#get-exchange-records-list" class="toc-h3 toc-link" data-title="get exchange records list">get exchange records list</a>
+                          </li>
+                          <li>
+                            <a href="#get-exchange-record" class="toc-h3 toc-link" data-title="get exchange record">get exchange record</a>
+                          </li>
+                      </ul>
+                  </li>
               </ul>
           </li>
           <li>
@@ -366,16 +389,16 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='https://github.com/nbltrust/jadepool-saas-api-docs'>Documentation</a></li>
+            <li><a href='https://github.com/nbltrust/hashkey-custody-api-docs'>Documentation</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Jadepool SAAS API</p>
+<p>Hashkey Custody API</p>
 
-<p>Feel free to check out our <a href="https://github.com/nbltrust/jadepool-saas-sdk-nodejs">NodeJs SDK</a>, <a href="https://github.com/nbltrust/jadepool-saas-sdk-golang">Go SDK</a>, <a href="https://github.com/nbltrust/jadepool-saas-sdk-java">Java SDK</a>.</p>
+<p>Feel free to check out our <a href="https://github.com/nbltrust/hashkey-custody-sdk-nodejs">NodeJs SDK</a>, <a href="https://github.com/nbltrust/hashkey-custody-sdk-golang">Go SDK</a>, <a href="https://github.com/nbltrust/jadepool-saas-sdk-java">Java SDK</a>.</p>
 <h1 id='api-server-url'>API Server URL:</h1><h3 id='sandbox-https-openapi-jadepool-io'>sandbox: https://openapi.jadepool.io</h3><h1 id='general-structure'>General Structure</h1>
 <p>This is the general request structure for verifing the request by server.</p>
 
@@ -433,7 +456,7 @@
 </code></p>
 
 <p><font size=4>The <a href="#signature">signature method</a> is similar to OAuth.</font></p>
-<h1 id='wallet-api'>Wallet API</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>jadepool-saas-sdk-golang
+<h1 id='wallet-api'>Wallet API</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/hashkey-custody-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>hashkey-custody-sdk-golang
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="s1">'TyTLvCnHINbWZQag88hhmMz1'</span>
 <span class="kr">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="s1">'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'</span>
 <span class="kr">const</span> <span class="nx">apiAddr</span> <span class="o">=</span> <span class="s1">'http://127.0.0.1:8092'</span>
@@ -799,6 +822,55 @@ data:
 <td>the wallet coin list</td>
 </tr>
 </tbody></table>
+<h3 id='get-wallet-assets-with-id'>get wallet assets with id</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"GetAssets"</span>
+code: 0
+message: success
+data:
+<span class="o">{</span>
+  <span class="s2">"assets"</span>: <span class="o">[</span>
+    <span class="o">{</span>id: 1, name: <span class="s2">"ETH"</span><span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre>
+<p><strong>Summary:</strong> get wallet assets with id</p>
+<h4 id='http-request-5'>HTTP Request</h4>
+<p><code>GET /api/v1/app/assetsWithID</code></p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-App-Key</td>
+<td>header</td>
+<td>app key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>assets</td>
+<td>array</td>
+<td>the wallet coin list</td>
+</tr>
+</tbody></table>
 <h3 id='get-wallet-order'>get wallet order</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"GetOrder"</span> <span class="s2">"rNXBQGJlw09apVyg4nDo"</span>
 code: 0
 message: success
@@ -830,7 +902,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">appTest</span><span class="o">.</span><span class="na">getOrder</span><span class="o">(</span><span class="s">"rNXBQGJlw09apVyg4nDo"</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> get wallet order</p>
-<h4 id='http-request-5'>HTTP Request</h4>
+<h4 id='http-request-6'>HTTP Request</h4>
 <p><code>GET /api/v1/app/order/{id}</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -976,7 +1048,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">appTest</span><span class="o">.</span><span class="na">withdraw</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="s">"ETH"</span><span class="o">,</span> <span class="s">"0xF0706B7Cab38EA42538f4D8C279B6F57ad1d4072"</span><span class="o">,</span> <span class="s">"0.05"</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> withdraw</p>
-<h4 id='http-request-6'>HTTP Request</h4>
+<h4 id='http-request-7'>HTTP Request</h4>
 <p><code>POST /api/v1/app/{coinName}/withdraw</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1165,7 +1237,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">appTest</span><span class="o">.</span><span class="na">getValidators</span><span class="o">(</span><span class="s">"IRIS"</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> get staking validators</p>
-<h4 id='http-request-7'>HTTP Request</h4>
+<h4 id='http-request-8'>HTTP Request</h4>
 <p><code>GET /api/v1/staking/{coinName}/validators</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1233,7 +1305,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">appTest</span><span class="o">.</span><span class="na">delegate</span><span class="o">(</span><span class="s">"1569231558"</span><span class="o">,</span> <span class="s">"IRIS2"</span><span class="o">,</span> <span class="s">"1"</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> delegate</p>
-<h4 id='http-request-8'>HTTP Request</h4>
+<h4 id='http-request-9'>HTTP Request</h4>
 <p><code>POST /api/v1/staking/{coinName}/delegate</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1325,7 +1397,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">appTest</span><span class="o">.</span><span class="na">unDelegate</span><span class="o">(</span><span class="s">"1569231809"</span><span class="o">,</span> <span class="s">"IRIS2"</span><span class="o">,</span> <span class="s">"1"</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> undelegate</p>
-<h4 id='http-request-9'>HTTP Request</h4>
+<h4 id='http-request-10'>HTTP Request</h4>
 <p><code>POST /api/v1/staking/{coinName}/undelegate</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1414,7 +1486,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">appTest</span><span class="o">.</span><span class="na">addUrgentStakingFunding</span><span class="o">(</span><span class="s">"1569292076"</span><span class="o">,</span> <span class="s">"IRIS2"</span><span class="o">,</span> <span class="s">"1"</span><span class="o">,</span> <span class="mi">1569302076</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> add funding requirement</p>
-<h4 id='http-request-10'>HTTP Request</h4>
+<h4 id='http-request-11'>HTTP Request</h4>
 <p><code>POST /api/v1/staking/{coinName}/funding</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1494,7 +1566,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">appTest</span><span class="o">.</span><span class="na">getStakingInterest</span><span class="o">(</span><span class="s">"IRIS"</span><span class="o">,</span> <span class="s">"2019-09-26"</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> get staking interest</p>
-<h4 id='http-request-11'>HTTP Request</h4>
+<h4 id='http-request-12'>HTTP Request</h4>
 <p><code>GET /api/v1/staking/{coinName}/interest</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1591,7 +1663,7 @@ data:
 <p><strong>Summary:</strong> set support quote symbols</p>
 
 <p>The symbol will be updated if already exists.</p>
-<h4 id='http-request-12'>HTTP Request</h4>
+<h4 id='http-request-13'>HTTP Request</h4>
 <p><code>POST /api/v1/otc/symbols</code></p>
 
 <p><strong>Parameters</strong></p>
@@ -1689,7 +1761,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> get support quote symbols</p>
-<h4 id='http-request-13'>HTTP Request</h4>
+<h4 id='http-request-14'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/symbols</code></p>
 
 <p><strong>Parameters</strong></p>
@@ -1734,7 +1806,7 @@ data:
 <span class="o">{}</span>
 </code></pre>
 <p><strong>Summary:</strong> delete a quote symbol</p>
-<h4 id='http-request-14'>HTTP Request</h4>
+<h4 id='http-request-15'>HTTP Request</h4>
 <p><code>DELETE /api/v1/otc/symbol</code></p>
 
 <p><strong>Parameters</strong></p>
@@ -1799,7 +1871,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> get opening quote orders without feeding price</p>
-<h4 id='http-request-15'>HTTP Request</h4>
+<h4 id='http-request-16'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/orders</code></p>
 
 <p><strong>Parameters</strong></p>
@@ -1862,7 +1934,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> get order by id</p>
-<h4 id='http-request-16'>HTTP Request</h4>
+<h4 id='http-request-17'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/order/{orderID}</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -1975,7 +2047,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> feed price</p>
-<h4 id='http-request-17'>HTTP Request</h4>
+<h4 id='http-request-18'>HTTP Request</h4>
 <p><code>POST /api/v1/otc/orders/{orderID}/price</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -2094,7 +2166,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> get opening prices the app feed</p>
-<h4 id='http-request-18'>HTTP Request</h4>
+<h4 id='http-request-19'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/prices</code></p>
 
 <p><strong>Parameters</strong></p>
@@ -2150,7 +2222,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> get the latest status of price</p>
-<h4 id='http-request-19'>HTTP Request</h4>
+<h4 id='http-request-20'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}</code></p>
@@ -2261,7 +2333,7 @@ data:
 <p><strong>Summary:</strong> make a deal with the price</p>
 
 <p>If the app&#39;s asset balance is enough, the price&#39;s order will be done. Otherwise(Error code: 20002), the price will be terminated.</p>
-<h4 id='http-request-20'>HTTP Request</h4>
+<h4 id='http-request-21'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}/close</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}/close</code></p>
@@ -2360,7 +2432,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> reject the price</p>
-<h4 id='http-request-21'>HTTP Request</h4>
+<h4 id='http-request-22'>HTTP Request</h4>
 <p><code>GET /api/v1/otc/price/{priceID}/terminate</code></p>
 
 <p><code>GET /api/v1/otc/price/custom/{customID}/terminate</code></p>
@@ -2453,7 +2525,7 @@ data:
 <span class="o">}</span>
 </code></pre>
 <p><strong>Summary:</strong> get system current timestamp</p>
-<h4 id='http-request-22'>HTTP Request</h4>
+<h4 id='http-request-23'>HTTP Request</h4>
 <p><code>GET /api/v1/system/time</code></p>
 
 <p><strong>Parameters</strong></p>
@@ -2491,7 +2563,7 @@ data:
 <td>current timestamp</td>
 </tr>
 </tbody></table>
-<h1 id='company-api'>Company API</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/jadepool-saas-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>jadepool-saas-sdk-golang
+<h1 id='company-api'>Company API</h1><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>git clone https://github.com/nbltrust/hashkey-custody-sdk-golang.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>hashkey-custody-sdk-golang
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">companyKey</span> <span class="o">=</span> <span class="s1">'TyTLvCnHINbWZQag88hhmMz1'</span>
 <span class="kr">const</span> <span class="nx">companySecret</span> <span class="o">=</span> <span class="s1">'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'</span>
 <span class="kr">const</span> <span class="nx">apiAddr</span> <span class="o">=</span> <span class="s1">'http://127.0.0.1:8092'</span>
@@ -2540,7 +2612,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">getFundingWallets</span><span class="o">();</span>
 </code></pre>
 <p><strong>Summary:</strong> get funding wallets list</p>
-<h4 id='http-request-23'>HTTP Request</h4>
+<h4 id='http-request-24'>HTTP Request</h4>
 <p><code>GET /api/v1/funding/balances</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -2621,7 +2693,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">fundingTransfer</span><span class="o">(</span><span class="s">"QrLxg3XgKPMR1O8"</span><span class="o">,</span> <span class="s">"ZKz8XpwXGPBAQVE"</span><span class="o">,</span> <span class="s">"BTC"</span><span class="o">,</span> <span class="s">"0.0001"</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> funding transfer</p>
-<h4 id='http-request-24'>HTTP Request</h4>
+<h4 id='http-request-25'>HTTP Request</h4>
 <p><code>POST /api/v1/funding/transfer</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -2743,7 +2815,7 @@ data:
 </span></code></pre><pre class="highlight java tab-java"><code>  <span class="n">APIResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">companyTest</span><span class="o">.</span><span class="na">getFundingRecords</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
 </code></pre>
 <p><strong>Summary:</strong> get funding records list</p>
-<h4 id='http-request-25'>HTTP Request</h4>
+<h4 id='http-request-26'>HTTP Request</h4>
 <p><code>GET /api/v1/funding/records</code> </p>
 
 <p><strong>Parameters</strong></p>
@@ -2835,6 +2907,398 @@ data:
 <td>records</td>
 <td>array</td>
 <td>record list</td>
+</tr>
+</tbody></table>
+<h2 id='trading'>Trading</h2><h3 id='get-exchange-list'>get exchange list</h3><pre class="highlight javascript tab-javascript"><code>    <span class="k">try</span> <span class="p">{</span>
+        <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getExchanges</span><span class="p">()</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="p">{</span><span class="na">depth</span><span class="p">:</span> <span class="kc">null</span><span class="p">})</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// do something</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre>
+<p><strong>Summary:</strong> get exchange list</p>
+<h4 id='http-request-27'>HTTP Request</h4>
+<p><code>GET /api/v1/exchanges</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-Company-Key</td>
+<td>header</td>
+<td>company key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>exchanges</td>
+<td>array</td>
+<td>exchanges list</td>
+</tr>
+</tbody></table>
+<h3 id='get-exchange-balances'>get exchange balances</h3><pre class="highlight javascript tab-javascript"><code>    <span class="k">try</span> <span class="p">{</span>
+        <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getExchangeBalances</span><span class="p">(</span><span class="s2">"z41mwygl0gnl2keo"</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="p">{</span><span class="na">depth</span><span class="p">:</span> <span class="kc">null</span><span class="p">})</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// do something</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre>
+<p><strong>Summary:</strong> get exchange balances</p>
+<h4 id='http-request-28'>HTTP Request</h4>
+<p><code>GET /api/v1/exchange/balances</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-Company-Key</td>
+<td>header</td>
+<td>company key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>exchangeID</td>
+<td>query</td>
+<td>exchange id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>balances</td>
+<td>array</td>
+<td>balances list</td>
+</tr>
+</tbody></table>
+<h3 id='exchange-transfer'>exchange transfer</h3><pre class="highlight javascript tab-javascript"><code>    <span class="k">try</span> <span class="p">{</span>
+        <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">tradingTransfer</span><span class="p">(</span><span class="s2">"WALLET"</span><span class="p">,</span> <span class="s2">"rKyOD9pAJPAg54e"</span><span class="p">,</span> <span class="s2">"EXCHANGE"</span><span class="p">,</span> <span class="s2">"qdkrm8621j73zx4y"</span><span class="p">,</span> <span class="s2">"USDT"</span><span class="p">,</span> <span class="s2">"2.73"</span><span class="p">,</span> <span class="s2">"wallet to binance"</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// do something</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre>
+<p><strong>Summary:</strong> exchange transfer</p>
+<h4 id='http-request-29'>HTTP Request</h4>
+<p><code>POST /api/v1/exchange/transfer</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-Company-Key</td>
+<td>header</td>
+<td>company key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>fromType</td>
+<td>body</td>
+<td>from type: enum[EXCHANGE,WALLET]</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>fromID</td>
+<td>body</td>
+<td>from id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>toType</td>
+<td>body</td>
+<td>to type: enum[EXCHANGE,WALLET]</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>toID</td>
+<td>body</td>
+<td>to id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>body</td>
+<td>transfer amount</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>assetName</td>
+<td>body</td>
+<td>coin name</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>remark</td>
+<td>body</td>
+<td>remark</td>
+<td>No</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>withdrawID</td>
+<td>string</td>
+<td>withdraw order id</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>string</td>
+<td>real transfer amount</td>
+</tr>
+<tr>
+<td>fee</td>
+<td>string</td>
+<td>exchange fee amount</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>withdraw order status, enum[PENDING,FAILED,DONE]</td>
+</tr>
+</tbody></table>
+<h3 id='get-exchange-records-list'>get exchange records list</h3><pre class="highlight javascript tab-javascript"><code>    <span class="k">try</span> <span class="p">{</span>
+        <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">getExchangeFundings</span><span class="p">(</span><span class="s2">"z41mwygl0gnl2keo"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// do something</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre>
+<p><strong>Summary:</strong> get exchange records</p>
+<h4 id='http-request-30'>HTTP Request</h4>
+<p><code>GET /api/v1/exchange/funding/records</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-Company-Key</td>
+<td>header</td>
+<td>company key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>exchangeID</td>
+<td>query</td>
+<td>exchange id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>page</td>
+<td>query</td>
+<td>page, e.g. 1, 50 items per page</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>totalAmount</td>
+<td>number</td>
+<td>total record number</td>
+</tr>
+<tr>
+<td>records</td>
+<td>array</td>
+<td>record list</td>
+</tr>
+</tbody></table>
+<h3 id='get-exchange-record'>get exchange record</h3><pre class="highlight javascript tab-javascript"><code>    <span class="k">try</span> <span class="p">{</span>
+        <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">getExchangeFunding</span><span class="p">(</span><span class="s2">"3qky8xo2l0gpdg7erpmdwzn1"</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// do something</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre>
+<p><strong>Summary:</strong> get exchange record</p>
+<h4 id='http-request-31'>HTTP Request</h4>
+<p><code>GET /api/v1/exchange/funding/record</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-Company-Key</td>
+<td>header</td>
+<td>company key</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>id</td>
+<td>query</td>
+<td>record id</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Result</strong></p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>record id</td>
+</tr>
+<tr>
+<td>fromType</td>
+<td>string</td>
+<td>from type: enum[EXCHANGE,WALLET]</td>
+</tr>
+<tr>
+<td>fromID</td>
+<td>string</td>
+<td>from id</td>
+</tr>
+<tr>
+<td>fromName</td>
+<td>string</td>
+<td>from name</td>
+</tr>
+<tr>
+<td>toType</td>
+<td>string</td>
+<td>to type: enum[EXCHANGE,WALLET]</td>
+</tr>
+<tr>
+<td>toID</td>
+<td>string</td>
+<td>to id</td>
+</tr>
+<tr>
+<td>toName</td>
+<td>string</td>
+<td>to name</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>record status</td>
+</tr>
+<tr>
+<td>assetName</td>
+<td>string</td>
+<td>coin name</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>string</td>
+<td>amount</td>
+</tr>
+<tr>
+<td>fee</td>
+<td>string</td>
+<td>fee amount</td>
+</tr>
+<tr>
+<td>remark</td>
+<td>string</td>
+<td>record remark</td>
+</tr>
+<tr>
+<td>createdAt</td>
+<td>number</td>
+<td>unix timestamp, seconds</td>
 </tr>
 </tbody></table>
 <h1 id='callback'>Callback</h1><h2 id='order'>Order</h2>
