@@ -378,7 +378,7 @@ data:
 
 ```javascript
     try {
-        result = await api.addAppAssets("BTC", "ETH")
+        result = await api.addAppAssets(["BTC", "ETH"])
         console.log(result)
     } catch(e) {
         // do something
@@ -391,7 +391,8 @@ data:
 ```
 
 ```java
-  APIResult result = appTest.addAppAssets("BTC", "ETH");
+  String[] assets = {"BTC", "ETH"};
+  APIResult result = appTest.addAppAssets(assets);
 ```
 
 **Summary:** add wallet assets
@@ -1576,6 +1577,10 @@ data:
 {
   "price": "10000"
 }
+```
+
+```java
+  APIResult result = appTest.getMarket("ETH");
 ```
 
 **Summary:** get the asset price by USD
