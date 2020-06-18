@@ -451,7 +451,7 @@ data:
 ```
 
 ```java
-  APIResult result = appTest.getBalance("ETH")
+  APIResult result = appTest.getBalance("ETH");
 ```
 
 **Summary:** get wallet balance
