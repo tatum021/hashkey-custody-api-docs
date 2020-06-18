@@ -366,7 +366,7 @@ money | string | the amount(USD) equal to the balance
 name | string | the coin name
 price | string | the coin price(USD)
 
-### add wallet assets
+### add wallet asset
 
 ```shell
 $ go run cmd/ctl/main.go "appkey" "appsecret" "AddAsset" "BTC"
@@ -378,7 +378,7 @@ data:
 
 ```javascript
     try {
-        result = await api.addAppAssets(["BTC", "ETH"])
+        result = await api.addAppAsset("BTC")
         console.log(result)
     } catch(e) {
         // do something
@@ -391,11 +391,10 @@ data:
 ```
 
 ```java
-  String[] assets = {"BTC", "ETH"};
-  APIResult result = appTest.addAppAssets(assets);
+  APIResult result = appTest.addAppAsset("BTC");
 ```
 
-**Summary:** add wallet assets
+**Summary:** add wallet asset
 
 #### HTTP Request 
 `POST /api/v1/app/assets` 
@@ -405,7 +404,7 @@ data:
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
 | X-App-Key | header | app key | Yes | string |
-| coinNames | body | asset name list | Yes | array |
+| coinName | body | asset name | Yes | array |
 
 **Response Result**
 
@@ -1777,7 +1776,7 @@ data:
 ```
 
 ```java
-  APIResult result = companyTest.updateWalletKey("appID", true);
+  APIResult result = companyTest.updateWalletKey("appKey", true);
 ```
 
 **Summary:** update appkey attributes
