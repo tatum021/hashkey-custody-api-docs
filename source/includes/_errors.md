@@ -1,6 +1,6 @@
 # Errors
 
-The Jadepool SAAS API uses the following error codes:
+The Hashkey Custody API uses the following error codes:
 
 
 Error Code | Meaning
