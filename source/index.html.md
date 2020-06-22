@@ -625,6 +625,7 @@ data:
 | amount | query | item count on this page, e.g. 10 | Yes | string |
 | coins | query | coin list, can be empty string | No | string |
 | state | query | order state, can be empty string | No | string |
+| bizType | query | order type, can be empty string | No | string |
 
 **Response Result**
 
