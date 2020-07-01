@@ -1397,6 +1397,7 @@ data:
       "customID": "0320042810120495",
       "price": "7739.90",
       "invalidAt": 1588151193,
+      'chooseInvalidAt': 1593595402,
       "quoteAmount": "9458.15779",
       "baseAmount": "1.222",
       "orderID": "8yxkewovldjmmqj2m0n9pz71"
@@ -1437,6 +1438,7 @@ data:
   "customID": "0320042810120495",
   "price": "7739.90",
   "invalidAt": 1588151193,
+  'chooseInvalidAt': 1593595402,
   "quoteAmount": "9458.15779",
   "baseAmount": "1.222",
   "orderID": "8yxkewovldjmmqj2m0n9pz71"
@@ -1470,6 +1472,7 @@ price | string | price
 quoteAmount | string | the quote amount by the price
 baseAmount | string | the base amount by the price
 invalidAt | number | invalid timestamp
+chooseInvalidAt | number | choose invalid timestamp
 orderID | string | the associated order id
 
 ### close price
