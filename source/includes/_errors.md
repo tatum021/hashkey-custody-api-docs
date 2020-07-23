@@ -1,6 +1,6 @@
 # Errors
 
-The Hashkey Custody API uses the following error codes:
+The Hashkey Prime API uses the following error codes:
 
 
 Error Code | Meaning

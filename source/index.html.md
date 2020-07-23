@@ -1,6 +1,6 @@
 --- 
 
-title: Hashkey Custody API
+title: HashKey Prime API
 
 language_tabs: 
    - shell
@@ -20,7 +20,7 @@ search: true
 
 # Introduction 
 
-Hashkey Custody API
+Hashkey Prime API
 
 Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/hashkey-custody-sdk-nodejs), [Go SDK](https://github.com/nbltrust/hashkey-custody-sdk-golang), [Java SDK](https://github.com/nbltrust/jadepool-saas-sdk-java).
 
@@ -1092,7 +1092,7 @@ value | string | the interest value
 
 ## OTC
 
-Provide better pricing and fast settlement for large trades. The customer can trade on the OTC tab in custody dashboard. The following are normal processs.
+Provide better pricing and fast settlement for large trades. The customer can trade on the OTC tab in dashboard. The following are normal processs.
 
 1. [Set support quote symbols](#set-quote-symbols) for the customer. The customer will see the quote symbols on the OTC tab.
 2. An open order would be created after the customer get quote on the OTC tab. Get that by [the API](#get-open-orders).
