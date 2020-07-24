@@ -2229,6 +2229,7 @@ createdAt| number |  unix timestamp, seconds
 Value | Type | Description
 --------- | ------- | ---------
 id | string | the order ID
+withdrawID | string | withdraw id
 coinName | string | unique token name
 txid | string | transaction hash
 state | string | order state
