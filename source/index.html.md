@@ -2206,6 +2206,7 @@ createdAt| number |  unix timestamp, seconds
 ```json
 {
   "id": "2XB0eKAvj7KvjZDk59zl",
+  "withdrawID": "7Cab38EA42538f4D8C2",
   "bizType": "DEPOSIT",
   "coinName": "ETH",
   "type": "ETH",
@@ -2302,3 +2303,7 @@ decipher = AES.new(aeskey, AES.MODE_CBC, IV=iv)
 plaintext = _unpad(decipher.decrypt(base64.b64decode(base64EncryptedAppSecret)))
 print(plaintext)
 ```
+
+# ERROR CODE
+
+>> 10001 -- bad key
