@@ -2303,7 +2303,3 @@ decipher = AES.new(aeskey, AES.MODE_CBC, IV=iv)
 plaintext = _unpad(decipher.decrypt(base64.b64decode(base64EncryptedAppSecret)))
 print(plaintext)
 ```
-
-# ERROR CODE
-
->> 10001 -- bad key
