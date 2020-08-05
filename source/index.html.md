@@ -625,7 +625,7 @@ data:
 | amount | query | item count on this page, e.g. 10 | Yes | string |
 | coins | query | coin list, can be empty string | No | string |
 | state | query | order state, can be empty string | No | string |
-| bizType | query | order type, can be empty string | No | string |
+| bizType | query | order type, TRANSFER_IN/TRANSFER_OUT/WITHDRAW/DEPOSIT | No | string |
 
 **Response Result**
 
@@ -655,7 +655,9 @@ data:
   "to": "0xF0706B7Cab38EA42538f4D8C279B6F57ad1d4072",
   "txid": "0xcfc4cb925c77c2ea10be3c233029fc1f05d0ddffe7396920ddd493544e52933d",
   "type": "ETH",
-  "value": "0.045000000000000000"
+  "value": "0.045000000000000000",
+  "note": "note",
+  "message": ""
 }
 ```
 
@@ -700,13 +702,47 @@ confirmations | number | number of transaction confirmations
 fee | string | fee burnt for the transaction
 from | string | transaction input
 id | string | order id
-memo | string | order note
+memo | string | order memo
 n | number | order index
 state | string | order state
 to | string | transaction output
 txid | string | transaction hash
 type | string | token type
 value | string | transaction value
+note | string | order note
+message | string | message to recipient of transfer
+
+### update wallet order
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "UpdateOrder" "rNXBQGJlw09apVyg4nDo" "123"
+code: 0
+message: success
+data:
+{}
+```
+
+```go
+	result, _ = app.UpdateOrder("rNXBQGJlw09apVyg4nDo", "123")
+```
+
+**Summary:** update wallet order
+
+#### HTTP Request 
+`PUT /api/v1/app/order/{id}` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| id | path | order id | Yes | string |
+| note | body | note | No | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
 
 ### withdraw 
 
@@ -771,6 +807,73 @@ data:
 | to | body | receive address | Yes | string |
 | value | body | withdraw amount | Yes | string |
 | memo | body | address memo | No | string |
+| note | body | note | No | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+bizType | string | order type
+block | number | the block transaction mined in
+coinName | string | unique token name
+confirmations | number | number of transaction confirmations
+fee | string | fee burnt for the transaction
+from | string | transaction input
+id | string | order id
+memo | string | address memo
+n | number | order index
+state | string | order state
+to | string | transaction output
+txid | string | transaction hash
+type | string | token type
+value | string | transaction value
+note | string | order note
+
+### transfer
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" Transfer "e5dJyVp8R3B1m4o" "ETH" "0.01"
+code: 0
+message: success
+data:
+{
+  "bizType": "TRANSFER_OUT",
+  "coinName": "ETH",
+  "confirmations": 0,
+  "fee": "0",
+  "from": "L6RayqPn4jXExW0",
+  "id": "orders4eq8kz1235jz2yj0n9rvpwl7",
+  "memo": "",
+  "message": "",
+  "n": 0,
+  "note": "",
+  "state": "DONE",
+  "to": "e5dJyVp8R3B1m4o",
+  "txid": "",
+  "type": "ETH",
+  "value": "0.01"
+}
+```
+
+```go
+	result, _ = app.Transfer("e5dJyVp8R3B1m4o", "ETH", "0.01")
+```
+
+**Summary:** transfer
+
+#### HTTP Request 
+`POST /api/v1/app/{coinName}/transfer` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| coinName | path | coin type | Yes | string |
+| to | body | receive wallet id | Yes | string |
+| value | body | transfer amount | Yes | string |
+| note | body | transfer note, can be empty string | Yes | string |
+| message | body | transfer message, can be empty string | Yes | string |
 
 **Response Result**
 
@@ -790,6 +893,8 @@ to | string | transaction output
 txid | string | transaction hash
 type | string | token type
 value | string | transaction value
+note | string | transfer note
+message | string | transfer message
 
 ## Staking
 ### get staking validators 
@@ -1802,8 +1907,8 @@ Value | Type | Description
 --------- | ------- | ---------
 
 
-## Funding
-### get funding wallets list 
+## Lending
+### get lending wallets list 
 
 ```shell
 $ go run cmd/ctl/main.go "companykey" "companysecret" "GetFundingWallets"
@@ -1850,7 +1955,7 @@ data:
   APIResult result = companyTest.getFundingWallets();
 ```
 
-**Summary:** get funding wallets list
+**Summary:** get lending wallets list
 
 #### HTTP Request 
 `GET /api/v1/funding/balances` 
@@ -1867,7 +1972,7 @@ Value | Type | Description
 --------- | ------- | ---------
 wallets | array | wallet list
 
-### funding transfer 
+### transfer 
 
 ```shell
 $ go run cmd/ctl/main.go "companykey" "companysecret" "FundingTransfer" "QrLxg3XgKPMR1O8" "ZKz8XpwXGPBAQVE" "BTC" "0.0001"
@@ -1922,7 +2027,7 @@ data:
   APIResult result = companyTest.fundingTransfer("QrLxg3XgKPMR1O8", "ZKz8XpwXGPBAQVE", "BTC", "0.0001");
 ```
 
-**Summary:** funding transfer
+**Summary:** transfer
 
 #### HTTP Request 
 `POST /api/v1/funding/transfer` 
@@ -1936,7 +2041,8 @@ data:
 | to | body | to wallet id | Yes | string |
 | value | body | transfer amount | Yes | string |
 | assetName | body | coin name | Yes | string |
-| memo | body | address memo | No | string |
+| memo | body | note | No | string |
+| message | body | message to recipient | No | string |
 
 **Response Result**
 
@@ -1945,7 +2051,7 @@ Value | Type | Description
 balances | array | balances after transfer
 record | object | transfer record
 
-### get funding records list 
+### get records list 
 
 ```shell
 $ go run cmd/ctl/main.go "companykey" "companysecret" "GetFundingRecords" 1 10
@@ -2001,7 +2107,7 @@ data:
   APIResult result = companyTest.getFundingRecords(1, 10);
 ```
 
-**Summary:** get funding records list
+**Summary:** get records list
 
 #### HTTP Request 
 `GET /api/v1/funding/records` 
