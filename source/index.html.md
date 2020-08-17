@@ -657,7 +657,9 @@ data:
   "type": "ETH",
   "value": "0.045000000000000000",
   "note": "note",
-  "message": ""
+  "message": "",
+  "createdAt": 1569306519,
+  "finalizedAt": 1569306519
 }
 ```
 
@@ -711,6 +713,8 @@ type | string | token type
 value | string | transaction value
 note | string | order note
 message | string | message to recipient of transfer
+createdAt | number |  unix timestamp, seconds
+finalizedAt | number |  unix timestamp, seconds
 
 ### update wallet order
 
