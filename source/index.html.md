@@ -1,6 +1,6 @@
 --- 
 
-title: HashKey Prime API
+title: HashKey Prime API Documentation
 
 language_tabs: 
    - shell
@@ -20,13 +20,56 @@ search: true
 
 # Introduction 
 
-Hashkey Prime API
+Hashkey Prime provides a simple and robust RESTful API and client SDK to integrate digital currency wallets with your application. Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/hashkey-custody-sdk-nodejs), [Go SDK](https://github.com/nbltrust/hashkey-custody-sdk-golang), [Java SDK](https://github.com/nbltrust/jadepool-saas-sdk-java).We have 2 level API, management API and wallet API.
 
-Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/hashkey-custody-sdk-nodejs), [Go SDK](https://github.com/nbltrust/hashkey-custody-sdk-golang), [Java SDK](https://github.com/nbltrust/jadepool-saas-sdk-java).
+The management API enables the following:
 
-# API Server URL:
+- Creation of Wallets
+- Lending between wallets
+- Manage the assets or positions in exchange accounts
 
-### sandbox: https://openapi.jadepool.io
+The wallet API enables the following:
+
+- Wallet balance and transaction listing
+- Transaction creation
+- Transaction monitoring and notifications
+- Provide quote in OTC market as a OTC Service Provider
+
+# Environments
+
+HashKey Prime has two separate environments available for development and production. For security reasons, all API requests are made using TLS over HTTPS.
+
+## Production Environment
+The production endpoint is live and used by partners.
+
+- Production Site: https://prime.hashkey.com/
+- Production API endpoint: https://prime.hashkey.com/saas-api
+
+## Test Environment
+The test environment is entirely separate from BitGo's production environment and there is no overlap in either data or accounts. You will need to create accounts at https://saas.jadepool.io/.
+
+- Test Site: https://saas.jadepool.io/
+- Test API endpoint: https://openapi.jadepool.io
+
+This environment is connected to the TestNet networks of various digital currencies we support. Tokens on these networks can be obtained from faucets and do not represent real money.
+
+# Coin / Digital Currency Support
+For production environment, please refer the document.
+> https://XXXXX
+
+For test Environment, please refer the list:
+
+| Coin | Blockchain | Description |
+| ---- | ---------- | ----------- |
+| ETH | Ethereum | Koven testnet |
+| NASH | Ethereum | Koven testnet, ERC20 |
+| BTC | Bitcoin | public testnet |
+| EOS | Eosio | Jungle testnet |
+| ATOM | Cosmos | Private testnet |
+| IRIS | Irisnet | Private testnet |
+
+# API Authentication
+
 
 
 # General Structure
@@ -2409,3 +2452,9 @@ decipher = AES.new(aeskey, AES.MODE_CBC, IV=iv)
 plaintext = _unpad(decipher.decrypt(base64.b64decode(base64EncryptedAppSecret)))
 print(plaintext)
 ```
+
+# Change Log
+
+Release Time | API | New / Update | Description
+-------------- | -------------- | -------------- | --------------
+2020-09-04 14:00 | - | - | update the documentation
