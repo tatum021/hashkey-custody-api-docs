@@ -586,7 +586,16 @@ message: success
 data:
 {
   "assets": [
-    {id: 1, name: "ETH"}
+    {
+      "id": 1,
+      "name": "ETH",
+      "absFee": "0.0050000000",
+      "canDeposit": true,
+      "canWithdraw": true,
+      "decimal": 18,
+      "description": "ETH",
+      "feeCoin": "ETH"
+    }
   ]
 }
 ```
@@ -607,6 +616,19 @@ data:
 Value | Type | Description
 --------- | ------- | ---------
 assets | array | the wallet coin list
+
+asset:
+
+Value | Type | Description
+--------- | ------- | ---------
+id | number | the asset id
+name | string | the asset name
+absFee | string | withdraw fee
+canDeposit | boolean | whether or not the asset can be deposited
+canWithdraw | boolean | whether or not the asset can be withdrawn
+decimal | number | the asset decimal
+description | string | the asset description
+feeCoin | string | withdraw fee coin
 
 ### get wallet orders
 
