@@ -589,12 +589,32 @@ data:
     {
       "id": 1,
       "name": "ETH",
-      "absFee": "0.0050000000",
+      "absFee": "0.005",
       "canDeposit": true,
       "canWithdraw": true,
       "decimal": 18,
       "description": "ETH",
-      "feeCoin": "ETH"
+      "feeCoin": "ETH",
+      "priorityAverage": {
+        "fee": "0.02",
+        "priority": "4.0"
+      },
+      "priorityFast": {
+        "fee": "0.025",
+        "priority": "5.0"
+      },
+      "prioritySlow": {
+        "fee": "0.01",
+        "priority": "2.0"
+      },
+      "priorityVeryFast": {
+        "fee": "0.03",
+        "priority": "6.0"
+      },
+      "priorityVerySlow": {
+        "fee": "0.015",
+        "priority": "3.0"
+      }
     }
   ]
 }
@@ -629,6 +649,18 @@ canWithdraw | boolean | whether or not the asset can be withdrawn
 decimal | number | the asset decimal
 description | string | the asset description
 feeCoin | string | withdraw fee coin
+priorityAverage | object | withdraw fee with average priority
+priorityFast | object | withdraw fee with fast priority
+prioritySlow | object | withdraw fee with slow priority
+priorityVeryFast | object | withdraw fee with very fast priority
+priorityVerySlow | object | withdraw fee with very slow priority
+
+priority:
+
+Value | Type | Description
+--------- | ------- | ---------
+fee | string | fee with the priority
+priority | string | the priority, set into the withdraw request
 
 ### get wallet orders
 
@@ -873,6 +905,7 @@ data:
 | value | body | withdraw amount | Yes | string |
 | memo | body | address memo | No | string |
 | note | body | note | No | string |
+| priority | body | priority | No | string |
 
 **Response Result**
 
