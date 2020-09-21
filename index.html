@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>HashKey Prime API</title>
+    <title>HashKey Prime API Documentation</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -225,12 +225,21 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#api-server-url" class="toc-h1 toc-link" data-title="API Server URL:">API Server URL:</a>
+            <a href="#environments" class="toc-h1 toc-link" data-title="Environments">Environments</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#sandbox-https-openapi-jadepool-io" class="toc-h2 toc-link" data-title="sandbox: https://openapi.jadepool.io">sandbox: https://openapi.jadepool.io</a>
+                    <a href="#production-environment" class="toc-h2 toc-link" data-title="Production Environment">Production Environment</a>
+                  </li>
+                  <li>
+                    <a href="#test-environment" class="toc-h2 toc-link" data-title="Test Environment">Test Environment</a>
                   </li>
               </ul>
+          </li>
+          <li>
+            <a href="#coin-digital-currency-support" class="toc-h1 toc-link" data-title="Coin / Digital Currency Support">Coin / Digital Currency Support</a>
+          </li>
+          <li>
+            <a href="#api-authentication" class="toc-h1 toc-link" data-title="API Authentication">API Authentication</a>
           </li>
           <li>
             <a href="#general-structure" class="toc-h1 toc-link" data-title="General Structure">General Structure</a>
@@ -431,6 +440,9 @@
             <a href="#aes-encryption" class="toc-h1 toc-link" data-title="AES Encryption">AES Encryption</a>
           </li>
           <li>
+            <a href="#change-log" class="toc-h1 toc-link" data-title="Change Log">Change Log</a>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
@@ -442,10 +454,90 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Hashkey Prime API</p>
+<p>Hashkey Prime provides a simple and robust RESTful API and client SDK to integrate digital currency wallets with your application. Feel free to check out our <a href="https://github.com/nbltrust/hashkey-custody-sdk-nodejs">NodeJs SDK</a>, <a href="https://github.com/nbltrust/hashkey-custody-sdk-golang">Go SDK</a>, <a href="https://github.com/nbltrust/jadepool-saas-sdk-java">Java SDK</a>.We have 2 level API, management API and wallet API.</p>
 
-<p>Feel free to check out our <a href="https://github.com/nbltrust/hashkey-custody-sdk-nodejs">NodeJs SDK</a>, <a href="https://github.com/nbltrust/hashkey-custody-sdk-golang">Go SDK</a>, <a href="https://github.com/nbltrust/jadepool-saas-sdk-java">Java SDK</a>.</p>
-<h1 id='api-server-url'>API Server URL:</h1><h3 id='sandbox-https-openapi-jadepool-io'>sandbox: https://openapi.jadepool.io</h3><h1 id='general-structure'>General Structure</h1>
+<p>The management API enables the following:</p>
+
+<ul>
+<li>Creation of Wallets</li>
+<li>Lending between wallets</li>
+<li>Manage the assets or positions in exchange accounts</li>
+</ul>
+
+<p>The wallet API enables the following:</p>
+
+<ul>
+<li>Wallet balance and transaction listing</li>
+<li>Transaction creation</li>
+<li>Transaction monitoring and notifications</li>
+<li>Provide quote in OTC market as a OTC Service Provider</li>
+</ul>
+<h1 id='environments'>Environments</h1>
+<p>HashKey Prime has two separate environments available for development and production. For security reasons, all API requests are made using TLS over HTTPS.</p>
+<h2 id='production-environment'>Production Environment</h2>
+<p>The production endpoint is live and used by partners.</p>
+
+<ul>
+<li>Production Site: https://prime.hashkey.com/</li>
+<li>Production API endpoint: https://prime.hashkey.com/saas-api</li>
+</ul>
+<h2 id='test-environment'>Test Environment</h2>
+<p>The test environment is entirely separate from BitGo&#39;s production environment and there is no overlap in either data or accounts. You will need to create accounts at https://saas.jadepool.io/.</p>
+
+<ul>
+<li>Test Site: https://saas.jadepool.io/</li>
+<li>Test API endpoint: https://openapi.jadepool.io</li>
+</ul>
+
+<p>This environment is connected to the TestNet networks of various digital currencies we support. Tokens on these networks can be obtained from faucets and do not represent real money.</p>
+<h1 id='coin-digital-currency-support'>Coin / Digital Currency Support</h1>
+<p>For production environment, please refer the document.</p>
+
+<blockquote>
+<p>https://XXXXX</p>
+</blockquote>
+
+<p>For test Environment, please refer the list:</p>
+
+<table><thead>
+<tr>
+<th>Coin</th>
+<th>Blockchain</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ETH</td>
+<td>Ethereum</td>
+<td>Koven testnet</td>
+</tr>
+<tr>
+<td>NASH</td>
+<td>Ethereum</td>
+<td>Koven testnet, ERC20</td>
+</tr>
+<tr>
+<td>BTC</td>
+<td>Bitcoin</td>
+<td>public testnet</td>
+</tr>
+<tr>
+<td>EOS</td>
+<td>Eosio</td>
+<td>Jungle testnet</td>
+</tr>
+<tr>
+<td>ATOM</td>
+<td>Cosmos</td>
+<td>Private testnet</td>
+</tr>
+<tr>
+<td>IRIS</td>
+<td>Irisnet</td>
+<td>Private testnet</td>
+</tr>
+</tbody></table>
+<h1 id='api-authentication'>API Authentication</h1><h1 id='general-structure'>General Structure</h1>
 <p>This is the general request structure for verifing the request by server.</p>
 
 <p><strong>Parameters</strong></p>
@@ -1163,7 +1255,36 @@ message: success
 data:
 <span class="o">{</span>
   <span class="s2">"assets"</span>: <span class="o">[</span>
-    <span class="o">{</span>id: 1, name: <span class="s2">"ETH"</span><span class="o">}</span>
+    <span class="o">{</span>
+      <span class="s2">"id"</span>: 1,
+      <span class="s2">"name"</span>: <span class="s2">"ETH"</span>,
+      <span class="s2">"absFee"</span>: <span class="s2">"0.005"</span>,
+      <span class="s2">"canDeposit"</span>: <span class="nb">true</span>,
+      <span class="s2">"canWithdraw"</span>: <span class="nb">true</span>,
+      <span class="s2">"decimal"</span>: 18,
+      <span class="s2">"description"</span>: <span class="s2">"ETH"</span>,
+      <span class="s2">"feeCoin"</span>: <span class="s2">"ETH"</span>,
+      <span class="s2">"priorityAverage"</span>: <span class="o">{</span>
+        <span class="s2">"fee"</span>: <span class="s2">"0.02"</span>,
+        <span class="s2">"priority"</span>: <span class="s2">"4.0"</span>
+      <span class="o">}</span>,
+      <span class="s2">"priorityFast"</span>: <span class="o">{</span>
+        <span class="s2">"fee"</span>: <span class="s2">"0.025"</span>,
+        <span class="s2">"priority"</span>: <span class="s2">"5.0"</span>
+      <span class="o">}</span>,
+      <span class="s2">"prioritySlow"</span>: <span class="o">{</span>
+        <span class="s2">"fee"</span>: <span class="s2">"0.01"</span>,
+        <span class="s2">"priority"</span>: <span class="s2">"2.0"</span>
+      <span class="o">}</span>,
+      <span class="s2">"priorityVeryFast"</span>: <span class="o">{</span>
+        <span class="s2">"fee"</span>: <span class="s2">"0.03"</span>,
+        <span class="s2">"priority"</span>: <span class="s2">"6.0"</span>
+      <span class="o">}</span>,
+      <span class="s2">"priorityVerySlow"</span>: <span class="o">{</span>
+        <span class="s2">"fee"</span>: <span class="s2">"0.015"</span>,
+        <span class="s2">"priority"</span>: <span class="s2">"3.0"</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
   <span class="o">]</span>
 <span class="o">}</span>
 </code></pre>
@@ -1204,6 +1325,103 @@ data:
 <td>assets</td>
 <td>array</td>
 <td>the wallet coin list</td>
+</tr>
+</tbody></table>
+
+<p>asset:</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>number</td>
+<td>the asset id</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>the asset name</td>
+</tr>
+<tr>
+<td>absFee</td>
+<td>string</td>
+<td>withdraw fee</td>
+</tr>
+<tr>
+<td>canDeposit</td>
+<td>boolean</td>
+<td>whether or not the asset can be deposited</td>
+</tr>
+<tr>
+<td>canWithdraw</td>
+<td>boolean</td>
+<td>whether or not the asset can be withdrawn</td>
+</tr>
+<tr>
+<td>decimal</td>
+<td>number</td>
+<td>the asset decimal</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>the asset description</td>
+</tr>
+<tr>
+<td>feeCoin</td>
+<td>string</td>
+<td>withdraw fee coin</td>
+</tr>
+<tr>
+<td>priorityAverage</td>
+<td>object</td>
+<td>withdraw fee with average priority</td>
+</tr>
+<tr>
+<td>priorityFast</td>
+<td>object</td>
+<td>withdraw fee with fast priority</td>
+</tr>
+<tr>
+<td>prioritySlow</td>
+<td>object</td>
+<td>withdraw fee with slow priority</td>
+</tr>
+<tr>
+<td>priorityVeryFast</td>
+<td>object</td>
+<td>withdraw fee with very fast priority</td>
+</tr>
+<tr>
+<td>priorityVerySlow</td>
+<td>object</td>
+<td>withdraw fee with very slow priority</td>
+</tr>
+</tbody></table>
+
+<p>priority:</p>
+
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fee</td>
+<td>string</td>
+<td>fee with the priority</td>
+</tr>
+<tr>
+<td>priority</td>
+<td>string</td>
+<td>the priority, set into the withdraw request</td>
 </tr>
 </tbody></table>
 <h3 id='get-wallet-orders'>get wallet orders</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"GetOrders"</span> 1 10
@@ -1622,6 +1840,13 @@ data:
 <td>note</td>
 <td>body</td>
 <td>note</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>priority</td>
+<td>body</td>
+<td>priority</td>
 <td>No</td>
 <td>string</td>
 </tr>
@@ -4487,7 +4712,23 @@ mode=auto&amp;nonce=15833762841261615239762485&amp;timestamp=1583376284
 <span class="n">decipher</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">aeskey</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_CBC</span><span class="p">,</span> <span class="n">IV</span><span class="o">=</span><span class="n">iv</span><span class="p">)</span>
 <span class="n">plaintext</span> <span class="o">=</span> <span class="n">_unpad</span><span class="p">(</span><span class="n">decipher</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">base64EncryptedAppSecret</span><span class="p">)))</span>
 <span class="k">print</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span>
-</code></pre><h1 id='errors'>Errors</h1>
+</code></pre><h1 id='change-log'>Change Log</h1>
+<table><thead>
+<tr>
+<th>Release Time</th>
+<th>API</th>
+<th>New / Update</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>2020-09-04 14:00</td>
+<td>-</td>
+<td>-</td>
+<td>update the documentation</td>
+</tr>
+</tbody></table>
+<h1 id='errors'>Errors</h1>
 <p>The Hashkey Prime API uses the following error codes:</p>
 
 <table><thead>
