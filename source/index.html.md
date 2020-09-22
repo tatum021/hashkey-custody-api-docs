@@ -46,7 +46,7 @@ The production endpoint is live and used by partners.
 - Production API endpoint: https://prime.hashkey.com/saas-api
 
 ## Test Environment
-The test environment is entirely separate from BitGo's production environment and there is no overlap in either data or accounts. You will need to create accounts at https://saas.jadepool.io/.
+The test environment is entirely separate from the production environment and there is no overlap in either data or accounts. You will need to create accounts at https://saas.jadepool.io/.
 
 - Test Site: https://saas.jadepool.io/
 - Test API endpoint: https://openapi.jadepool.io
