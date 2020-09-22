@@ -20,7 +20,7 @@ search: true
 
 # Introduction 
 
-Hashkey Prime provides a simple and robust RESTful API and client SDK to integrate digital currency wallets with your application. Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/hashkey-custody-sdk-nodejs), [Go SDK](https://github.com/nbltrust/hashkey-custody-sdk-golang), [Java SDK](https://github.com/nbltrust/jadepool-saas-sdk-java).We have 2 level API, management API and wallet API.
+Hashkey Prime provides a simple and robust RESTful API and client SDK to integrate digital currency wallets with your application. Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/hashkey-custody-sdk-nodejs), [Go SDK](https://github.com/nbltrust/hashkey-custody-sdk-go), [Java SDK](https://github.com/nbltrust/jadepool-saas-sdk-java).We have 2 level API, management API and wallet API.
 
 The management API enables the following:
 
