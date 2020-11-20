@@ -1838,7 +1838,7 @@ Value | Type | Description
 --------- | ------- | ---------
 timestamp | number | current timestamp
 
-# Company API
+# Management API
 
 ```shell
 $ git clone https://github.com/nbltrust/hashkey-custody-sdk-golang.git && cd hashkey-custody-sdk-golang
@@ -1864,7 +1864,7 @@ APIContext companyContext = new APIContext(endpoint, appKey, appSecret);
 Company companyTest = new Company(companyContext);
 ```
 
-The company key and secret can be generated in the company settings.
+The management key and secret can be generated in the team settings.
 
 ## Wallet
 ### create
