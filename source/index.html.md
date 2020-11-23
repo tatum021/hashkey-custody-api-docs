@@ -2425,7 +2425,7 @@ createdAt| number |  unix timestamp, seconds
   "block": 13721091,
   "affirmativeConfirmation": 20,
   "confirmations": 27,
-  "sign": "796dde931a15c98edc3dfdb65a2c2addfde422f217a1f6934be9226542839aa0"
+  "sign": "fb0f53f33bba4cfa4bcb2c81e976bbe817633ba87a9904b6c3de293da3805cb3"
 }
 ```
 
@@ -2450,6 +2450,46 @@ block | number | the block transaction mined in
 memo | string | order note, editable on admin
 n | number | the order index
 sign | string | hex string, sign parameters with HMACSHA256
+
+### Signature
+The sign can be verified by the following steps:
+
+1. Form a String message (sorted) that contains data prarams(exclude the sign self). 
+
+    if body params is: 
+</br>
+`
+{
+  "id": "2XB0eKAvj7KvjZDk59zl",
+  "withdrawID": "7Cab38EA42538f4D8C2",
+  "bizType": "DEPOSIT",
+  "coinName": "ETH",
+  "type": "ETH",
+  "state": "DONE",
+  "memo": "",
+  "value": "1.000000000000000000",
+  "fee": "0.000000000000000000",
+  "from": "0xF0706B7Cab38EA42538f4D8C279B6F57ad1d4072",
+  "to": "0x29152c850456899A78178622B6543BBFfC224495",
+  "txid": "0x8487e23bbf71f1763e015598283ae891cc5ea8d444f87a0a60a0b5eb7e1a4d59",
+  "n": 0,
+  "block": 13721091,
+  "affirmativeConfirmation": 20,
+  "confirmations": 27
+}
+`
+
+    The message string looks like this:
+</br>
+`
+affirmativeConfirmation=20&bizType=DEPOSIT&block=13721091&coinName=ETH&confirmations=27&fee=0.000000000000000000&from=0xF0706B7Cab38EA42538f4D8C279B6F57ad1d4072&id=2XB0eKAvj7KvjZDk59zl&memo=&n=0&state=DONE&to=0x29152c850456899A78178622B6543BBFfC224495&txid=0x8487e23bbf71f1763e015598283ae891cc5ea8d444f87a0a60a0b5eb7e1a4d59&type=ETH&value=1.000000000000000000&withdrawID=7Cab38EA42538f4D8C2
+`
+
+2. Sign the message using HMAC-SHA256. If the AppSecret is `exzYZT8IubM9Jxq1PWU5QjZ0JFP81bvCmlf1fFjW0b87Zr6eAMdofeYlhAMZxPzo`, the sign param would be like this:
+</br>
+`
+fb0f53f33bba4cfa4bcb2c81e976bbe817633ba87a9904b6c3de293da3805cb3
+`
 
 # Signature
 1. Get the current timestamp (seconds) and the nonce (random string). Please make sure the timestamp error not exceed 5 minutes and the nonce not repeated in 10 minutes.
