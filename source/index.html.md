@@ -2452,9 +2452,9 @@ n | number | the order index
 sign | string | hex string, sign parameters with HMACSHA256
 
 ### Signature
-The sign can be verified by the following steps:
+In order to prove the message sender's identity, it should be verified by the following steps:
 
-1. Form a String message (sorted) that contains data prarams(exclude the sign self). 
+1. Form a String message (sorted) that contains data prarams(exclude the sign param). 
 
     if body params is: 
 </br>

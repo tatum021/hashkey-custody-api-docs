@@ -2451,6 +2451,46 @@ memo | string | order note, editable on admin
 n | number | the order index
 sign | string | hex string, sign parameters with HMACSHA256
 
+### 签名
+上面的 sign 参数可以通过下面的方法验证，以保证这个回调结果的发送方身份:
+
+1. 形成一个字符串消息（排序），其中包含数据prarams（排除 sign）。
+
+    如果body params是: 
+</br>
+`
+{
+  "id": "2XB0eKAvj7KvjZDk59zl",
+  "withdrawID": "7Cab38EA42538f4D8C2",
+  "bizType": "DEPOSIT",
+  "coinName": "ETH",
+  "type": "ETH",
+  "state": "DONE",
+  "memo": "",
+  "value": "1.000000000000000000",
+  "fee": "0.000000000000000000",
+  "from": "0xF0706B7Cab38EA42538f4D8C279B6F57ad1d4072",
+  "to": "0x29152c850456899A78178622B6543BBFfC224495",
+  "txid": "0x8487e23bbf71f1763e015598283ae891cc5ea8d444f87a0a60a0b5eb7e1a4d59",
+  "n": 0,
+  "block": 13721091,
+  "affirmativeConfirmation": 20,
+  "confirmations": 27
+}
+`
+
+    消息字符串如下:
+</br>
+`
+affirmativeConfirmation=20&bizType=DEPOSIT&block=13721091&coinName=ETH&confirmations=27&fee=0.000000000000000000&from=0xF0706B7Cab38EA42538f4D8C279B6F57ad1d4072&id=2XB0eKAvj7KvjZDk59zl&memo=&n=0&state=DONE&to=0x29152c850456899A78178622B6543BBFfC224495&txid=0x8487e23bbf71f1763e015598283ae891cc5ea8d444f87a0a60a0b5eb7e1a4d59&type=ETH&value=1.000000000000000000&withdrawID=7Cab38EA42538f4D8C2
+`
+
+2. 使用HMAC-SHA256对消息进行签名。如果 AppSecret 是 `exzYZT8IubM9Jxq1PWU5QjZ0JFP81bvCmlf1fFjW0b87Zr6eAMdofeYlhAMZxPzo`, 那么sign param 如下:
+</br>
+`
+fb0f53f33bba4cfa4bcb2c81e976bbe817633ba87a9904b6c3de293da3805cb3
+`
+
 # 签名
 1. G获取当前的时间戳（秒）和nonce（随机字符串）。请确保时间戳错误不超过5分钟，nonce不在10分钟内重复。
 
