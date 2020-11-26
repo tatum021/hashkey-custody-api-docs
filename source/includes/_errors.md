@@ -20,3 +20,6 @@ Error Code | Meaning
 20008 | In Blacklist -- The request address in the blacklist.
 20009 | Not In Whitelist -- The request address not in the whitelist.
 20010 | Not In Package -- The package don't support this feature. Please upgrade the package.
+20011 | Hour Limit -- The request hit the hour limit of order.
+20012 | Day Limit -- The request hit the day limit of order.
+20013 | Transaction Limit -- The request hit the transaction limit of order.

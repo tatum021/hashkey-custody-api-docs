@@ -1,6 +1,6 @@
 --- 
 
-title: HashKey Prime API
+title: HashKey Prime API Documentation
 
 language_tabs: 
    - shell
@@ -20,13 +20,56 @@ search: true
 
 # Introduction 
 
-Hashkey Prime API
+Hashkey Prime provides a simple and robust RESTful API and client SDK to integrate digital currency wallets with your application. Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/hashkey-custody-sdk-nodejs), [Go SDK](https://github.com/nbltrust/hashkey-custody-sdk-go), [Java SDK](https://github.com/nbltrust/jadepool-saas-sdk-java).We have 2 level API, management API and wallet API.
 
-Feel free to check out our [NodeJs SDK](https://github.com/nbltrust/hashkey-custody-sdk-nodejs), [Go SDK](https://github.com/nbltrust/hashkey-custody-sdk-golang), [Java SDK](https://github.com/nbltrust/jadepool-saas-sdk-java).
+The management API enables the following:
 
-# API Server URL:
+- Creation of Wallets
+- Lending between wallets
+- Manage the assets or positions in exchange accounts
 
-### sandbox: https://openapi.jadepool.io
+The wallet API enables the following:
+
+- Wallet balance and transaction listing
+- Transaction creation
+- Transaction monitoring and notifications
+- Provide quote in OTC market as a OTC Service Provider
+
+# Environments
+
+HashKey Prime has two separate environments available for development and production. For security reasons, all API requests are made using TLS over HTTPS.
+
+## Production Environment
+The production endpoint is live and used by partners.
+
+- Production Site: https://prime.hashkey.com/
+- Production API endpoint: https://prime.hashkey.com/saas-api
+
+## Test Environment
+The test environment is entirely separate from the production environment and there is no overlap in either data or accounts. You will need to create accounts at https://saas.jadepool.io/.
+
+- Test Site: https://saas.jadepool.io/
+- Test API endpoint: https://openapi.jadepool.io
+
+This environment is connected to the TestNet networks of various digital currencies we support. Tokens on these networks can be obtained from faucets and do not represent real money.
+
+# Coin / Digital Currency Support
+For production environment, please refer the document.
+> https://XXXXX
+
+For test Environment, please refer the list:
+
+| Coin | Blockchain | Description |
+| ---- | ---------- | ----------- |
+| ETH | Ethereum | Koven testnet |
+| NASH | Ethereum | Koven testnet, ERC20 |
+| BTC | Bitcoin | public testnet |
+| EOS | Eosio | Jungle testnet |
+| ATOM | Cosmos | Private testnet |
+| IRIS | Irisnet | Private testnet |
+
+# API Authentication
+
 
 
 # General Structure
@@ -543,7 +586,36 @@ message: success
 data:
 {
   "assets": [
-    {id: 1, name: "ETH"}
+    {
+      "id": 1,
+      "name": "ETH",
+      "absFee": "0.005",
+      "canDeposit": true,
+      "canWithdraw": true,
+      "decimal": 18,
+      "description": "ETH",
+      "feeCoin": "ETH",
+      "priorityAverage": {
+        "fee": "0.02",
+        "priority": "4.0"
+      },
+      "priorityFast": {
+        "fee": "0.025",
+        "priority": "5.0"
+      },
+      "prioritySlow": {
+        "fee": "0.01",
+        "priority": "2.0"
+      },
+      "priorityVeryFast": {
+        "fee": "0.03",
+        "priority": "6.0"
+      },
+      "priorityVerySlow": {
+        "fee": "0.015",
+        "priority": "3.0"
+      }
+    }
   ]
 }
 ```
@@ -564,6 +636,31 @@ data:
 Value | Type | Description
 --------- | ------- | ---------
 assets | array | the wallet coin list
+
+asset:
+
+Value | Type | Description
+--------- | ------- | ---------
+id | number | the asset id
+name | string | the asset name
+absFee | string | withdraw fee
+canDeposit | boolean | whether or not the asset can be deposited
+canWithdraw | boolean | whether or not the asset can be withdrawn
+decimal | number | the asset decimal
+description | string | the asset description
+feeCoin | string | withdraw fee coin
+priorityAverage | object | withdraw fee with average priority
+priorityFast | object | withdraw fee with fast priority
+prioritySlow | object | withdraw fee with slow priority
+priorityVeryFast | object | withdraw fee with very fast priority
+priorityVerySlow | object | withdraw fee with very slow priority
+
+priority:
+
+Value | Type | Description
+--------- | ------- | ---------
+fee | string | fee with the priority
+priority | string | the priority, set into the withdraw request
 
 ### get wallet orders
 
@@ -812,6 +909,7 @@ data:
 | value | body | withdraw amount | Yes | string |
 | memo | body | address memo | No | string |
 | note | body | note | No | string |
+| priority | body | priority | No | string |
 
 **Response Result**
 
@@ -1744,7 +1842,7 @@ Value | Type | Description
 --------- | ------- | ---------
 timestamp | number | current timestamp
 
-# Company API
+# Management API
 
 ```shell
 $ git clone https://github.com/nbltrust/hashkey-custody-sdk-golang.git && cd hashkey-custody-sdk-golang
@@ -1770,7 +1868,7 @@ APIContext companyContext = new APIContext(endpoint, appKey, appSecret);
 Company companyTest = new Company(companyContext);
 ```
 
-The company key and secret can be generated in the company settings.
+The management key and secret can be generated in the team settings.
 
 ## Wallet
 ### create
@@ -2331,7 +2429,7 @@ createdAt| number |  unix timestamp, seconds
   "block": 13721091,
   "affirmativeConfirmation": 20,
   "confirmations": 27,
-  "sign": "796dde931a15c98edc3dfdb65a2c2addfde422f217a1f6934be9226542839aa0"
+  "sign": "fb0f53f33bba4cfa4bcb2c81e976bbe817633ba87a9904b6c3de293da3805cb3"
 }
 ```
 
@@ -2356,6 +2454,46 @@ block | number | the block transaction mined in
 memo | string | order note, editable on admin
 n | number | the order index
 sign | string | hex string, sign parameters with HMACSHA256
+
+### Signature
+In order to prove the message sender's identity, it should be verified by the following steps:
+
+1. Form a String message (sorted) that contains data prarams(exclude the sign param). 
+
+    if body params is: 
+</br>
+`
+{
+  "id": "2XB0eKAvj7KvjZDk59zl",
+  "withdrawID": "7Cab38EA42538f4D8C2",
+  "bizType": "DEPOSIT",
+  "coinName": "ETH",
+  "type": "ETH",
+  "state": "DONE",
+  "memo": "",
+  "value": "1.000000000000000000",
+  "fee": "0.000000000000000000",
+  "from": "0xF0706B7Cab38EA42538f4D8C279B6F57ad1d4072",
+  "to": "0x29152c850456899A78178622B6543BBFfC224495",
+  "txid": "0x8487e23bbf71f1763e015598283ae891cc5ea8d444f87a0a60a0b5eb7e1a4d59",
+  "n": 0,
+  "block": 13721091,
+  "affirmativeConfirmation": 20,
+  "confirmations": 27
+}
+`
+
+    The message string looks like this:
+</br>
+`
+affirmativeConfirmation=20&bizType=DEPOSIT&block=13721091&coinName=ETH&confirmations=27&fee=0.000000000000000000&from=0xF0706B7Cab38EA42538f4D8C279B6F57ad1d4072&id=2XB0eKAvj7KvjZDk59zl&memo=&n=0&state=DONE&to=0x29152c850456899A78178622B6543BBFfC224495&txid=0x8487e23bbf71f1763e015598283ae891cc5ea8d444f87a0a60a0b5eb7e1a4d59&type=ETH&value=1.000000000000000000&withdrawID=7Cab38EA42538f4D8C2
+`
+
+2. Sign the message using HMAC-SHA256. If the AppSecret is `exzYZT8IubM9Jxq1PWU5QjZ0JFP81bvCmlf1fFjW0b87Zr6eAMdofeYlhAMZxPzo`, the sign param would be like this:
+</br>
+`
+fb0f53f33bba4cfa4bcb2c81e976bbe817633ba87a9904b6c3de293da3805cb3
+`
 
 # Signature
 1. Get the current timestamp (seconds) and the nonce (random string). Please make sure the timestamp error not exceed 5 minutes and the nonce not repeated in 10 minutes.
@@ -2413,3 +2551,9 @@ decipher = AES.new(aeskey, AES.MODE_CBC, IV=iv)
 plaintext = _unpad(decipher.decrypt(base64.b64decode(base64EncryptedAppSecret)))
 print(plaintext)
 ```
+
+# Change Log
+
+Release Time | API | New / Update | Description
+-------------- | -------------- | -------------- | --------------
+2020-09-04 14:00 | - | - | update the documentation
