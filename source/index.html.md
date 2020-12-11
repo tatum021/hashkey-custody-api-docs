@@ -134,6 +134,10 @@ App appTest = new App(appContext);
 
 The wallet key and secret can be generated in the wallet settings.
 
+For security purpose, it is strongly recommended that you bind an IP address or IP segment to the API Key.
+
+*Warning:* API Key/Secret is closely related to the security of your account and should not be disclosed to anyone at any time. API Key/Secret disclosure may result in the loss of your assets (even if you do not enable access to withdrawals). Please delete the API Key/Secret as soon as you discover it has been compromised.
+
 ## Address
 
 ### get the latest address 
@@ -1869,6 +1873,10 @@ Company companyTest = new Company(companyContext);
 ```
 
 The management key and secret can be generated in the team settings.
+
+For security purpose, it is strongly recommended that you bind an IP address or IP segment to the API Key.
+
+*Warning:* API Key/Secret is closely related to the security of your account and should not be disclosed to anyone at any time. Please delete the API Key/Secret as soon as you discover it has been compromised.
 
 ## Wallet
 ### create
