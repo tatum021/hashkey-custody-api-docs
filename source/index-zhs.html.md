@@ -136,7 +136,7 @@ App appTest = new App(appContext);
 
 出于安全考虑，强烈建议您为 API Key 绑定 IP 地址或 IP 段。
 
-*风险提示：*API Key/Secret 与账号安全紧密相关，无论何时都请勿向其它人透露。API Key/Secret 的泄露可能会造成您的资产损失（即使未开通提现权限），若发现API Key/Secret 泄露请尽快删除该API Key。
+**风险提示：**API Key/Secret 与账号安全紧密相关，无论何时都请勿向其它人透露。API Key/Secret 的泄露可能会造成您的资产损失（即使未开通提现权限），若发现API Key/Secret 泄露请尽快删除该API Key。
 
 ## 地址
 
@@ -1872,7 +1872,7 @@ Company companyTest = new Company(companyContext);
 
 出于安全考虑，强烈建议您为企业 API Key 绑定  IP 地址或 IP 段。
 
-*风险提示：*API Key/Secret 与账号安全紧密相关，无论何时都请勿向其它人透露。若发现API Key/Secret 泄露请尽快删除该API Key。
+**风险提示：**API Key/Secret 与账号安全紧密相关，无论何时都请勿向其它人透露。若发现API Key/Secret 泄露请尽快删除该API Key。
 
 ## 钱包
 ### 创建
