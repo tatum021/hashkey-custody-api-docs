@@ -666,6 +666,47 @@ Value | Type | Description
 fee | string | fee with the priority
 priority | string | the priority, set into the withdraw request
 
+### get wallet attributes 
+
+```shell
+$ go run cmd/ctl/main.go "appkey" "appsecret" "GetAppInfo"
+code: 0
+message: success
+data:
+{
+  "bizType": "NORMAL",
+  "description": "string",
+  "id": "L6RayqPn4jXExW0",
+  "name": "test",
+  "status": "NORMAL"
+}
+```
+
+```go
+	result, _ = app.GetAppInfo()
+```
+
+**Summary:** get wallet attributes
+
+#### HTTP Request 
+`GET /api/v1/app/info` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | the wallet id
+name | string | the wallet name
+description | string | the wallet description
+status | string | the wallet status, NORMAL/ABNORMAL
+bizType | string | the wallet type, NORMAL
+
 ### get wallet orders
 
 ```shell
@@ -2016,6 +2057,47 @@ data:
 Value | Type | Description
 --------- | ------- | ---------
 
+### get wallet attributes by id
+
+```shell
+$ go run cmd/ctl/main.go "companykey" "companysecret" "GetWalletInfo" "appID"
+code: 0
+message: success
+data:
+{
+  "bizType": "NORMAL",
+  "description": "string",
+  "id": "L6RayqPn4jXExW0",
+  "name": "test",
+  "status": "NORMAL"
+}
+```
+
+```go
+	result, _ = company.GetWalletInfo("appID")
+```
+
+**Summary:** get wallet attributes by id
+
+#### HTTP Request 
+`GET /api/v1/app/{appID}/info` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+| appID | path | wallet id | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | the wallet id
+name | string | the wallet name
+description | string | the wallet description
+status | string | the wallet status, NORMAL/ABNORMAL
+bizType | string | the wallet type, NORMAL
 
 ## Lending
 ### get lending wallets list 
