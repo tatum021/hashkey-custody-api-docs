@@ -614,6 +614,10 @@
 <span class="n">App</span> <span class="n">appTest</span> <span class="o">=</span> <span class="k">new</span> <span class="n">App</span><span class="o">(</span><span class="n">appContext</span><span class="o">);</span>
 </code></pre>
 <p>钱包的 key 和 secret 可在钱包的设置中生成。</p>
+
+<p>出于安全考虑，强烈建议您为 API Key 绑定 IP 地址或 IP 段。</p>
+
+<p><strong>风险提示：</strong>API Key/Secret 与账号安全紧密相关，无论何时都请勿向其它人透露。API Key/Secret 的泄露可能会造成您的资产损失（即使未开通提现权限），若发现API Key/Secret 泄露请尽快删除该API Key。</p>
 <h2 id='67d2d7970f'>地址</h2><h3 id='7e1c81cbed'>获取最新地址</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"appkey"</span> <span class="s2">"appsecret"</span> <span class="s2">"GetAddress"</span> <span class="s2">"ETH"</span>
 code: 0
 message: success
@@ -3567,6 +3571,10 @@ data:
 <span class="n">Company</span> <span class="n">companyTest</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Company</span><span class="o">(</span><span class="n">companyContext</span><span class="o">);</span>
 </code></pre>
 <p>企业 key 和 secret 可在企业设置中生成。</p>
+
+<p>出于安全考虑，强烈建议您为企业 API Key 绑定  IP 地址或 IP 段。</p>
+
+<p><strong>风险提示：</strong>API Key/Secret 与账号安全紧密相关，无论何时都请勿向其它人透露。若发现API Key/Secret 泄露请尽快删除该API Key。</p>
 <h2 id='c02d697612-2'>钱包</h2><h3 id='fcbd093292'>创建</h3><pre class="highlight shell tab-shell"><code><span class="gp">$ </span>go run cmd/ctl/main.go <span class="s2">"companykey"</span> <span class="s2">"companysecret"</span> <span class="s2">"CreateWallet"</span> <span class="s2">"name"</span> <span class="s2">"password"</span> <span class="s2">"https://noti.domain/callback"</span>
 code: 0
 message: success
