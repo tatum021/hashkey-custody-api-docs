@@ -23,3 +23,5 @@ Error Code | Meaning
 20011 | Hour Limit -- The request hit the hour limit of order.
 20012 | Day Limit -- The request hit the day limit of order.
 20013 | Transaction Limit -- The request hit the transaction limit of order.
+20014 | AML Closed -- The AML service had been closed.
+20015 | Not In AML Asset List -- The asset isn't supported by AML service.
