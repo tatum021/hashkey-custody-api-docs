@@ -653,7 +653,8 @@ data:
       "priorityVerySlow": {
         "fee": "0.015",
         "priority": "3.0"
-      }
+      },
+      "withdrawMinAmount": "0.0001"
     }
   ]
 }
@@ -693,6 +694,7 @@ priorityFast | object | withdraw fee with fast priority
 prioritySlow | object | withdraw fee with slow priority
 priorityVeryFast | object | withdraw fee with very fast priority
 priorityVerySlow | object | withdraw fee with very slow priority
+withdrawMinAmount | string | min withdraw amount
 
 priority:
 
