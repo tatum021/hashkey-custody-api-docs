@@ -12,6 +12,7 @@ Error Code | Meaning
 10005 | Bad Params -- Your request parameters is invalid.
 10006 | Internal Server Error -- We had a problem with our server. Try again later.
 10007 | API Closed -- We don't provide the API anymore.
+10008 | API Suspended -- The function has been suspended currently.
 20001 | Not Found -- The specified resource could not be found.
 20002 | Not Enough -- The wallet balance isn't enough.
 20003 | Repeated Request -- The specified resource has existed.
