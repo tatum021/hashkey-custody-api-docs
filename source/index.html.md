@@ -1916,7 +1916,7 @@ data:
 Value | Type | Description
 --------- | ------- | ---------
 id | string | order id
-status | string | order status, PENDING/DONE/TERMINATED
+status | string | order status, DONE/TERMINATED
 type | string | quote mode, BUY/SELL
 baseCoin | string | base coin
 quoteCoin | string | quote coin
@@ -1941,7 +1941,7 @@ Value | Type | Description
 --------- | ------- | ---------
 id | string | quote id
 price | string | quote price
-status | string | quote status, PENDING/DONE/TERMINATED
+status | string | quote status, DONE/TERMINATED
 reason | string | failed reason if quote terminated
 
 The above API only trade with the default provider. The following are advanced processs that support more control abilities.
