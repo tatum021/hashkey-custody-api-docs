@@ -1931,11 +1931,11 @@ $ git clone https://github.com/nbltrust/hashkey-custody-sdk-golang.git && cd has
 ```
 
 ```javascript
-const companyKey = 'TyTLvCnHINbWZQag88hhmMz1'
-const companySecret = 'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'
+const teamKey = 'TyTLvCnHINbWZQag88hhmMz1'
+const teamSecret = 'uf0rPlTluGnIllGqx0X1os4hQ6rOdXDxStiN4qGd79lS6yeHZaOK4ldvRv1TBqr6'
 const apiAddr = 'http://127.0.0.1:8092'
 
-const api = new API(companyKey, companySecret, apiAddr)
+const api = new API(teamKey, teamSecret, apiAddr)
 ```
 
 ```go
@@ -1960,7 +1960,7 @@ For security purpose, it is strongly recommended that you bind an IP address or 
 ### create
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "CreateWallet" "name" "password" "https://noti.domain/callback"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "CreateWallet" "name" "password" "https://noti.domain/callback"
 code: 0
 message: success
 data:
@@ -1989,7 +1989,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 | name | body | the wallet name | Yes | string |
 | password  | body | the wallet password, should encrypted by [AES encryption](#aes-encryption) and base64 encoded | Yes | string |
 | description | body | the wallet description | Yes | string |
@@ -2007,7 +2007,7 @@ encryptedAppSecret | string | the base64 encoded [AES encrypted](#aes-encryption
 ### get appkeys
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "GetWalletKeys" "appID"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "GetWalletKeys" "appID"
 code: 0
 message: success
 data:
@@ -2040,7 +2040,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 | appID | path | wallet id | Yes | string |
 | aesIV | query | base64 encoded [AES encryption](#aes-encryption) iv, must be 16 bytes, used by encrypting app secret in the response | Yes | string |
 
@@ -2061,7 +2061,7 @@ encryptedAppSecret | string | the base64 encoded [AES encrypted](#aes-encryption
 ### update appkey
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" UpdateWalletKey "appKey" true
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" UpdateWalletKey "appKey" true
 code: 0
 message: success
 data:
@@ -2085,7 +2085,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 | appKey | path | wallet appkey | Yes | string |
 | enable | body | enable flag, the appkey will been forbidden if set false | Yes | boolean |
 
@@ -2097,7 +2097,7 @@ Value | Type | Description
 ### get wallet attributes by id
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "GetWalletInfo" "appID"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "GetWalletInfo" "appID"
 code: 0
 message: success
 data:
@@ -2123,7 +2123,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 | appID | path | wallet id | Yes | string |
 
 **Response Result**
@@ -2140,7 +2140,7 @@ bizType | string | the wallet type, NORMAL
 ### get lending wallets list 
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "GetFundingWallets"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "GetFundingWallets"
 code: 0
 message: success
 data:
@@ -2193,7 +2193,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 
 **Response Result**
 
@@ -2204,7 +2204,7 @@ wallets | array | wallet list
 ### transfer 
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "FundingTransfer" "QrLxg3XgKPMR1O8" "ZKz8XpwXGPBAQVE" "BTC" "0.0001"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "FundingTransfer" "QrLxg3XgKPMR1O8" "ZKz8XpwXGPBAQVE" "BTC" "0.0001"
 code: 0
 message: success
 data:
@@ -2265,7 +2265,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 | from | body | from wallet id | Yes | string |
 | to | body | to wallet id | Yes | string |
 | value | body | transfer amount | Yes | string |
@@ -2283,7 +2283,7 @@ record | object | transfer record
 ### get records list 
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "GetFundingRecords" 1 10
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "GetFundingRecords" 1 10
 code: 0
 message: success
 data:
@@ -2345,7 +2345,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 | page | query | page, e.g. 1 | Yes | string |
 | amount | query | item count on this page, e.g. 10 | Yes | string |
 | coins | query | coin list, can be empty string | Yes | string |
@@ -2361,177 +2361,6 @@ Value | Type | Description
 --------- | ------- | ---------
 records | array | record list
 
-## Trading
-### get exchange list 
-
-```javascript
-    try {
-        result = await api.getExchanges()
-        console.dir(result, {depth: null})
-    } catch(e) {
-        // do something
-        console.log(e)
-    }
-```
-
-**Summary:** get exchange list
-
-#### HTTP Request 
-`GET /api/v1/exchanges` 
-
-**Parameters**
-
-| Name | Located in | Description | Required | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
-
-**Response Result**
-
-Value | Type | Description
---------- | ------- | ---------
-exchanges | array | exchanges list
-
-### get exchange balances 
-
-```javascript
-    try {
-        result = await api.getExchangeBalances("z41mwygl0gnl2keo")
-        console.dir(result, {depth: null})
-    } catch(e) {
-        // do something
-        console.log(e)
-    }
-```
-
-**Summary:** get exchange balances
-
-#### HTTP Request 
-`GET /api/v1/exchange/balances` 
-
-**Parameters**
-
-| Name | Located in | Description | Required | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
-| exchangeID | query | exchange id | Yes | string |
-
-**Response Result**
-
-Value | Type | Description
---------- | ------- | ---------
-balances | array | balances list
-
-### exchange transfer 
-
-```javascript
-    try {
-        result = await tradingTransfer("WALLET", "rKyOD9pAJPAg54e", "EXCHANGE", "qdkrm8621j73zx4y", "USDT", "2.73", "wallet to binance")
-        console.log(result)
-    } catch(e) {
-        // do something
-        console.log(e)
-    }
-```
-
-**Summary:** exchange transfer
-
-#### HTTP Request 
-`POST /api/v1/exchange/transfer` 
-
-**Parameters**
-
-| Name | Located in | Description | Required | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
-| fromType | body | from type: enum[EXCHANGE,WALLET] | Yes | string |
-| fromID | body | from id | Yes | string |
-| toType | body | to type: enum[EXCHANGE,WALLET] | Yes | string |
-| toID | body | to id | Yes | string |
-| amount | body | transfer amount | Yes | string |
-| assetName | body | coin name | Yes | string |
-| remark | body | remark | No | string |
-
-**Response Result**
-
-Value | Type | Description
---------- | ------- | ---------
-withdrawID | string | withdraw order id
-amount | string | real transfer amount
-fee | string | exchange fee amount
-status | string | withdraw order status, enum[PENDING,FAILED,DONE]
-
-### get exchange records list 
-
-```javascript
-    try {
-        result = await getExchangeFundings("z41mwygl0gnl2keo", 1)
-        console.log(result)
-    } catch(e) {
-        // do something
-        console.log(e)
-    }
-```
-
-**Summary:** get exchange records
-
-#### HTTP Request 
-`GET /api/v1/exchange/funding/records` 
-
-**Parameters**
-
-| Name | Located in | Description | Required | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
-| exchangeID | query | exchange id | Yes | string |
-| page | query | page, e.g. 1, 50 items per page | Yes | string |
-
-**Response Result**
-
-Value | Type | Description
---------- | ------- | ---------
-totalAmount| number |  total record number
-records | array | record list
-
-### get exchange record 
-
-```javascript
-    try {
-        result = await getExchangeFunding("3qky8xo2l0gpdg7erpmdwzn1")
-        console.log(result)
-    } catch(e) {
-        // do something
-        console.log(e)
-    }
-```
-
-**Summary:** get exchange record
-
-#### HTTP Request 
-`GET /api/v1/exchange/funding/record` 
-
-**Parameters**
-
-| Name | Located in | Description | Required | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
-| id | query | record id | Yes | string |
-**Response Result**
-
-Value | Type | Description
---------- | ------- | ---------
-id| string |  record id
-fromType| string |  from type: enum[EXCHANGE,WALLET]
-fromID| string |  from id
-fromName| string |  from name
-toType| string |  to type: enum[EXCHANGE,WALLET]
-toID| string |  to id
-toName| string |  to name
-status| string |  record status
-assetName| string |  coin name
-amount| string |  amount
-fee| string |  fee amount
-remark| string |  record remark
-createdAt| number |  unix timestamp, seconds
 
 ## OTC Customer
 
@@ -2540,7 +2369,7 @@ The customer can trade with the OTC providers by the API. The following is a sim
 ### trade
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "OTCCustomerTrade" "walletn05r28gdw2jl3yez" "BUY" "BTC" "USDTERC20" "1234.56" "USDTERC20"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "OTCCustomerTrade" "walletn05r28gdw2jl3yez" "BUY" "BTC" "USDTERC20" "1234.56" "USDTERC20"
 code: 0
 message: success
 data:
@@ -2584,7 +2413,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 | walletID | body | wallet id | Yes | string |
 | type | body | quote mode, BUY/SELL | Yes | string |
 | baseCoin | body | base coin | Yes | string |
@@ -2639,7 +2468,7 @@ The above API only trade with the default provider. The following are advanced p
 ### get quote symbols
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "OTCCustomerGetQuoteSymbols"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "OTCCustomerGetQuoteSymbols"
 code: 0
 message: success
 data:
@@ -2668,7 +2497,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 
 **Response Result**
 
@@ -2694,7 +2523,7 @@ name | string | coin name
 ### open quote order
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "OTCCustomerOrder" "walletn05r28gdw2jl3yez" "BUY" "BTC" "USDTERC20" "1234.56" "USDTERC20"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "OTCCustomerOrder" "walletn05r28gdw2jl3yez" "BUY" "BTC" "USDTERC20" "1234.56" "USDTERC20"
 code: 0
 message: success
 data:
@@ -2718,7 +2547,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 | walletID | body | wallet id | Yes | string |
 | type | body | quote mode, BUY/SELL | Yes | string |
 | baseCoin | body | base coin | Yes | string |
@@ -2743,7 +2572,7 @@ wallet | object | customer wallet info
 ### get order
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "OTCCustomerGetOrder" "25ovqdkrm86201g73zx4ynep"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "OTCCustomerGetOrder" "25ovqdkrm86201g73zx4ynep"
 code: 0
 message: success
 data:
@@ -2788,7 +2617,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 
 **Response Result**
 
@@ -2829,7 +2658,7 @@ reason | string | failed reason if quote terminated
 ### accept price
 
 ```shell
-$ go run cmd/ctl/main.go "companykey" "companysecret" "OTCCustomerAcceptPrice" "otcprioxy81l9m5eg32n67kz320qpw" "52111.34"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "OTCCustomerAcceptPrice" "otcprioxy81l9m5eg32n67kz320qpw" "52111.34"
 code: 0
 message: success
 data:
@@ -2845,7 +2674,7 @@ data:
 
 | Name | Located in | Description | Required | Type |
 | ---- | ---------- | ----------- | -------- | ---- |
-| X-Company-Key | header | company key | Yes | string |
+| X-Company-Key | header | team api key | Yes | string |
 | price | body | price | Yes | string |
 
 **Response Result**
@@ -2972,7 +2801,7 @@ mode=auto&nonce=15833762841261615239762485&timestamp=1583376284
 4. Send request as the same format as described in [General Structure](#general-structure).
 
 # AES Encryption
-The encryption has two parts: key and iv. The key is sha256(CompanySecret). The iv is a random bytes that length is 16. An example of encrypting appSecret written by python.
+The encryption has two parts: key and iv. The key is sha256(TeamSecret). The iv is a random bytes that length is 16. An example of encrypting appSecret written by python.
 
 ```python
 import base64
@@ -2985,10 +2814,10 @@ def _pad(s):
 def _unpad(s):
     return s[:-ord(s[len(s)-1:])]
 
-companySecret = b'kfTKfuSV5oiuFZENI6tv1OwfiJ1tEv70HnmJsVxNGCu2YEKqEq2QHpBGgqwRa29R'
+teamSecret = b'kfTKfuSV5oiuFZENI6tv1OwfiJ1tEv70HnmJsVxNGCu2YEKqEq2QHpBGgqwRa29R'
 appSecret = 'nn2oh58iuc1sg2adya1golz35cowjbz7r0hfjt2ey6b4fc4xyq6kdopp9tlp0ko3'
 
-aeskey = bytes.fromhex(hashlib.sha256(companySecret).hexdigest())
+aeskey = bytes.fromhex(hashlib.sha256(teamSecret).hexdigest())
 iv = base64.b64decode('MTIzNDU2Nzg5MDEyMzQ1Ng==')
 
 decipher = AES.new(aeskey, AES.MODE_CBC, IV=iv)
