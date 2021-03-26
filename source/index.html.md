@@ -1951,7 +1951,7 @@ The above API only trade with the default provider. The following are advanced p
 2. [Open an order](#open-quote-order) open an order for requesting quote list from the OTC providers.
 3. [Get the latest status of order](#get-order-2) the order contain the quote list given by the OTC providers. The price maybe changed frequently so request the API consistently for the latest price.
 4. [Accept price](#accept-price) choose a price from the quote list.
-5. [Get the latest status of order](#get-order) check if the order is done. The order would be terminated if the price is rejected by the OTC provider.
+5. [Get the latest status of order](#get-order-2) check if the order is done. The order would be terminated if the price is rejected by the OTC provider.
 
 
 ### get quote symbols
