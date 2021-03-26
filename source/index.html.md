@@ -1857,314 +1857,6 @@ price | string | price
 invalidAt | number | invalid timestamp
 orderID | string | the associated order id
 
-## OTC Customer
-
-The customer can trade with the OTC providers by the API. The following is a simple trade API.
-
-### trade
-
-```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCCustomerTrade" "BUY" "BTC" "USDTERC20" "1234.56" "USDTERC20"
-code: 0
-message: success
-data:
-{
-  "id": "25ovqdkrm86201g73zx4ynep",
-  "status": "DONE",
-  "type": "BUY",
-  "baseCoin": "BTC",
-  "quoteCoin": "USDTERC20",
-  "amount": "1234.56",
-  "amountCoin": "USDTERC20",
-  "inAmount": "0.023690812786621877",
-  "inCoin": "BTC",
-  "outAmount": "1234.56",
-  "outCoin": "USDTERC20",
-  "provider": {
-    "quote": {
-      "id": "otcprioxy81l9m5eg32n67kz320qpw",
-      "price": "52111.34",
-      "status": "DONE",
-      "reason": ""
-    },
-    "wallet": {
-      "id": "walletel2w0vjxpm6r9q31",
-      "name": "OTC provider"
-    }
-  }
-}
-```
-
-**Summary:** trade with the OTC provider
-
-#### HTTP Request 
-`POST /api/v1/otc/customer/trade`
-
-**Parameters**
-
-| Name | Located in | Description | Required | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| X-App-Key | header | app key | Yes | string |
-| type | body | quote mode, BUY/SELL | Yes | string |
-| baseCoin | body | base coin | Yes | string |
-| quoteCoin | body | quote coin | Yes | string |
-| amount | body | amount | Yes | string |
-| amountCoin | body | amount coin | Yes | string |
-
-**Response Result**
-
-Value | Type | Description
---------- | ------- | ---------
-id | string | order id
-status | string | order status, DONE/TERMINATED
-type | string | quote mode, BUY/SELL
-baseCoin | string | base coin
-quoteCoin | string | quote coin
-amount | string | amount
-amountCoin | string | amount coin
-inAmount | string | received amount
-inCoin | string | received coin
-outAmount | string | sent amount
-outCoin | string | sent coin
-provider | object | OTC provider
-
-provider:
-
-Value | Type | Description
---------- | ------- | ---------
-quote | object | quote info
-wallet | object | wallet info
-
-quote:
-
-Value | Type | Description
---------- | ------- | ---------
-id | string | quote id
-price | string | quote price
-status | string | quote status, DONE/TERMINATED
-reason | string | failed reason if quote terminated
-
-
-The above API only trade with the default provider. The following are advanced processs that support more control abilities.
-
-1. [Get support quote symbols](#get-quote-symbols-2) get all support symbols given by the OTC providers.
-2. [Open an order](#open-quote-order) open an order for requesting quote list from the OTC providers.
-3. [Get the latest status of order](#get-order-2) the order contain the quote list given by the OTC providers. The price maybe changed frequently so request the API consistently for the latest price.
-4. [Accept price](#accept-price) choose a price from the quote list.
-5. [Get the latest status of order](#get-order-2) check if the order is done. The order would be terminated if the price is rejected by the OTC provider.
-
-
-### get quote symbols
-
-```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCCustomerGetQuoteSymbols"
-code: 0
-message: success
-data:
-{
-        "symbols": [
-            {
-                "baseCoin": {
-                    "id": 1,
-                    "name": "BTC"
-                },
-                "quoteCoin": {
-                    "id": 18,
-                    "name": "USDT"
-                }
-            }
-        ]
-}
-```
-
-**Summary:** get all support symbols given by the OTC providers
-
-#### HTTP Request 
-`GET /api/v1/otc/customer/symbols`
-
-**Parameters**
-
-| Name | Located in | Description | Required | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| X-App-Key | header | app key | Yes | string |
-
-**Response Result**
-
-Value | Type | Description
---------- | ------- | ---------
-symbols | array | support symbol list
-
-symbol:
-
-Value | Type | Description
---------- | ------- | ---------
-baseCoin | object | base coin info
-quoteCoin | object | quote coin info
-
-coin info:
-
-Value | Type | Description
---------- | ------- | ---------
-id | number | coin id
-name | string | coin name
-
-
-### open quote order
-
-```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCCustomerOrder" "BUY" "BTC" "USDTERC20" "1234.56" "USDTERC20"
-code: 0
-message: success
-data:
-{
-  "id": "25ovqdkrm86201g73zx4ynep",
-  "status": "PENDING",
-  "type": "BUY",
-  "baseCoin": "BTC",
-  "quoteCoin": "USDTERC20",
-  "amount": "1234.56",
-  "amountCoin": "USDTERC20"
-}
-```
-
-**Summary:** open an order for requesting quote list
-
-#### HTTP Request 
-`POST /api/v1/otc/customer/order`
-
-**Parameters**
-
-| Name | Located in | Description | Required | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| X-App-Key | header | app key | Yes | string |
-| type | body | quote mode, BUY/SELL | Yes | string |
-| baseCoin | body | base coin | Yes | string |
-| quoteCoin | body | quote coin | Yes | string |
-| amount | body | amount | Yes | string |
-| amountCoin | body | amount coin | Yes | string |
-
-**Response Result**
-
-Value | Type | Description
---------- | ------- | ---------
-id | string | order id
-status | string | order status, PENDING/DONE/TERMINATED
-type | string | quote mode, BUY/SELL
-baseCoin | string | base coin
-quoteCoin | string | quote coin
-amount | string | amount
-amountCoin | string | amount coin
-
-
-### get order
-
-```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCCustomerGetOrder" "25ovqdkrm86201g73zx4ynep"
-code: 0
-message: success
-data:
-{
-  "id": "25ovqdkrm86201g73zx4ynep",
-  "status": "PENDING",
-  "type": "BUY",
-  "baseCoin": "BTC",
-  "quoteCoin": "USDTERC20",
-  "amount": "1234.56",
-  "amountCoin": "USDTERC20",
-  "inAmount": "",
-  "inCoin": "BTC",
-  "outAmount": "",
-  "outCoin": "USDTERC20",
-  "providers": [{
-    "quote": {
-      "id": "otcprioxy81l9m5eg32n67kz320qpw",
-      "price": "52111.34",
-      "status": "PENDING",
-      "reason": ""
-    },
-    "wallet": {
-      "id": "walletel2w0vjxpm6r9q31",
-      "name": "OTC provider"
-    },
-    "choose": false
-  }]
-}
-```
-
-**Summary:** get order by id
-
-#### HTTP Request
-`GET /api/v1/otc/customer/order/{orderID}`
-
-**Parameters**
-
-| Name | Located in | Description | Required | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| X-App-Key | header | app key | Yes | string |
-
-**Response Result**
-
-Value | Type | Description
---------- | ------- | ---------
-id | string | order id
-status | string | order status, PENDING/DONE/TERMINATED
-type | string | quote mode, BUY/SELL
-baseCoin | string | base coin
-quoteCoin | string | quote coin
-amount | string | amount
-amountCoin | string | amount coin
-inAmount | string | received amount
-inCoin | string | received coin
-outAmount | string | sent amount
-outCoin | string | sent coin
-providers | array | OTC providers
-
-provider:
-
-Value | Type | Description
---------- | ------- | ---------
-quote | object | quote info
-wallet | object | wallet info
-choose | boolean | mark if choose
-
-quote:
-
-Value | Type | Description
---------- | ------- | ---------
-id | string | quote id
-price | string | quote price
-status | string | quote status, PENDING/DONE/TERMINATED
-reason | string | failed reason if quote terminated
-
-
-### accept price
-
-```shell
-$ go run cmd/ctl/main.go "appkey" "appsecret" "OTCCustomerAcceptPrice" "otcprioxy81l9m5eg32n67kz320qpw" "52111.34"
-code: 0
-message: success
-data:
-{}
-```
-
-**Summary:** choose a price from the provider list
-
-#### HTTP Request 
-`POST /api/v1/otc/customer/price/{priceID}/accept`
-
-**Parameters**
-
-| Name | Located in | Description | Required | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| X-App-Key | header | app key | Yes | string |
-| price | body | price | Yes | string |
-
-**Response Result**
-
-Value | Type | Description
---------- | ------- | ---------
-
-
 ## Market
 
 ### current price
@@ -2840,6 +2532,328 @@ amount| string |  amount
 fee| string |  fee amount
 remark| string |  record remark
 createdAt| number |  unix timestamp, seconds
+
+## OTC Customer
+
+The customer can trade with the OTC providers by the API. The following is a simple trade API.
+
+### trade
+
+```shell
+$ go run cmd/ctl/main.go "companykey" "companysecret" "OTCCustomerTrade" "walletn05r28gdw2jl3yez" "BUY" "BTC" "USDTERC20" "1234.56" "USDTERC20"
+code: 0
+message: success
+data:
+{
+  "id": "25ovqdkrm86201g73zx4ynep",
+  "status": "DONE",
+  "type": "BUY",
+  "baseCoin": "BTC",
+  "quoteCoin": "USDTERC20",
+  "amount": "1234.56",
+  "amountCoin": "USDTERC20",
+  "inAmount": "0.023690812786621877",
+  "inCoin": "BTC",
+  "outAmount": "1234.56",
+  "outCoin": "USDTERC20",
+  "provider": {
+    "quote": {
+      "id": "otcprioxy81l9m5eg32n67kz320qpw",
+      "price": "52111.34",
+      "status": "DONE",
+      "reason": ""
+    },
+    "wallet": {
+      "id": "walletel2w0vjxpm6r9q31",
+      "name": "OTC provider"
+    }
+  },
+  "wallet": {
+    "id": "walletn05r28gdw2jl3yez",
+    "name": "OTC customer"
+  }
+}
+```
+
+**Summary:** trade with the OTC provider
+
+#### HTTP Request 
+`POST /api/v1/otc/customer/trade`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+| walletID | body | wallet id | Yes | string |
+| type | body | quote mode, BUY/SELL | Yes | string |
+| baseCoin | body | base coin | Yes | string |
+| quoteCoin | body | quote coin | Yes | string |
+| amount | body | amount | Yes | string |
+| amountCoin | body | amount coin | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | order id
+status | string | order status, DONE/TERMINATED
+type | string | quote mode, BUY/SELL
+baseCoin | string | base coin
+quoteCoin | string | quote coin
+amount | string | amount
+amountCoin | string | amount coin
+inAmount | string | received amount
+inCoin | string | received coin
+outAmount | string | sent amount
+outCoin | string | sent coin
+provider | object | OTC provider
+wallet | object | customer wallet info
+
+provider:
+
+Value | Type | Description
+--------- | ------- | ---------
+quote | object | quote info
+wallet | object | wallet info
+
+quote:
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | quote id
+price | string | quote price
+status | string | quote status, DONE/TERMINATED
+reason | string | failed reason if quote terminated
+
+
+The above API only trade with the default provider. The following are advanced processs that support more control abilities.
+
+1. [Get support quote symbols](#get-quote-symbols-2) get all support symbols given by the OTC providers.
+2. [Open an order](#open-quote-order) open an order for requesting quote list from the OTC providers.
+3. [Get the latest status of order](#get-order-2) the order contain the quote list given by the OTC providers. The price maybe changed frequently so request the API consistently for the latest price.
+4. [Accept price](#accept-price) choose a price from the quote list.
+5. [Get the latest status of order](#get-order-2) check if the order is done. The order would be terminated if the price is rejected by the OTC provider.
+
+
+### get quote symbols
+
+```shell
+$ go run cmd/ctl/main.go "companykey" "companysecret" "OTCCustomerGetQuoteSymbols"
+code: 0
+message: success
+data:
+{
+        "symbols": [
+            {
+                "baseCoin": {
+                    "id": 1,
+                    "name": "BTC"
+                },
+                "quoteCoin": {
+                    "id": 18,
+                    "name": "USDT"
+                }
+            }
+        ]
+}
+```
+
+**Summary:** get all support symbols given by the OTC providers
+
+#### HTTP Request 
+`GET /api/v1/otc/customer/symbols`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+symbols | array | support symbol list
+
+symbol:
+
+Value | Type | Description
+--------- | ------- | ---------
+baseCoin | object | base coin info
+quoteCoin | object | quote coin info
+
+coin info:
+
+Value | Type | Description
+--------- | ------- | ---------
+id | number | coin id
+name | string | coin name
+
+
+### open quote order
+
+```shell
+$ go run cmd/ctl/main.go "companykey" "companysecret" "OTCCustomerOrder" "walletn05r28gdw2jl3yez" "BUY" "BTC" "USDTERC20" "1234.56" "USDTERC20"
+code: 0
+message: success
+data:
+{
+  "id": "25ovqdkrm86201g73zx4ynep",
+  "status": "PENDING",
+  "type": "BUY",
+  "baseCoin": "BTC",
+  "quoteCoin": "USDTERC20",
+  "amount": "1234.56",
+  "amountCoin": "USDTERC20"
+}
+```
+
+**Summary:** open an order for requesting quote list
+
+#### HTTP Request 
+`POST /api/v1/otc/customer/order`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+| walletID | body | wallet id | Yes | string |
+| type | body | quote mode, BUY/SELL | Yes | string |
+| baseCoin | body | base coin | Yes | string |
+| quoteCoin | body | quote coin | Yes | string |
+| amount | body | amount | Yes | string |
+| amountCoin | body | amount coin | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | order id
+status | string | order status, PENDING/DONE/TERMINATED
+type | string | quote mode, BUY/SELL
+baseCoin | string | base coin
+quoteCoin | string | quote coin
+amount | string | amount
+amountCoin | string | amount coin
+wallet | object | customer wallet info
+
+
+### get order
+
+```shell
+$ go run cmd/ctl/main.go "companykey" "companysecret" "OTCCustomerGetOrder" "25ovqdkrm86201g73zx4ynep"
+code: 0
+message: success
+data:
+{
+  "id": "25ovqdkrm86201g73zx4ynep",
+  "status": "PENDING",
+  "type": "BUY",
+  "baseCoin": "BTC",
+  "quoteCoin": "USDTERC20",
+  "amount": "1234.56",
+  "amountCoin": "USDTERC20",
+  "inAmount": "",
+  "inCoin": "BTC",
+  "outAmount": "",
+  "outCoin": "USDTERC20",
+  "providers": [{
+    "quote": {
+      "id": "otcprioxy81l9m5eg32n67kz320qpw",
+      "price": "52111.34",
+      "status": "PENDING",
+      "reason": ""
+    },
+    "wallet": {
+      "id": "walletel2w0vjxpm6r9q31",
+      "name": "OTC provider"
+    },
+    "choose": false
+  }],
+  "wallet": {
+    "id": "walletn05r28gdw2jl3yez",
+    "name": "OTC customer"
+  }
+}
+```
+
+**Summary:** get order by id
+
+#### HTTP Request
+`GET /api/v1/otc/customer/order/{orderID}`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | order id
+status | string | order status, PENDING/DONE/TERMINATED
+type | string | quote mode, BUY/SELL
+baseCoin | string | base coin
+quoteCoin | string | quote coin
+amount | string | amount
+amountCoin | string | amount coin
+inAmount | string | received amount
+inCoin | string | received coin
+outAmount | string | sent amount
+outCoin | string | sent coin
+providers | array | OTC providers
+wallet | object | customer wallet info
+
+provider:
+
+Value | Type | Description
+--------- | ------- | ---------
+quote | object | quote info
+wallet | object | wallet info
+choose | boolean | mark if choose
+
+quote:
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | quote id
+price | string | quote price
+status | string | quote status, PENDING/DONE/TERMINATED
+reason | string | failed reason if quote terminated
+
+
+### accept price
+
+```shell
+$ go run cmd/ctl/main.go "companykey" "companysecret" "OTCCustomerAcceptPrice" "otcprioxy81l9m5eg32n67kz320qpw" "52111.34"
+code: 0
+message: success
+data:
+{}
+```
+
+**Summary:** choose a price from the provider list
+
+#### HTTP Request 
+`POST /api/v1/otc/customer/price/{priceID}/accept`
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | company key | Yes | string |
+| price | body | price | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+
+
 
 # Callback
 
