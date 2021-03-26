@@ -2364,7 +2364,16 @@ records | array | record list
 
 ## OTC Customer
 
-The customer can trade with the OTC providers by the API. The following is a simple trade API.
+The customer can trade with the OTC providers by the API. We provide two ways of accessing our service：
+1. If you want to place a market order, please choose [the API](#trade). Our system will automate choose the best price for you.
+
+2. If you want to choose a price or liquidity provider, please use the set of interfaces. In this way, you will get more control over the process:
+
+1) [Get support quote symbols](#get-quote-symbols-2) get all support symbols given by the OTC providers.
+2) [Open an order](#open-quote-order) open an order for requesting quote list from the OTC providers.
+3) [Get the latest status of order](#get-order-2) the order contain the quote list given by the OTC providers. The price maybe changed frequently so request the API consistently for the latest price.
+4) [Accept price](#accept-price) choose a price from the quote list.
+5) [Get the latest status of order](#get-order-2) check if the order is done. The order would be terminated if the price is rejected by the OTC provider.
 
 ### trade
 
@@ -2454,15 +2463,6 @@ id | string | quote id
 price | string | quote price
 status | string | quote status, DONE/TERMINATED
 reason | string | failed reason if quote terminated
-
-
-The above API only trade with the default provider. The following are advanced processs that support more control abilities.
-
-1. [Get support quote symbols](#get-quote-symbols-2) get all support symbols given by the OTC providers.
-2. [Open an order](#open-quote-order) open an order for requesting quote list from the OTC providers.
-3. [Get the latest status of order](#get-order-2) the order contain the quote list given by the OTC providers. The price maybe changed frequently so request the API consistently for the latest price.
-4. [Accept price](#accept-price) choose a price from the quote list.
-5. [Get the latest status of order](#get-order-2) check if the order is done. The order would be terminated if the price is rejected by the OTC provider.
 
 
 ### get quote symbols
