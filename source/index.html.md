@@ -2139,7 +2139,7 @@ bizType | string | the wallet type, NORMAL
 ### trade
 
 ```shell
-$ go run cmd/ctl/main.go "teamkey" "teamsecret" "Trade" "ETH/USDT" 'market' 'buy' '0.01'
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "Trade" "walletzr1o0kjwq3j84pxw" "ETH/USDT" "market" "buy" "0.01"
 code: 0
 message: success
 data:
@@ -2188,7 +2188,7 @@ price | number | average price
 ### get trade order
 
 ```shell
-$ go run cmd/ctl/main.go "teamkey" "teamsecret" "GetTradeOrder" "ETH/USDT" "3477737825"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "GetTradeOrder" "walletzr1o0kjwq3j84pxw" "ETH/USDT" "3477737825"
 code: 0
 message: success
 data:
