@@ -13,10 +13,11 @@ Error Code | Meaning
 10006 | Internal Server Error -- We had a problem with our server. Try again later.
 10007 | API Closed -- We don't provide the API anymore.
 10008 | API Suspended -- The function has been suspended currently.
+10009 | Request Timeout -- Request the 3rd platform timeout.
 20001 | Not Found -- The specified resource could not be found.
 20002 | Not Enough -- The wallet balance isn't enough.
 20003 | Repeated Request -- The specified resource has existed.
-20005 | Too Small -- The amount is too small caused by fee.
+20005 | Too Small -- The amount is too small.
 20007 | Forbidden -- The API is hidden for the user.
 20008 | In Blacklist -- The request address in the blacklist.
 20009 | Not In Whitelist -- The request address not in the whitelist.
