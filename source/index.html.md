@@ -1980,7 +1980,7 @@ data:
   APIResult result = companyTest.createWallet("name", "password", "https://noti.domain/callback", "description");
 ```
 
-**Summary:** create wallet
+**Summary:** create a general wallet
 
 #### HTTP Request 
 `POST /api/v1/app` 
@@ -2135,6 +2135,101 @@ name | string | the wallet name
 description | string | the wallet description
 status | string | the wallet status, NORMAL/ABNORMAL
 bizType | string | the wallet type, NORMAL
+
+### trade
+
+```shell
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "Trade" "ETH/USDT" 'market' 'buy' '0.01'
+code: 0
+message: success
+data:
+{
+  "id": "3477737825",
+  "symbol": "ETH/USDT",
+  "type": "market",
+  "side": "buy",
+  "amount": 0.01,
+  "filled": 0.01,
+  "status": "closed",
+  "price": 1831.65
+}
+```
+
+**Summary:** create a new trade order in the API wallet
+
+#### HTTP Request 
+`POST /api/v1/app/{appID}/trade` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-Company-Key | header | team api key | Yes | string |
+| appID | path | api wallet id | Yes | string |
+| symbol | body | trade symbol, base/quote | Yes | string |
+| type | body | trade type, only support MARKET currently | Yes | string |
+| side | body | trade side, BUY/SELL | Yes | string |
+| amount | body | the amount of the base asset the user wants to buy or sell | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | trade order id
+symbol | string | trade symbol
+type | string | trade type
+side | string | trade side
+amount | number | total amount
+filled | number | filled amount
+status | string | open/closed/canceled/rejected/expired
+price | number | average price
+
+
+### get trade order
+
+```shell
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "GetTradeOrder" "3477737825"
+code: 0
+message: success
+data:
+{
+  "id": "3477737825",
+  "symbol": "ETH/USDT",
+  "type": "market",
+  "side": "buy",
+  "amount": 0.01,
+  "filled": 0.01,
+  "status": "closed",
+  "price": 1831.65
+}
+```
+
+**Summary:** get trade order
+
+#### HTTP Request 
+`GET /api/v1/app/{appID}/trade/{tradeID}` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| X-App-Key | header | app key | Yes | string |
+| appID | path | wallet id | Yes | string |
+| tradeID | path | trade order id | Yes | string |
+
+**Response Result**
+
+Value | Type | Description
+--------- | ------- | ---------
+id | string | order id
+symbol | string | trade symbol
+type | string | trade type
+side | string | trade side
+amount | number | total amount
+filled | number | filled amount
+status | string | open/closed/canceled/rejected/expired
+price | number | average price
+
 
 ## Lending
 ### get lending wallets list 
