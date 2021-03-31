@@ -2188,7 +2188,7 @@ price | number | average price
 ### get trade order
 
 ```shell
-$ go run cmd/ctl/main.go "teamkey" "teamsecret" "GetTradeOrder" "3477737825"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "GetTradeOrder" "ETH/USDT" "3477737825"
 code: 0
 message: success
 data:
@@ -2216,6 +2216,7 @@ data:
 | X-App-Key | header | app key | Yes | string |
 | appID | path | wallet id | Yes | string |
 | tradeID | path | trade order id | Yes | string |
+| symbol | query | trade symbol | Yes | string |
 
 **Response Result**
 
