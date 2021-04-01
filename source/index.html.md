@@ -2139,7 +2139,7 @@ bizType | string | the wallet type, NORMAL
 ### trade
 
 ```shell
-$ go run cmd/ctl/main.go "teamkey" "teamsecret" "Trade" "walletzr1o0kjwq3j84pxw" "ETH/USDT" "market" "buy" "0.01"
+$ go run cmd/ctl/main.go "teamkey" "teamsecret" "Trade" "walletzr1o0kjwq3j84pxw" "ETH/USDT" "market" "buy" "0.01" "ETH"
 code: 0
 message: success
 data:
@@ -2169,7 +2169,8 @@ data:
 | symbol | body | trade symbol, base/quote | Yes | string |
 | type | body | trade type, only support MARKET currently | Yes | string |
 | side | body | trade side, BUY/SELL | Yes | string |
-| amount | body | the amount of the base asset the user wants to buy or sell | Yes | string |
+| amount | body | amount of the user wants to buy or sell | Yes | string |
+| amountCoin | body | amount coin | Yes | string |
 
 **Response Result**
 
