@@ -2441,7 +2441,7 @@ s | string |
 
 ## 用户
 ### 更新 token
-**描述:** 用户授权合作方后跳转至合作方页面，合作方会从 url 获得 token ，用来在其他接口中标识用户，出于安全原因 token 仅在短时间内有效（不超过2小时），过期后需要通过此接口更新；也可在需要旧 token 失效时调用此接口；若 token 遗失需要用户重新授权
+**描述:** 用户授权合作方后跳转至合作方页面，合作方会从 url 获得 token ，用来在其他接口中标识用户，出于安全原因 token 仅在短时间内有效（不超过2小时），过期后需要通过此接口更新；也可在需要旧 token 失效时调用此接口，获取到新 token 后旧 token 失效，不可再调用此接口；注意旧的 token 如果已过期调此接口时还需要传入用户的 Google 二次验证码 otpCode ，若 token 遗失需要用户重新授权
 
 #### HTTP请求 
 `PUT /api/v1/business/client/token`
@@ -2452,6 +2452,7 @@ s | string |
 | ---- | ---------- | ----------- | -------- | ---- |
 | token | body | 旧的 token | Yes | string |
 | ttl | body | 新 token 的有效期（秒） | Yes | number |
+| otpCode | body | 用户的 Google Authentication Code | 旧的 token 过期时必需 | string |
 
 **响应结果**
 
