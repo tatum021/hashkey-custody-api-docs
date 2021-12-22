@@ -2418,6 +2418,7 @@ createdAt| number |  unix timestamp, seconds
 
 | 名称 | 位置 | 描述| 是否必需| 类型 |
 | ---- | ---------- | ----------- | -------- | ---- |
+| X-BUSINESS-KEY | header | 业务合作方 key，用于标识业务合作方 | Yes | string |
 | sigR | query | ECC signature 参数，生成方法见[ECC signature](#ecc) | Yes | string |
 | sigS | query | ECC signature 参数，生成方法见[ECC signature](#ecc) | Yes | string |
 | timestamp | query | timestamp，ECC signature 参数，生成方法见[ECC signature](#ecc) | Yes | number |
