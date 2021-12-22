@@ -2441,7 +2441,7 @@ s | string |
 
 ## 用户
 ### 更新 token
-**描述:** 用户授权合作方后获得的 token 有过期时间，过期后需要通过此接口更新
+**描述:** 用户授权合作方后会获得 token ，用来在其他接口中标识用户，出于安全原因 token 仅在短时间内有效（不超过2小时），过期后需要通过此接口更新；也可在需要旧 token 失效时调用此接口；若 token 遗失需要用户重新授权
 
 #### HTTP请求 
 `PUT /api/v1/business/client/token`
@@ -2826,7 +2826,12 @@ timestamp1557913602438
 ```
 3. 使用 sha3 keccak256 编码上面的字符串
 4. 使用私钥通过 ecdsa 签名上面编码好的字符串
-5. 将签名结果的 r 和 s 进行 base64 编码后放入请求参数 sigR 和 sigS 中，时间戳放入 timestamp 中
+5. 将签名结果的 r 和 s 进行 base64 编码后放入请求参数 sigR 和 sigS 中，时间戳放入 timestamp 中，假设私钥(hex编码)为 1cc64d8767ff6fe618a7794d1e16cced03ab35715d58d48029de87b475abef85 ，那么最终的 sigR 和 sigS 为
+</br>
+```
+sigR = '2vS/6a+4+X0wyDyqAw5gTcLS02cCvH+CsSDIOsStPvc='
+sigS = 'S7TIyw5oYkoBUC0mBUIHxabMU4slREcMAMYo74ZO2wM='
+```
 
 *构建 POST/PUT 请求的签名步骤:*
 
@@ -2838,4 +2843,11 @@ fromwalletwovldjmmmqj2m0n9fromAmount123fromAssetID1notetest sigsequenceabcdtimes
 ```
 3. 使用 sha3 keccak256 编码上面的字符串
 4. 使用私钥通过 ecdsa 签名上面编码好的字符串
-5. 将签名结果的 r 和 s 进行 base64 编码后放入请求参数 sig 中，时间戳放入 timestamp 中
+5. 将签名结果的 r 和 s 进行 base64 编码后放入请求参数 sig 中，时间戳放入 timestamp 中，假设私钥(hex编码)为 1cc64d8767ff6fe618a7794d1e16cced03ab35715d58d48029de87b475abef85 ，那么最终的 sig 为
+</br>
+```
+sig: {
+  r: 'Il4vOx0mIfQLRwFQt9E4480IsuwyCvPOHvTxWnv+CM0=',
+  s: 'Psdc5NI36LE+R/X6qVvumtjTvo0ufqBBqEBB62FRTh0='
+}
+```
